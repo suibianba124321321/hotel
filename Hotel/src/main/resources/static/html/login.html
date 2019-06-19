@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	登录
+	<p shiro:hasrole="admin"> shiro</p>
+	
+	<form action="../file/upload"  method="post" enctype="multipart/form-data">
+	<input type="file" value="上传" name="headImg">
+	<input type="submit" value="提交">
+	
+	</form>
+</body>
+</html>

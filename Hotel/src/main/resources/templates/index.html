@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(function(){
+	$.ajax({
+		url:"user/all",
+		success:function(data){
+			var table=$("<table></table>");
+			for(var i=0;i<data.length;i++){
+				var user=data[i];
+				var tr=$("<tr></tr>");
+				var uid=$("<td></td>").text(user.uid);
+				var uname=$("<td></td>").text(user.uname);
+				tr.append(uid);
+				tr.append(uname);
+				table.append(tr);
+			}
+			$("body").append(table);
+		}
+	});
+	
+})
+</script>
+</head>
+<body>
+
+</body>
+</html>
