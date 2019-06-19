@@ -55,6 +55,7 @@ public class ShiroConfig {
 		map.put("/druid/**", "anon");
 		map.put("/user/login", "anon");
 		map.put("/user/register", "anon");
+		map.put("/backstage/**", "anon");
 		
 		
 		map.put("/user/logout", "logout");
