@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -23,20 +25,20 @@ public class ShiroConfig {
 		return matcher;
 	}
 
-/*	@Bean
+/*@Bean
 	public UserRealm realm(CredentialsMatcher matcher){
 		
 		UserRealm userRealm=new UserRealm();
 		userRealm.setCredentialsMatcher(matcher);
 		return userRealm;
-	}
+	}*/
 	@Bean
-	public SecurityManager securityManager(UserRealm userRealm){
-		DefaultSecurityManager securityManager=new DefaultWebSecurityManager(userRealm);
+	public SecurityManager securityManager(){
+		DefaultSecurityManager securityManager=new DefaultWebSecurityManager();
 		
 		
 		return securityManager;
-	}*/
+	}
 	@Bean
 	public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
 		
