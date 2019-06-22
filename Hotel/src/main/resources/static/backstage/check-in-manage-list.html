@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="./css/xadmin.css">
         <script src="./lib/layui/layui.js" charset="utf-8"></script>
         <script type="text/javascript" src="./js/xadmin.js"></script>
+        <script type="text/javascript" src="./js/jquery.min.js"></script>
         <!--[if lt IE 9]>
           <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
           <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
@@ -50,8 +51,8 @@
                             <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
                             <button class="layui-btn" onclick="xadmin.open('登记入住','./information-add.html',600,600)"><i class="layui-icon"></i>登记入住</button>
                         </div>
-                        <div class="layui-card-body layui-table-body layui-table-main">
-                            <table class="layui-table layui-form">
+                        <div class="layui-card-body layui-table-body layui-table-main" id="show_information_list">
+                            <!-- <table class="layui-table layui-form">
                                 <thead>
                                   <tr>
                                     <th>
@@ -92,7 +93,7 @@
                                     </td>
                                   </tr>
                                 </tbody>
-                            </table>
+                            </table> -->
                         </div>
                         <div class="layui-card-body ">
                             <div class="page">
@@ -111,6 +112,79 @@
             </div>
         </div> 
     </body>
+    
+    
+    <script type="text/javascript">
+	function showInformation(pcurrentpage){
+		alert(666);
+	$.ajax({
+		url:"../information/list",
+		type:"POST",
+		data:{
+			currentpage:pcurrentpage
+		},
+		dataType:"json",
+		success:function(data){
+			var content="";
+			content+='<table class="layui-table layui-form">'
+				+'<thead>'
+				+'<tr>'
+				+'<th>'
+				+'<input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">'
+				+'</th>'
+				+'<th>ID</th>'
+				+'<th>身份证号</th>'
+				+'<th>入住姓名</th>'
+				+'<th>手机号</th>'
+				+'<th>房型</th>'
+				+'<th>房间号</th>'
+				+'<th>入住日期</th>'
+				+'<th>离店日期</th>'
+				+'<th>入住价格</th>'
+				+'<th>状态</th>'
+				+'<th>操作</th></tr>'
+				+'</thead>';
+			for (var i = 0; i < 3; i++) {
+				content+='<tbody>'
+                +'<tr>'
+                +'<td>'
+                +'<input type="checkbox" name="id" value="1"   lay-skin="primary">' 
+                +'</td>'
+                +'<td >1</td>'
+                +'<td>511024199311201295</td>'
+                +'<td>张三</td>'
+                +'<td>18408230395</td>'
+                +'<td>大床房</td>'
+                +'<td>1002</td>'
+                +'<td>2019-06-20</td>'
+                +'<td>2019-06-21</td>'
+                +'<td>289</td>'
+                +'<td class="td-status">'
+                +'<span class="layui-btn layui-btn-normal layui-btn-mini">入住中</span></td>'
+                +'<td class="td-manage">'
+                +"<button class='layui-btn' onclick=\"xadmin.open('编辑','./information-edit.html?information_id=2',600,600)\">修改</button>"
+                +'<button class="layui-btn" onclick="check-out">退房</button>'
+                +'<button class="layui-btn" onclick="delete">删除</button>'
+                +'</td>'
+                +'</tr>'
+                +'</tbody>';
+			}
+			+'</table>';
+			$("#show_information_list").html(content);
+			/* $("#totalPage").html(totalPage);
+			$("#currentPage").html(pcurrentpage); */
+		}
+	});
+	}
+	showInformation(1);
+    
+    
+    
+    
+    
+    </script>
+    
+    
     
     <script>
       layui.use(['laydate','form'], function(){

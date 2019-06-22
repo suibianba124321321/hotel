@@ -27,9 +27,9 @@ public class InformationController {
 //			model.addAllObjects("roomList",informationService.add(information));
 //			model.addObject("findAll",informationService.findList(null));
 			List<Information> informations=new ArrayList<>();
-			informations=informationService.findList(null);
-			System.out.println(informations);
-			System.out.println(informations.get(0).getPerson_id());
+//			informations=informationService.findList(null);
+//			System.out.println(informations);
+//			System.out.println(informations.get(0).getPerson_id());
 			return informations;
 		}
 	

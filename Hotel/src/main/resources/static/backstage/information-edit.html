@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="x-admin-sm">
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
     
     <head>
         <meta charset="UTF-8">
@@ -18,6 +18,7 @@
         <![endif]-->
     </head>
     <body>
+    	<input type="hidden" th:value="${param.information_id }" id="information_id">
         <div class="layui-fluid">
             <div class="layui-row">
                     <div class="layui-form-item">
@@ -78,6 +79,7 @@
                         <button class="layui-btn" onclick="information_add()">修改</button></div>
             </div>
         </div>
+        
         <script>layui.use(['form', 'layer','jquery'],
             function() {
                 $ = layui.jquery;
@@ -172,4 +174,18 @@
         	
         </script>
     </body>
+    
+    <script type="text/javascript">
+    function showInformation(){
+		alert(777);
+		alert($("#information_id").val());
+	}
+	showInformation();
+    
+    
+    
+    
+    </script>
+    
+    
 </html>
