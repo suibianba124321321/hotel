@@ -84,23 +84,26 @@ public class OrderServiceImpl implements OrderService{
 	}
 	
 	//取消订单定时器
-	public  void autoCancel(Order nowOrder) {
+	public  void autoCancel(OrderService orderService,Integer orderId) {
 		
 		Timer timer = new Timer();
 		     timer.schedule(new TimerTask() {
 		      public void run() {
-	      
-	        Order order=findOrderById(nowOrder);
-	         int orderState=order.getOrder_state();
+	     
+	        Order order=orderService.findOrderById(orderId);
+	       
+	        int orderState=order.getOrder_state();
 	         int auto=order.getAuto_cancel();
+	        
 	         if(orderState == 0 && auto ==1){
-	        	 deleteOrder(order);
+	        	
+	        	 orderService.deleteOrder(order);
 	         }
 	        
 	         timer.cancel();
 	       
 		      }
-	     }, 1000*60*15);// 设定指定的时间time,此处为过期时间，默认15分钟
+	     }, 1000*60);// 设定指定的时间time,此处为过期时间，默认15分钟
 		
 	}
 	//创建订单
@@ -164,7 +167,7 @@ public class OrderServiceImpl implements OrderService{
 			for(int j=0;j<orderDates.size();j++){
 				
 				//获取比较的时间
-				String date=orderDates.get(i);
+				String date=orderDates.get(j);
 				//判断当前房间的时间信息中是否包含目标时间
 				if(dates.contains(date)){
 					
@@ -231,7 +234,7 @@ public class OrderServiceImpl implements OrderService{
 			}
 		}
 		//超过规定时间未付款自动取消订单
-		autoCancel(order);
+		autoCancel(this,orderId);
 		return result;
 	}
 	
@@ -256,9 +259,9 @@ public class OrderServiceImpl implements OrderService{
 
 	//以订单id查询
 	@Override
-	public Order findOrderById(Order order) {
+	public Order findOrderById(Integer id) {
 		
-		return orderDAO.findOrder(order).get(0);
+		return orderDAO.findOrderById(id);
 	}
 	//删除订单
 	@Override
@@ -267,7 +270,7 @@ public class OrderServiceImpl implements OrderService{
 		orderDAO.deleteOrder(order);
 		itemDAO.deleteItem(order);
 		roomDateDAO.delete(order);
-		return "删除成功";
+		return "退房成功";
 	}
 	
 	

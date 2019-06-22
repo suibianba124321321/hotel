@@ -8,8 +8,8 @@ public class OrderProvider {
 	
 	public String select(Order order){
 		SQL sql=new SQL().SELECT("*").FROM("`order`");
-		if(order.getOrder_id()!=null){
-			sql.WHERE("order_id="+order.getOrder_id());
+		if(order.getMember_id()!=null){
+			sql.WHERE("member_id="+order.getMember_id());
 		}
 		if(order.getLogin_id()!=null){
 			sql.WHERE("login_id="+order.getLogin_id());

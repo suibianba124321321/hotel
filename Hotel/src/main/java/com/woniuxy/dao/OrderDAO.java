@@ -28,5 +28,6 @@ public interface OrderDAO {
 	public void deleteOrder(Order order);
 	@Select("select * from `order` where order_number=#{orderNumber} and flag=0")
 	public Order findOrderByNumber(String orderNumber);
-	
+	@Select("select * from `order` where order_id=#{id} and flag=0")
+	public Order findOrderById(Integer id);
 }

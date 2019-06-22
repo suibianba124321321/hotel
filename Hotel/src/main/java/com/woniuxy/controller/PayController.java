@@ -48,9 +48,7 @@ public class PayController {
 		if(id==null){
 			return;
 		}
-		Order order=new Order();
-		order.setOrder_id(id);
-		order=orderService.findOrderById(order);
+		Order order=orderService.findOrderById(id);
 		if(order==null){
 			return;
 		}
@@ -226,9 +224,8 @@ public class PayController {
 		
 		
 		//验证订单号是否存在
-		Order order=new Order();
-		order.setOrder_id(id);
-		order=orderService.findOrderById(order);
+		
+		Order order=orderService.findOrderById(id);
 		if(order==null){
 			return "账单不存在或已经退款";
 		}
