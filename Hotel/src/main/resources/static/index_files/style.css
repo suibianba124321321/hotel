@@ -1,0 +1,23 @@
+/* citySelector */
+.citySelector{font-size:14px;text-align:left;border-radius:3px;margin-left:-46px;margin-top:25px;}
+.cityBox{width:550px;background: #FFFFFF;border:1px solid #D5D5D5;box-shadow: 0px 4px 10px 0px rgba(193,193,193,0.50);border-radius:3px;padding:10px 20px 20px;}
+
+.cityBox ul li{float:left;width:16%;padding:10px 0;cursor:pointer;display:inline;border-bottom:#ccc solid 2px;text-align:center;}
+.cityBox ul li.on{background:#fff;border-bottom:#f08519 solid 3px;position:relative;color:#f08519;font-weight:bold;}
+
+.hotCity{clear:both;overflow:hidden;padding:20px 20px 0;}
+.cityTab{overflow:hidden;}
+.cityTab dl{margin:0;padding:0;overflow:hidden;}
+.cityTab dl dt{clear:both;display:block;color:#999;line-height:35px;font-size:15px;}
+.cityTab dl dd{clear:both;}
+.cityTab dl dd a{width:16%;line-height:30px;display:inline-block;color:#666;text-decoration:none;line-height:30px;height:30px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.cityTab dl dd a:hover{text-decoration:underline;color:#f08519;}
+
+.cityslide{width:550px;border:1px solid #D5D5D5;box-shadow: 0px 4px 10px 0px rgba(193,193,193,0.50);border-radius:3px;padding:10px 20px 20px;background:#fff;}
+.cityslide li{clear:both;overflow:hidden;height:30px;padding:5px;display:block;}
+.cityslide li.on{clear:both;background:#f08519;color:#fff;height:30px;padding:5px;display:block;cursor:pointer;}
+.cityslide li b{font-weight:normal;}
+.cityslide li.empty{background:#fff2e8;color:#666;padding:5px 10px;}
+.cityslide li.empty em{color:red;font-style:normal;}
+.cityslide .cityname{float:left;}
+.cityslide .cityspell{float:right;}

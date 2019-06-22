@@ -1,0 +1,16 @@
+function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	var r = window.location.search.substr(1).match(reg);
+	if (r != null)
+		return unescape(r[2]);
+	return null;
+}
+
+var sid = getQueryString("sid");
+if(sid != '' && sid != null){
+	$.cookie("cpsMemberNo", sid, {
+		path : "/",
+		expires : 1 / (24 * 2)
+	});
+}
+

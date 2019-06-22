@@ -120,7 +120,7 @@ public class DuridConfiguration {
     }
 
     //创建过滤器
-@Bean
+//@Bean
     public FilterRegistrationBean statFilter(){
         //创建过滤器
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new WebStatFilter());
