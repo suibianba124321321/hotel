@@ -63,8 +63,24 @@ public class InformationServiceImpl implements InformationService{
 	//根据information_id查询单个入住信息
 	@Override
 	public Information findOne(Information information) {
-		// TODO Auto-generated method stub
 		return informationDao.findOne(information);
+	}
+
+	@Override
+	public List<Information> findInformationByPage(int currentpage) {
+		List<Information> informations=null;
+		//根据页码获取下标
+		int index=(currentpage-1)*5;
+		informations=informationDao.findInformationByIndex(index);
+		return informations;
+	}
+
+	@Override
+	public int findTotalPage() {
+		int totalPage=0;
+		int totalIndex=informationDao.findTotalIndex();
+		totalPage=totalIndex%5==0?totalIndex/5:totalIndex/5+1;
+		return totalPage;
 	}
 
 }

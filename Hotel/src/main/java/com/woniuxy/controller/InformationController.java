@@ -1,6 +1,5 @@
 package com.woniuxy.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,20 +18,18 @@ public class InformationController {
 		@Autowired
 		private	InformationService informationService; 
 		
-		
+		//根据页码查询入住信息
 		@RequestMapping("/list")
 		@ResponseBody
-		public List<Information> list(ModelAndView model,String name,String pwd){
-//			model.addAllObjects("roomTypeList",informationService.findOne(information));
-//			model.addAllObjects("roomList",informationService.add(information));
-//			model.addObject("findAll",informationService.findList(null));
-			List<Information> informations=new ArrayList<>();
-//			informations=informationService.findList(null);
-//			System.out.println(informations);
-//			System.out.println(informations.get(0).getPerson_id());
-			return informations;
+		public Map<String,Object> showInformationByPage(int currentpage){
+			Map<String,Object> result=new HashMap<String,Object>();
+			List<Information> informations = informationService.findInformationByPage(currentpage);
+			int totalPage=informationService.findTotalPage();
+			result.put("informations", informations);
+			result.put("totalPage", 4);
+			return result;
 		}
-	
+		
 		//添加入住信息
 		@RequestMapping("/add")
 		public String add(Information information){
@@ -75,9 +72,11 @@ public class InformationController {
 		
 		//根据information_id查询单个入住信息
 		@RequestMapping("/findOne")
+		@ResponseBody
 		public Information findOne(Information information){
-			
+			System.out.println(11);
 			return informationService.findOne(information);
+			
 			
 		}
 

@@ -15,6 +15,32 @@
           <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
           <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
+    <style type="text/css">
+		    /* 
+		 分页
+		 */
+		.page{
+			width: 300px;
+			height: 30px;
+			margin: 0 auto;
+			
+		}
+		.page-item{
+			height: 20px;
+			line-height: 20px;
+			border: 1px solid #ccc;
+			margin-left: 5px;
+			float: left;
+			text-align: center;
+			color: #999;
+			padding:2px 5px;
+		}
+		.page-item:hover{
+			background-color: #ddd;
+			cursor: pointer;
+		}
+    </style>
+        
     </head>
     <body>
         <div class="x-nav">
@@ -58,14 +84,11 @@
                         </div>
                         <div class="layui-card-body ">
                             <div class="page">
-                                <div>
-                                  <a class="prev" href="">&lt;&lt;</a>
-                                  <a class="num" href="">1</a>
-                                  <span class="current">2</span>
-                                  <a class="num" href="">3</a>
-                                  <a class="num" href="">489</a>
-                                  <a class="next" href="">&gt;&gt;</a>
-                                </div>
+                                <div class="page-item first" onclick="showInformation(1)">首页</div>
+								<div class="page-item prev" onclick="prePage()">上一页</div>
+								<div class="page-item"><span id="currentPage" style="border:0px">5</span>/<span id="totalPage" style="border:0px">10</span></div>
+								<div class="page-item next" onclick="nextPage()">下一页</div>
+								<div class="page-item last" onclick="endPage()">末页</div>
                             </div>
                         </div>
                     </div>
@@ -87,6 +110,8 @@
 		},
 		dataType:"json",
 		success:function(data){
+			var informations=data.informations;
+			var totalPage=data.totalPage;
 			var content="";
 			content+='<table class="layui-table layui-form">'
 				+'<thead>'
@@ -133,13 +158,13 @@
 			}
 			+'</table>';
 			$("#show_information_list").html(content);
-			/* $("#totalPage").html(totalPage);
-			$("#currentPage").html(pcurrentpage); */
+			 $("#totalPage").html(totalPage);
+			$("#currentPage").html(pcurrentpage);
 		}
 	});
 	}
 	showInformation(1);
-    
+	
     //退房
     function check_out(information_id){
     	alert(information_id);
@@ -172,6 +197,23 @@
     	});
     }
     
+    function nextPage(){
+    	var currentpage=parseInt($("#currentPage").html());
+    	var totalPage=parseInt($("#totalPage").html());
+    	if(totalPage>currentpage){
+    		showInformation(currentpage+1);
+    	}
+    }
+    function prePage(){
+    	var currentpage=parseInt($("#currentPage").html());
+    	if(currentpage>1){
+    		showInformation(currentpage-1);
+    	}
+    }
+    function endPage(){
+    	var totalPage=parseInt($("#totalPage").html());
+    	showInformation(totalPage);
+    }
     
     
     </script>

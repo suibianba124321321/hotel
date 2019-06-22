@@ -19,67 +19,12 @@
         <![endif]-->
     </head>
     <body>
-    	<!-- <input type="hidden" th:value="${param.information_id }" id="information_id"> -->
         <div class="layui-fluid" id="information_update_list">
+        	<!-- 展示修改界面 -->
             <div class="layui-row">
-                    <!-- <div class="layui-form-item">
-                        <label for="L_email" class="layui-form-label">
-                            <span class="x-red">*</span>身份证号</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="idCard" name="idCard" required="" lay-verify="email" autocomplete="off" class="layui-input" onblur="selectOrderByidCard()"></div>
-                        <div class="layui-form-mid layui-word-aux">
-                            <span class="x-red">*</span>请输入18位身份证号</div></div>
-                    <div class="layui-form-item">
-                        <label for="L_username" class="layui-form-label">
-                            <span class="x-red">*</span>入住姓名</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="name" name="name" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label for="L_pass" class="layui-form-label">
-                            <span class="x-red">*</span>手机号</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="tel" name="tel" required="" lay-verify="pass" autocomplete="off" class="layui-input"></div>
-                        <div class="layui-form-mid layui-word-aux">请输入11位手机号</div></div>
-                    <div class="layui-form-item">
-                        <label for="L_username" class="layui-form-label">
-                            <span class="x-red">*</span>房型</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="roomType" name="roomType" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label for="L_username" class="layui-form-label">
-                            <span class="x-red">*</span>房间号</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="room_id" name="room_id" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label for="L_username" class="layui-form-label">
-                            <span class="x-red">*</span>入住日期</label>
-                        <div class="layui-input-inline">
-                            <input type="date" id="in_time" name="in_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label for="L_username" class="layui-form-label">
-                            <span class="x-red">*</span>离店日期</label>
-                        <div class="layui-input-inline">
-                            <input type="date" id="out_time" name="out_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label for="L_username" class="layui-form-label">
-                            <span class="x-red">*</span>状态</label>
-                        <div class="layui-input-inline">
-                            <select name=""order_state"" id="order_state" class="layui-input">   
-        						<option value="0">未预定</option>   
-       						 	<option value="1">预定中</option>   
-     						</select></div>
-                    </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label for="L_repass" class="layui-form-label"></label>
-                        <button class="layui-btn" onclick="information_add()">修改</button></div>
-            </div> -->
-        </div>
+                     
+                     
+       		</div>
         
         <script>layui.use(['form', 'layer','jquery'],
             function() {
@@ -143,67 +88,68 @@
 			var information_id=$.getUrlParam('information_id');
 			
 			$(function(){
+				alert(information_id)
 				$.ajax({
-					url:"../information/list",
+					url:"../information/findOne",
         			type:"post",
         			data:{
-        				information_id:$.getUrlParam('information_id'),
+        				 information_id:$.getUrlParam('information_id'),
         			},
-				dateType:"json",
+				dataType:"json",
 				success:function(data){
-					alert(information_id)
+					alert(3);
 					var content="";
 					content+='<div class="layui-row">'
                     +'<div class="layui-form-item">'
                     +'<label for="L_email" class="layui-form-label">'
                     +'<span class="x-red">*</span>身份证号</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="idCard" name="idCard" required="" lay-verify="email" autocomplete="off" class="layui-input" ></div>'
+                    +'<input type="text" id="idCard" name="idCard" required="" lay-verify="email" autocomplete="off" class="layui-input" value="214545435"></div>'
                     +'<div class="layui-form-mid layui-word-aux">'
                     +'<span class="x-red">*</span>请输入18位身份证号</div></div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>入住姓名</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="name" name="name" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>'
+                    +'<input type="text" id="name" name="name" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="张三"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_pass" class="layui-form-label">'
                     +'<span class="x-red">*</span>手机号</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="tel" name="tel" required="" lay-verify="pass" autocomplete="off" class="layui-input"></div>'
+                    +'<input type="text" id="tel" name="tel" required="" lay-verify="pass" autocomplete="off" class="layui-input" value="13545454545"></div>'
                     +'<div class="layui-form-mid layui-word-aux">请输入11位手机号</div></div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>房型</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="roomType" name="roomType" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>'
+                    +'<input type="text" id="roomType" name="roomType" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="大床房"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>房间号</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="room_id" name="room_id" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>'
+                    +'<input type="text" id="room_id" name="room_id" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="1001"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>入住日期</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="date" id="in_time" name="in_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>'
+                    +'<input type="date" id="in_time" name="in_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="2019-03-02"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>离店日期</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="date" id="out_time" name="out_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>'
+                    +'<input type="date" id="out_time" name="out_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="2019-03-03"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>状态</label>'
                     +'<div class="layui-input-inline">'
-                    +'<select name=""order_state"" id="order_state" class="layui-input">'   
-                    +'<option value="0">未预定</option>'   
-                    +'<option value="1">预定中</option>' 
+                    +'<select name=""order_state"" id="order_state" class="layui-input" value="1">'   
+                    +'<option value="0">入住中</option>'   
+                    +'<option value="1">已结算离店</option>' 
                     +'</select></div>'
                     +'</div>'
                     +'</div>'

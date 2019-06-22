@@ -19,5 +19,9 @@ public interface InformationService {
 		public Integer getTotal(Map<String,Object> queryMap);
 		//根据information_id查询单个入住信息
 		public Information findOne(Information information);
+		//根据页码展示入住信息
+		public List<Information> findInformationByPage(int currentpage);
+		//计算总页码
+		public int findTotalPage();
 
 }

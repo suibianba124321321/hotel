@@ -27,6 +27,12 @@ public interface InformationDao {
 	//根据information_id查询单个入住信息
 	@Select("select * from information where information_id=#{information_id}")
 	public Information findOne(Information information);
+	//根据下标查找入住信息
+	@Select ("select information_id,person_id,room_id,in_time,out_time,state from information where flag=0 limit #{index},5") 
+	public List<Information> findInformationByIndex(int index);
+	//获取入住信息条数
+	@Select("select count(information_id) from information where flag=0")
+	public int findTotalIndex();
 	
 
 }
