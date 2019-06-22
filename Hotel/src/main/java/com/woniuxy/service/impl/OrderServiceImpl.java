@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -103,7 +104,7 @@ public class OrderServiceImpl implements OrderService{
 	         timer.cancel();
 	       
 		      }
-	     }, 1000*60);// 设定指定的时间time,此处为过期时间，默认15分钟
+	     }, 1000*60*15);// 设定指定的时间time,此处为过期时间，默认15分钟
 		
 	}
 	//创建订单
@@ -271,6 +272,7 @@ public class OrderServiceImpl implements OrderService{
 		itemDAO.deleteItem(order);
 		roomDateDAO.delete(order);
 		return "退房成功";
+
 	}
 	
 	

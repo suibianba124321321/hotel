@@ -51,6 +51,13 @@ public class Person implements Serializable{
 	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
+
+	@Override
+	public String toString() {
+		return "Person [person_id=" + person_id + ", name=" + name + ", tel=" + tel + ", idcard=" + idcard + ", flag="
+				+ flag + "]";
+	}
+
 	
 	
 	

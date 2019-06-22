@@ -8,6 +8,7 @@ public class OrderProvider {
 	
 	public String select(Order order){
 		SQL sql=new SQL().SELECT("*").FROM("`order`");
+
 		if(order.getMember_id()!=null){
 			sql.WHERE("member_id="+order.getMember_id());
 		}
@@ -23,6 +24,7 @@ public class OrderProvider {
 		SQL sql=new SQL();
 		sql.INSERT_INTO("`order`").VALUES("creat_time","'"+order.getCreat_time()+"'").VALUES("order_number", "'"+order.getOrder_number()+"'").VALUES("in_time","'"+ order.getIn_time()+"'");
 		sql.VALUES("out_time","'"+ order.getOut_time()+"'").VALUES("cancel_time","'"+order.getCancel_time()+"'").VALUES("sumprice", order.getSumprice().toString());
+
 		if(order.getIn_air()!=null){
 			sql.VALUES("in_air", order.getIn_air().toString());
 		}

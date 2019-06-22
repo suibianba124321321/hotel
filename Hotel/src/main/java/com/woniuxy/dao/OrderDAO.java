@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Select;
+
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
@@ -30,4 +31,5 @@ public interface OrderDAO {
 	public Order findOrderByNumber(String orderNumber);
 	@Select("select * from `order` where order_id=#{id} and flag=0")
 	public Order findOrderById(Integer id);
+
 }

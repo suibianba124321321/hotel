@@ -1,6 +1,10 @@
 package com.woniuxy.pojo;
 
+	
+	
+
 import java.io.Serializable;
+import java.util.List;
 
 public class Login implements Serializable{
 
@@ -14,9 +18,16 @@ public class Login implements Serializable{
 	//会员id
 	private Integer member_id;
 	private Integer flag;
+	private List<Person> persons;
 	
 	
-	
+	public List<Person> getPersons() {
+		return persons;
+	}
+	public void setPersons(List<Person> persons) {
+		this.persons = persons;
+	}
+
 	public Integer getLogin_id() {
 		return login_id;
 	}

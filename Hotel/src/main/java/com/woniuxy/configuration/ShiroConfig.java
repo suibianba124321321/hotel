@@ -52,6 +52,16 @@ public class ShiroConfig {
 		Map<String, String> map=new HashMap<>();
 		map.put("/index.html", "anon");
 		map.put("/html/login.html", "anon");
+		map.put("/html/bookpage.html", "anon");
+		map.put("/html/bookdetailpage.html", "anon");
+		map.put("/type/text", "anon");
+		map.put("/css/**", "anon");
+		map.put("/js/**", "anon");
+		map.put("/img/**", "anon");
+		map.put("/type/show", "anon");
+		
+		
+		
 		map.put("/druid/**", "anon");
 		map.put("/user/login", "anon");
 		map.put("/user/register", "anon");
@@ -59,7 +69,7 @@ public class ShiroConfig {
 		
 		map.put("/user/logout", "logout");
 		
-		map.put("/**", "authc");
+		/*map.put("/**", "authc");*/
 		
 		
 		bean.setFilterChainDefinitionMap(map);

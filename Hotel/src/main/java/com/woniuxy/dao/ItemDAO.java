@@ -1,10 +1,9 @@
 package com.woniuxy.dao;
 
+
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -20,4 +19,6 @@ public interface ItemDAO {
 	public void deleteItem(Order order);
 	@Select("select * from item where order_id=#{orderid}")
 	public List<Item> findItemsByOrdeId(Integer order_id);
+
+
 }

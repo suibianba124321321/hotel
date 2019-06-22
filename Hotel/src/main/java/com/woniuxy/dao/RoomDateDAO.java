@@ -17,6 +17,8 @@ public interface RoomDateDAO {
 	public List<String> findDateByRoomid(Room room);
 	@Insert("insert into room_date values (default,#{room_id},#{type_id},#{date},#{order_id},default)")
 	public void insert(RoomDate roomState);
+
 	@Update("update room_date set flag=1 where order_id=#{order_id}")
+
 	public void delete(Order order);
 }

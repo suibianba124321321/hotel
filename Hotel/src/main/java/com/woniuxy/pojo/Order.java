@@ -2,12 +2,7 @@ package com.woniuxy.pojo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Order implements Serializable{
 	/**
@@ -64,6 +59,7 @@ public class Order implements Serializable{
 	public void setSumprice(BigDecimal sumprice) {
 		this.sumprice = sumprice;
 	}
+
 
 	public Integer getTypeID() {
 		return typeID;

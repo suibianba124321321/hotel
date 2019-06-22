@@ -94,7 +94,7 @@ public class TypeServiceImpl implements TypeService{
 				for(int j=0;j<inDates.size();j++){
 					
 					//获取比较的时间
-					String date=dates.get(i);
+					String date=inDates.get(j);
 					//判断当前房间的时间信息中是否包含目标时间
 					if(dates.contains(date)){
 						
@@ -114,5 +114,15 @@ public class TypeServiceImpl implements TypeService{
 		
 		return types;
 	}
+
+
+	
+	//房间类型id查找到房间
+	@Override
+	public Type findTypeByid(int id) {
+		
+		return typeDAO.findTypeByid(id);
+	}
+
 
 }

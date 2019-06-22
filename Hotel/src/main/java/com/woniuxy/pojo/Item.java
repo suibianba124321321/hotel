@@ -13,6 +13,7 @@ public class Item implements Serializable{
 	private Integer item_id;
 	private Integer order_id;
 	private Integer room_id;
+
 	private Integer type_id;
 	//住客id
 	private Integer person_id;
@@ -119,12 +120,7 @@ public class Item implements Serializable{
 		this.price = price;
 	}
 	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
