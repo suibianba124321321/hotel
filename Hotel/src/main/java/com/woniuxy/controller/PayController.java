@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -313,7 +314,7 @@ public class PayController {
 	 */
 	@RequestMapping("/ui")
 	
-	public void ui(HttpServletRequest request ,HttpServletResponse response) throws Exception {
+	public String ui(HttpServletRequest request,ModelMap map) throws Exception {
 		//获取支付宝GET过来反馈信息
 		Map<String,String> params = new HashMap<String,String>();
 		Map<String,String[]> requestParams = request.getParameterMap();
@@ -331,7 +332,6 @@ public class PayController {
 		}
 		
 		boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //调用SDK验证签名
-		PrintWriter out = response.getWriter();
 		//——请在这里编写您的程序（以下代码仅作参考）——
 		if(signVerified) {
 			//商户订单号
@@ -344,17 +344,18 @@ public class PayController {
 			String total_amount = new String(request.getParameter("total_amount").getBytes("ISO-8859-1"),"UTF-8");
 			
 			
-			out.println("out_trade_no:"+out_trade_no+"  "+"trade_no:"+trade_no+"  "+"total_amount:"+total_amount);
-			
+			map.addAttribute("msg", "操作成功！！！");
+			map.addAttribute("out_trade_no", out_trade_no);
+			map.addAttribute("trade_no", trade_no);
+			map.addAttribute("total_amount", total_amount);
 			
 			
 		}else {
-			
-			out.println("验签失败");
+			map.addAttribute("msg", "操作失败");
 			
 		
 		}
-		
+		return "/html/paymsg.html";
 	}
 	
 }
