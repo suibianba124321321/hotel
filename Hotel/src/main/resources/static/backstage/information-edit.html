@@ -6,11 +6,12 @@
         <title>欢迎页面-X-admin2.2</title>
         <meta name="renderer" content="webkit">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+        <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi">
         <link rel="stylesheet" href="./css/font.css">
         <link rel="stylesheet" href="./css/xadmin.css">
         <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
         <script type="text/javascript" src="./js/xadmin.js"></script>
+        <script type="text/javascript" src="./js/jquery.min.js"></script>
         <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
         <!--[if lt IE 9]>
             <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -18,10 +19,10 @@
         <![endif]-->
     </head>
     <body>
-    	<input type="hidden" th:value="${param.information_id }" id="information_id">
-        <div class="layui-fluid">
+    	<!-- <input type="hidden" th:value="${param.information_id }" id="information_id"> -->
+        <div class="layui-fluid" id="information_update_list">
             <div class="layui-row">
-                    <div class="layui-form-item">
+                    <!-- <div class="layui-form-item">
                         <label for="L_email" class="layui-form-label">
                             <span class="x-red">*</span>身份证号</label>
                         <div class="layui-input-inline">
@@ -77,7 +78,7 @@
                     <div class="layui-form-item">
                         <label for="L_repass" class="layui-form-label"></label>
                         <button class="layui-btn" onclick="information_add()">修改</button></div>
-            </div>
+            </div> -->
         </div>
         
         <script>layui.use(['form', 'layer','jquery'],
@@ -127,30 +128,106 @@
                 s.parentNode.insertBefore(hm, s);
             })();</script>
             
+        
         <script type="text/javascript">
+        	//根据入住id查询相关信息
+        	//获取url参数
+			(function($){
+			$.getUrlParam = function(name)
+			{
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r!=null) return unescape(r[2]); return null;
+			}
+			})(jQuery);
+			var information_id=$.getUrlParam('information_id');
+			
+			$(function(){
+				$.ajax({
+					url:"../information/list",
+        			type:"post",
+        			data:{
+        				information_id:$.getUrlParam('information_id'),
+        			},
+				dateType:"json",
+				success:function(data){
+					alert(information_id)
+					var content="";
+					content+='<div class="layui-row">'
+                    +'<div class="layui-form-item">'
+                    +'<label for="L_email" class="layui-form-label">'
+                    +'<span class="x-red">*</span>身份证号</label>'
+                    +'<div class="layui-input-inline">'
+                    +'<input type="text" id="idCard" name="idCard" required="" lay-verify="email" autocomplete="off" class="layui-input" ></div>'
+                    +'<div class="layui-form-mid layui-word-aux">'
+                    +'<span class="x-red">*</span>请输入18位身份证号</div></div>'
+                    +'<div class="layui-form-item">'
+                    +'<label for="L_username" class="layui-form-label">'
+                    +'<span class="x-red">*</span>入住姓名</label>'
+                    +'<div class="layui-input-inline">'
+                    +'<input type="text" id="name" name="name" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>'
+                    +'</div>'
+                    +'<div class="layui-form-item">'
+                    +'<label for="L_pass" class="layui-form-label">'
+                    +'<span class="x-red">*</span>手机号</label>'
+                    +'<div class="layui-input-inline">'
+                    +'<input type="text" id="tel" name="tel" required="" lay-verify="pass" autocomplete="off" class="layui-input"></div>'
+                    +'<div class="layui-form-mid layui-word-aux">请输入11位手机号</div></div>'
+                    +'<div class="layui-form-item">'
+                    +'<label for="L_username" class="layui-form-label">'
+                    +'<span class="x-red">*</span>房型</label>'
+                    +'<div class="layui-input-inline">'
+                    +'<input type="text" id="roomType" name="roomType" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>'
+                    +'</div>'
+                    +'<div class="layui-form-item">'
+                    +'<label for="L_username" class="layui-form-label">'
+                    +'<span class="x-red">*</span>房间号</label>'
+                    +'<div class="layui-input-inline">'
+                    +'<input type="text" id="room_id" name="room_id" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>'
+                    +'</div>'
+                    +'<div class="layui-form-item">'
+                    +'<label for="L_username" class="layui-form-label">'
+                    +'<span class="x-red">*</span>入住日期</label>'
+                    +'<div class="layui-input-inline">'
+                    +'<input type="date" id="in_time" name="in_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>'
+                    +'</div>'
+                    +'<div class="layui-form-item">'
+                    +'<label for="L_username" class="layui-form-label">'
+                    +'<span class="x-red">*</span>离店日期</label>'
+                    +'<div class="layui-input-inline">'
+                    +'<input type="date" id="out_time" name="out_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>'
+                    +'</div>'
+                    +'<div class="layui-form-item">'
+                    +'<label for="L_username" class="layui-form-label">'
+                    +'<span class="x-red">*</span>状态</label>'
+                    +'<div class="layui-input-inline">'
+                    +'<select name=""order_state"" id="order_state" class="layui-input">'   
+                    +'<option value="0">未预定</option>'   
+                    +'<option value="1">预定中</option>' 
+                    +'</select></div>'
+                    +'</div>'
+                    +'</div>'
+                    +'<div class="layui-form-item">'
+                    +'<label for="L_repass" class="layui-form-label"></label>'
+                    +'<button class="layui-btn" onclick="information_add()">修改</button></div>'
+                    +'</div>';
+					
+					$("#information_update_list").html(content);	
+				}
+					
+				})
+				
+		})
+		
+			
+		
+	</script>
         
-	      	//通过身份证查询是否存在订单
-	        function selectOrderByidCard(){
-	        	alert(666)
-	        	alert($("#idCard").val());
-	        	$("#tel").val(18408230394);
-	        	$.ajax({
-	        		/* url:"information/list",
-	        		type:"post",
-	        		data:{
-	        			idcard:$("#idCard").val()
-	        		},
-	        		success:function(data){
-	        			
-	        		} */
-	        		
-	        	});
-	        }
-        
-        	//添加入住信息
+        <script type="text/javascript">
+        	//修改入住信息
         	function information_add(){
         		$.ajax({
-        			url:"information/add",
+        			url:"information/update",
         			type:"post",
         			data:{
         				idcard:$("#idCard").val(),
@@ -175,17 +252,7 @@
         </script>
     </body>
     
-    <script type="text/javascript">
-    function showInformation(){
-		alert(777);
-		alert($("#information_id").val());
-	}
-	showInformation();
-    
-    
-    
-    
-    </script>
+   
     
     
 </html>
