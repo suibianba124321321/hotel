@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -80,9 +82,31 @@ public class OrderServiceImpl implements OrderService{
 	public void setOrderDAO(OrderDAO orderDAO) {
 		this.orderDAO = orderDAO;
 	}
+	
+	//取消订单定时器
+	public  void autoCancel(Order nowOrder) {
+		
+		Timer timer = new Timer();
+		     timer.schedule(new TimerTask() {
+		      public void run() {
+	      
+	        Order order=findOrderById(nowOrder);
+	         int orderState=order.getOrder_state();
+	         int auto=order.getAuto_cancel();
+	         if(orderState == 0 && auto ==1){
+	        	 deleteOrder(order);
+	         }
+	        
+	         timer.cancel();
+	       
+		      }
+	     }, 1000*60*15);// 设定指定的时间time,此处为过期时间，默认15分钟
+		
+	}
 	//创建订单
 	@Override
 	public String createOrder(Order order) {
+		
 		String result="创建成功";
 		//入住人员
 		List<Integer> personIds=order.getPersonID();
@@ -122,7 +146,7 @@ public class OrderServiceImpl implements OrderService{
 			Room room=rooms.get(i);
 			//获取该房间的时间信息
 			List<String> dates=roomDateDAO.findDateByRoomid(room);
-			
+		
 			//如果没有时间信息，那么直接加入可住房间中
 			if(dates==null){
 				
@@ -173,10 +197,13 @@ public class OrderServiceImpl implements OrderService{
 		Date cancelTime=new Date(creatTime.getTime()+15*60*1000);
 		//创建订单号
 		String OrderNumber=UUID.randomUUID().toString();
-		sd.applyPattern("yy-MM-dd HH-mm-ss");
+		sd.applyPattern("yyyy-MM-dd HH:mm:ss");
 		order.setOrder_number(OrderNumber);
 		order.setCreat_time(sd.format(creatTime));
 		order.setCancel_time(sd.format(cancelTime));
+		//订单总价
+		BigDecimal sumPrice=type.getPrice().multiply(new BigDecimal(""+inRoom.size()).multiply(new BigDecimal(""+orderDates.size())));
+		order.setSumprice(sumPrice);
 		//插入
 		orderDAO.insertOrder(order);
 		
@@ -185,9 +212,9 @@ public class OrderServiceImpl implements OrderService{
 		for(int i=0;i<inRoom.size();i++){
 			Room room=inRoom.get(i);
 			if(order.getMember_id()!=null&&order.getMember_id()!=0){
-				itemDAO.insertItem(new Item(orderId, room.getRoom_id(),personIds.get(i),orderDates.size(),new BigDecimal(0),room.getType().getPrice()));
+				itemDAO.insertItem(new Item(orderId, room.getRoom_id(),type.getType_id(),personIds.get(i),orderDates.size(),new BigDecimal(0),room.getType().getPrice()));
 			}else{
-				itemDAO.insertItem(new Item(orderId, room.getRoom_id(),personIds.get(i),orderDates.size(),room.getType().getDeposit(),room.getType().getPrice()));
+				itemDAO.insertItem(new Item(orderId, room.getRoom_id(),type.getType_id(),personIds.get(i),orderDates.size(),room.getType().getDeposit(),room.getType().getPrice()));
 				
 			}
 			
@@ -203,7 +230,8 @@ public class OrderServiceImpl implements OrderService{
 				roomDateDAO.insert(new RoomDate(room.getRoom_id(), room.getType_id(), date, orderId));
 			}
 		}
-		
+		//超过规定时间未付款自动取消订单
+		autoCancel(order);
 		return result;
 	}
 	
@@ -218,11 +246,10 @@ public class OrderServiceImpl implements OrderService{
 		return result;
 		
 	}
-	//以id所有订单
+	//以登录id所有订单
 	@Override
 	public List<Order> findAllOrder(Order order) {
 		List<Order> orders=orderDAO.findOrder(order);
-		
 		return orders;
 	}
 	

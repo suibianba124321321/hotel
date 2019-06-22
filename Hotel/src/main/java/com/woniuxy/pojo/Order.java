@@ -1,6 +1,7 @@
 package com.woniuxy.pojo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -43,7 +44,8 @@ public class Order implements Serializable{
 	private String cancel_time;
 	//订单状态
 	private Integer order_state;
-	
+	//总价
+	private BigDecimal sumprice;
 	private Integer flag;
 	
 	private Integer typeID;
@@ -55,6 +57,14 @@ public class Order implements Serializable{
 
 	
 	
+	public BigDecimal getSumprice() {
+		return sumprice;
+	}
+
+	public void setSumprice(BigDecimal sumprice) {
+		this.sumprice = sumprice;
+	}
+
 	public Integer getTypeID() {
 		return typeID;
 	}
