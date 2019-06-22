@@ -60,7 +60,7 @@ public class ShiroConfig {
 		
 		map.put("/user/logout", "logout");
 		
-		map.put("/**", "authc");
+//		map.put("/**", "authc");
 		
 		
 		bean.setFilterChainDefinitionMap(map);

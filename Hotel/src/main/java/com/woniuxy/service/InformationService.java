@@ -8,11 +8,11 @@ import com.woniuxy.pojo.Information;
 public interface InformationService {
 	
 		//添加入住信息
-		public Map<String,String> add(Information information);
+		public String add(Information information);
 		//修改入住信息
-		public Map<String,String> update(Information information);
+		public String update(Information information);
 		//删除入住信息
-		public Map<String,String> delete(Information information);
+		public String delete(Information information);
 		//根据条件查询入住信息
 		public List<Information> findList(Map<String,Object> queryMap);
 		//模糊搜索总条数

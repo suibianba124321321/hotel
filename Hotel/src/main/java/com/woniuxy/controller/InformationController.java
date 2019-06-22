@@ -1,5 +1,6 @@
 package com.woniuxy.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.woniuxy.pojo.Information;
@@ -19,36 +21,41 @@ public class InformationController {
 		
 		
 		@RequestMapping("/list")
-		public ModelAndView list(ModelAndView model){
+		@ResponseBody
+		public List<Information> list(ModelAndView model,String name,String pwd){
 //			model.addAllObjects("roomTypeList",informationService.findOne(information));
 //			model.addAllObjects("roomList",informationService.add(information));
-			model.setViewName("information/list");
-			return model;
+//			model.addObject("findAll",informationService.findList(null));
+			List<Information> informations=new ArrayList<>();
+			informations=informationService.findList(null);
+			System.out.println(informations);
+			System.out.println(informations.get(0).getPerson_id());
+			return informations;
 		}
 	
 		//添加入住信息
 		@RequestMapping("/add")
-		public Map<String,String> add(Information information){
-			Map<String,String> ret =new HashMap<>();
-			ret=informationService.add(information);
-			return ret;
+		public String add(Information information){
+			String result="添加失败";
+			result=informationService.add(information);
+			return result;
 			
 		}
 		
 		//修改入住信息
 		@RequestMapping("/update")
-		public Map<String,String> update(Information information){
-			Map<String,String> ret =new HashMap<>();
-			ret=informationService.update(information);
-			return ret;
+		public String update(Information information){
+			String result="修改失败";
+			result=informationService.update(information);
+			return result;
 		}
 		
 		//删除入住信息
 		@RequestMapping("/delete")
-		public Map<String,String> delete(Information information){
-			Map<String,String> ret =new HashMap<>();
-			ret=informationService.delete(information);
-			return ret;
+		public String delete(Information information){
+			String result="删除失败";
+			result=informationService.delete(information);
+			return result;
 		}
 		
 		//根据条件查询入住信息

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="backstage/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url:"information/list",
+			type:"post",
+			data:{},
+			dateType:"json",
+			success:function(data){
+				for (var i = 0; i < data.length; i++) {
+					alert(data[i].information_id);
+					alert(data[i].state);
+				}
+				alert(data);
+			}
+		})
+		
+    });
+	</script>
+
+</head>
+<body>
+	测试界面
+		账号：<input type="text" name="state" id="state">
+		密码：<input type="text" name="pwd" >
+		<input type="submit" value="提交">
+	
+</body>
+</html>
