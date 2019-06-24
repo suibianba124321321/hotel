@@ -42,6 +42,7 @@ public class InformationController {
 		//修改入住信息
 		@RequestMapping("/update")
 		public String update(Information information){
+			System.out.println(information);
 			String result="修改失败";
 			result=informationService.update(information);
 			return result;
@@ -75,7 +76,11 @@ public class InformationController {
 		@ResponseBody
 		public Information findOne(Information information){
 			System.out.println(11);
-			return informationService.findOne(information);
+			System.out.println(information.getInformation_id());
+			information.setState(1);
+			System.out.println(informationService.findOne(information));
+//			return informationService.findOne(information);
+			return information;
 			
 			
 		}

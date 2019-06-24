@@ -155,7 +155,7 @@
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_repass" class="layui-form-label"></label>'
-                    +'<button class="layui-btn" onclick="information_add()">修改</button></div>'
+                    +'<button class="layui-btn" onclick="information_update()">修改</button></div>'
                     +'</div>';
 					
 					$("#information_update_list").html(content);	
@@ -171,11 +171,13 @@
         
         <script type="text/javascript">
         	//修改入住信息
-        	function information_add(){
+        	function information_update(){
+        		alert(information_id);
         		$.ajax({
-        			url:"information/update",
+        			url:"../information/update",
         			type:"post",
         			data:{
+        				information_id:information_id,
         				idcard:$("#idCard").val(),
         				name:$("#name").val(),
         				tel:$("#tel").val(),
