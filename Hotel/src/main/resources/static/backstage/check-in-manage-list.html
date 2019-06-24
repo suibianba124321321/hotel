@@ -108,7 +108,6 @@
 		data:{
 			currentpage:pcurrentpage
 		},
-		dataType:"json",
 		success:function(data){
 			var informations=data.informations;
 			var totalPage=data.totalPage;
@@ -150,8 +149,8 @@
                 +'<span class="layui-btn layui-btn-normal layui-btn-mini">入住中</span></td>'
                 +'<td class="td-manage">'
                 +"<button class='layui-btn' onclick=\"xadmin.open('编辑','./information-edit.html?information_id=2',600,600)\">修改</button>"
-                +'<button class="layui-btn" onclick="check_out(5)">退房</button>'
-                +'<button class="layui-btn" onclick="check_delete(4)">删除</button>'
+                +'<button class="layui-btn" onclick="check_out(2)">退房</button>'
+                +'<button class="layui-btn" onclick="check_delete(2)">删除</button>'
                 +'</td>'
                 +'</tr>'
                 +'</tbody>';
@@ -169,14 +168,13 @@
     function check_out(information_id){
     	alert(information_id);
     	$.ajax({
-    		url:"../information/list",
+    		url:"../information/check_out",
     		type:"post",
     		data:{
     			information_id:information_id
     		},
-    	dataType:"json",
     	success:function(data){
-    		alert("退房成功");
+    		alert(data);
     	}
     	});
     }
@@ -185,14 +183,14 @@
     function check_delete(information_id){
     	alert(information_id);
     	$.ajax({
-    		url:"../information/list",
+    		url:"../information/delete",
     		type:"post",
     		data:{
     			information_id:information_id
     		},
-        	dataType:"json",
     		success:function(data){
-    		alert("删除成功");
+    			 console.log(data);
+    		alert(data);
     	}
     	});
     }

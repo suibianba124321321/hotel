@@ -35,7 +35,19 @@ public class InformationServiceImpl implements InformationService{
 		}
 		return result;
 	}
-
+	
+	//退房
+	@Override
+	public String check_out(Information information) {
+		String result="退房失败";
+		boolean re =informationDao.check_out(information);
+		if(re){
+			result="退房成功";
+		}
+		return result;
+	}
+	
+	
 	//删除入住信息
 	@Override
 	public String delete(Information information) {
@@ -66,6 +78,7 @@ public class InformationServiceImpl implements InformationService{
 		return informationDao.findOne(information);
 	}
 
+	//通过下标获取入住信息
 	@Override
 	public List<Information> findInformationByPage(int currentpage) {
 		List<Information> informations=null;
@@ -74,7 +87,8 @@ public class InformationServiceImpl implements InformationService{
 		informations=informationDao.findInformationByIndex(index);
 		return informations;
 	}
-
+	
+	//获取总页码
 	@Override
 	public int findTotalPage() {
 		int totalPage=0;
@@ -82,5 +96,7 @@ public class InformationServiceImpl implements InformationService{
 		totalPage=totalIndex%5==0?totalIndex/5:totalIndex/5+1;
 		return totalPage;
 	}
+
+	
 
 }

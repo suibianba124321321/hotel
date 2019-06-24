@@ -44,7 +44,7 @@
                         <label for="L_username" class="layui-form-label">
                             <span class="x-red">*</span>房型</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="roomType" name="roomType" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
+                            <input type="text" id="type" name="type" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
                     </div>
                     <div class="layui-form-item">
                         <label for="L_username" class="layui-form-label">
@@ -130,16 +130,28 @@
         
 	      	//通过身份证查询是否存在订单
 	        function selectOrderByidCard(){
-	        	alert(666)
+	        	alert(6667)
 	        	alert($("#idCard").val());
 	        	$("#tel").val(18408230394);
 	        	$.ajax({
-	        		/* url:"information/list",
+	        		/* url:"../information/findItemByIdCard",
 	        		type:"post",
 	        		data:{
 	        			idcard:$("#idCard").val()
 	        		},
 	        		success:function(data){
+	        			var person = data.person;
+	        			var item =data.item;
+	        			var room_date =data.room_data;
+	        			var room_type =data.room_type;
+	        			var order =data.order;
+	        			$("#name").val(person.name);
+	        			$("#tel").val(person.tel);
+	        			$("#type").val(room_type.type);
+	        			$("#room_id").val(room_date.room_id);
+	        			$("#in_time").val(order.in_time);
+	        			$("#out_time").val(order.out_time);
+	        			$("#order_state").val(order.order_state);
 	        			
 	        		} */
 	        		
@@ -149,17 +161,15 @@
         	//添加入住信息
         	function information_add(){
         		$.ajax({
-        			url:"information/add",
+        			url:"../information/add",
         			type:"post",
         			data:{
         				idcard:$("#idCard").val(),
-        				name:$("#name").val(),
-        				tel:$("#tel").val(),
-        				type:$("#roomType").val(),
         				room_id:$("#room_id").val(),
         				in_time:$("#in_time").val(),
-        				out_time:$("#out_time").val(),
+        				out_time:$("#out_time").val()
         			},
+        			dataType:"json",
         		success:function(data){
         			alert(data);
         			

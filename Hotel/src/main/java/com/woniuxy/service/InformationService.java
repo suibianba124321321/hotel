@@ -11,6 +11,8 @@ public interface InformationService {
 		public String add(Information information);
 		//修改入住信息
 		public String update(Information information);
+		//退房
+		public String check_out(Information information);
 		//删除入住信息
 		public String delete(Information information);
 		//根据条件查询入住信息

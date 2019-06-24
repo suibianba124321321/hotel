@@ -14,8 +14,11 @@ public interface InformationDao {
 	@Insert("insert into information(person_id,room_id,in_time,out_time) values(#{person_id},#{room_id},#{in_time},#{out_time})")
 	public boolean add(Information information);
 	//修改入住信息
-	@Update("update information set person_id=#{person_id},room_id=#{room_id},in_time=#{in_time},out_time=#{out_time},state=#{state} where information_id=#{information_id} and flag=0")
+	@Update("update information set room_id=#{room_id},in_time=#{in_time},out_time=#{out_time},state=#{state} where information_id=#{information_id} and flag=0")
 	public boolean update(Information information);
+	//退房
+	@Update("update information set state=1 where information_id=#{information_id} and flag=0")
+	public boolean check_out(Information information);
 	//删除入住信息
 	@Update("update information set flag=1 where information_id=#{information_id} and flag=0")
 	public boolean delete(Information information);

@@ -97,27 +97,27 @@
         			},
 				dataType:"json",
 				success:function(data){
-					alert(3);
+					alert("房间号："+data.room_id);
 					var content="";
 					content+='<div class="layui-row">'
                     +'<div class="layui-form-item">'
                     +'<label for="L_email" class="layui-form-label">'
                     +'<span class="x-red">*</span>身份证号</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="idCard" name="idCard" required="" lay-verify="email" autocomplete="off" class="layui-input" value="214545435"></div>'
+                    +'<input type="text" id="idCard" name="idCard" required="" lay-verify="email" autocomplete="off" class="layui-input" disabled="disabled" value="214545435"></div>'
                     +'<div class="layui-form-mid layui-word-aux">'
                     +'<span class="x-red">*</span>请输入18位身份证号</div></div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>入住姓名</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="name" name="name" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="张三"></div>'
+                    +'<input type="text" id="name" name="name" required="" lay-verify="nikename" autocomplete="off" class="layui-input" disabled="disabled" value="张三"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_pass" class="layui-form-label">'
                     +'<span class="x-red">*</span>手机号</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="tel" name="tel" required="" lay-verify="pass" autocomplete="off" class="layui-input" value="13545454545"></div>'
+                    +'<input type="text" id="tel" name="tel" required="" lay-verify="pass" autocomplete="off" class="layui-input" disabled="disabled" value="13545454545"></div>'
                     +'<div class="layui-form-mid layui-word-aux">请输入11位手机号</div></div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
@@ -129,27 +129,27 @@
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>房间号</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="room_id" name="room_id" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="1001"></div>'
+                    +'<input type="text" id="room_id" name="room_id" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="'+data.room_id+'"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>入住日期</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="date" id="in_time" name="in_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="2019-03-02"></div>'
+                    +'<input type="date" id="in_time" name="in_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="'+data.in_time+'"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>离店日期</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="date" id="out_time" name="out_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="2019-03-03"></div>'
+                    +'<input type="date" id="out_time" name="out_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="'+data.out_time+'"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>状态</label>'
                     +'<div class="layui-input-inline">'
-                    +'<select name=""order_state"" id="order_state" class="layui-input" value="1">'   
-                    +'<option value="0">入住中</option>'   
-                    +'<option value="1">已结算离店</option>' 
+                    +'<select name=""order_state"" id="order_state" class="layui-input">'   
+                    +'<option id="option0" value="0" >入住中</option>'   
+                    +'<option id="option1" value="1" >已结算离店</option>' 
                     +'</select></div>'
                     +'</div>'
                     +'</div>'
@@ -157,8 +157,12 @@
                     +'<label for="L_repass" class="layui-form-label"></label>'
                     +'<button class="layui-btn" onclick="information_update()">修改</button></div>'
                     +'</div>';
-					
-					$("#information_update_list").html(content);	
+					$("#information_update_list").html(content);
+					if(data.state==0){
+						$("#order_state").val("0");
+					}else{
+						$("#order_state").val("1");
+					}
 				}
 					
 				})
@@ -178,25 +182,19 @@
         			type:"post",
         			data:{
         				information_id:information_id,
-        				idcard:$("#idCard").val(),
-        				name:$("#name").val(),
-        				tel:$("#tel").val(),
-        				type:$("#roomType").val(),
         				room_id:$("#room_id").val(),
         				in_time:$("#in_time").val(),
         				out_time:$("#out_time").val(),
+        				state:$("#state").val(),
         			},
-        		success:function(data){
-        			alert(data);
-        			
+        			dataType:"json",
+        			success:function(data){
+        				alert(data);
         		}
         			
         		});
         		
         	}
-        	
-        
-        	
         </script>
     </body>
     
