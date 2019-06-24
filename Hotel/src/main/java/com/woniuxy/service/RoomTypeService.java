@@ -30,7 +30,7 @@ public interface RoomTypeService {
 	 * @param type
 	 * @return
 	 */
-	public List<Type> findAll(Type type);
+	public List<Type> findAll();
 	
 	/**
 	 * 修改房间价格通过房间类型ID

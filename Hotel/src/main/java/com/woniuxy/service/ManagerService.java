@@ -13,4 +13,6 @@ public interface ManagerService {
 	public void updatePwd(Manager manager);
 	public void deleteByName(Manager manager);
 	public void deleteByID(Manager manager) ;
+	Manager findOneByID(Manager manager);
+	void updateAll(Manager manager);
 }

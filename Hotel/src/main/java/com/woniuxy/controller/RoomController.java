@@ -1,6 +1,8 @@
 package com.woniuxy.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -9,19 +11,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.woniuxy.pojo.Room;
+import com.woniuxy.pojo.Type;
 import com.woniuxy.service.RoomService;
+import com.woniuxy.service.RoomTypeService;
 
 @Controller
 @RequestMapping("/room")
 public class RoomController {
     @Resource
 	private RoomService roomService;
+	@Resource
+	private RoomTypeService roomTypeService;
     
     @ResponseBody
-    @RequestMapping("/findByRoomID")
-    public Room findByRoomID(Room room){
+    @RequestMapping("/findByRoomId")
+    public Map<String,Object> findByRoomID(Room room){
     	Room rooms = roomService.findOneByroom_id(room.getRoom_id());
-    	return rooms;
+    	
+    	Type type=new Type();
+    	type.setType_id(rooms.getType_id());
+    	Type ty = roomTypeService.findOneBytype_id(type);
+    	
+    	Map<String,Object> map =new HashMap<>();
+    	map.put("room", rooms);
+    	map.put("type", ty);
+    	return map;
     }
     
     @ResponseBody
@@ -40,9 +54,13 @@ public class RoomController {
     
     @ResponseBody
     @RequestMapping("/all")
-    public List<Room> all(){
+    public Map<String,Object> all(){
     	List<Room> all = roomService.findAll();
-    	return all;
+    	List<Type> type = roomTypeService.findAll();
+    	Map<String,Object> map =new HashMap<>();
+    	map.put("all", all);
+    	map.put("type", type);
+    	return map;
     }
     @ResponseBody
     @RequestMapping("/updateByRoomID")

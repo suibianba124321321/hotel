@@ -41,5 +41,7 @@ public interface MemberDao {
 	 */
 	@Update("update member set rank=#{rank} where idcard=#{idcard} and falg=0")
 	public void updateRank(Member member);
+	@Update("update member set tel=#{tel} where idcard=#{idcard} and falg=0")
+	public void undateTel(Member member);
 
 }

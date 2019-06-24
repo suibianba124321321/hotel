@@ -31,8 +31,8 @@ public class RoomTypeImpl implements RoomTypeService{
 	}
 
 	@Override
-	public List<Type> findAll(Type type) {
-		List<Type> list = roomTypeDao.findAll(type);
+	public List<Type> findAll() {
+		List<Type> list = roomTypeDao.findAll();
 		return list;
 	}
 

@@ -20,4 +20,6 @@ public interface MemberService {
 
 	public void updateRank(Member member);
 
+	public void undateTel(Member member);
+
 }

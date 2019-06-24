@@ -34,15 +34,15 @@
                     <div class="layui-card">
                         <div class="layui-card-body ">
                            
-                                <form action="/member/find">
+                               
                                 <div class="layui-inline layui-show-xs-block">
-                                    <input type="text" id="selectname" name="name"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                                    <input type="text" id="account" name="name"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
                                 </div>
                                  
                                 <div class="layui-inline layui-show-xs-block">
-                                    <button class="layui-btn"   lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+                                     <button class="layui-btn"   onclick="serch($('#account').val())"><i class="layui-icon">&#xe615;</i></button>
                                 </div>
-                            </form>
+                            
                         </div>
                         <div class="layui-card-header">
                            
@@ -62,18 +62,7 @@
                                     <th>操作</th></tr>
                                 </thead>
                                 <tbody>
-                                  <tr>
-                                 <!-- 
-                                    <td>1</td>
-                                    <td>小明</td>
-                                    <td>黑卡</td>
-                                    <td>13000000000</td>
-                                    <td>12345654323434532</td>
-                                     <td>2000</td>
-                                    
-                                     <td> <button onclick="">删除</button> <button onclick="">修改</button></td>
-                                    -->
-                                  </tr>
+                        
                                 
                                 </tbody>
                             </table>
@@ -114,17 +103,32 @@
     			for(var i=0;i<data.length;i++){
     				var user=data[i];
     				var tr="<tr></tr>";
-    				
+    				var mid=user.member_id;
     				var id="<td>"+user.member_id+"</td>";
     				var name="<td>"+user.name+"</td>";
     				var grade="<td>"+user.grade+"</td>";
     				var tel="<td >"+user.tel+"</td>";
-    				var rank="<td >"+user.rank+"</td>";
+    				var rank="<td name='rank"+i+"'>"+user.rank+"</td>";
     				var role_id="<td>"+user.idcard+"</td>";
-    				var buten="<td> <button onclick='deletes("+user.member_id+")' class='layui-btn'>删除</button> <button onclick='update("+user.manager_id+")' class='layui-btn'>修改</button></td>";
+    				var buten="<td> <button onclick='deletes("+user.member_id+")' class='layui-btn'>删除</button> <button onclick=\"xadmin.open('修改用户信息','./member-edit.html?manager="+mid+"',600,400)\"  class='layui-btn'>修改</button></td>";
     				$("tbody").append(tr+id+name+rank+tel+role_id+grade+buten);
     				
+    				if(user.rank==1){
+    					$("td[name=rank"+i+"]").html("普通会员");
+    				}else if(user.rank==2){
+    					$("td[name=rank"+i+"]").html("铂金会员");
+    				}else if(user.rank==3){
+    					$("td[name=rank"+i+"]").html("黑卡会员");
+    				}
+    				
+    				
+    				
+    				
+    				
     			}
+    			
+    			
+    			
     		}
     	})
     };
@@ -174,6 +178,25 @@
 
 
       });
+      
+      
+      
+      function serch(account){
+    	
+     	 $.ajax({
+     		 url:"/member/find",
+     		 data:{
+     			 "name":account
+     		 },
+     		 success:function(data){
+     		
+     			
+     			 window.location.href="./member-one.html?id="+data.member_id;
+     			
+     		 }
+     	 })
+     	
+       }
 
     </script>
 </html>

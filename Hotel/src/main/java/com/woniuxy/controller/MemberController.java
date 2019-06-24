@@ -41,21 +41,16 @@ public class MemberController {
 		return findAll;
 	}
 	
-/*	@RequestMapping("/findByidcard")
+
+	
 	@ResponseBody
-	public Member findOneByIdcard(Member member){
-		Member member2 = memberService.findOneById(member.getIdcard());
-		return member2;
-	}*/
-	
-	
 	@RequestMapping("/find")
-	@ResponseBody
 	public Member find(String name){
 		
 		try {
 		Integer id=Integer.valueOf(name);
 		Member member2 = memberService.findOneById(id);
+		
 		return member2;
 		
 		} catch (Exception e) {
@@ -68,22 +63,19 @@ public class MemberController {
 	
 	
 	
-	@RequestMapping("/findByname")
+	@RequestMapping("/findById")
 	/**
 	 * 这个方法目前还未完成
 	 * @param member
 	 * @param map
 	 * @return
 	 */
-	public ModelAndView findOneByName(Member member,RedirectAttributes map){
+	@ResponseBody
+	public Member findOneByName(Member member){
 		
-		ModelAndView mo = new ModelAndView();
-		Member member2 = memberService.findOneByName(member.getName());
-		//mo.addObject("member", member2);
-		map.addFlashAttribute("member", member2);
-		System.out.println(member2);
-		mo.setViewName("redirect:/backstage/member-select1.html?name=22");
-		return mo;
+		Member findOneById = memberService.findOneById(member.getMember_id());
+	 
+		return findOneById;
 	}
 	
 	
@@ -101,8 +93,8 @@ public class MemberController {
 	public String update(Member member){
 		//修更新 积分
 		memberService.updateGrade(member);
-		// 更新 等级
-		memberService.updateRank(member);
+		//修改手机
+		memberService.undateTel(member);
 		
 		return "success";
 	}

@@ -43,6 +43,7 @@ public class ManagerController {
 	@RequestMapping("/login")
 	public String Login(Manager old_Manager){
 		String login = managerService.login(old_Manager);
+		
 		if(login.equals("success")){
 			return "redirect:/backstage/index.html";
 		}
@@ -60,6 +61,17 @@ public class ManagerController {
 		managerService.updatePwd(manager);
 		return "success";
 	}
+    
+    
+    
+    @ResponseBody
+  	@RequestMapping("/updateall")
+  	public String updateAll(Manager manager){
+  		managerService.updateAll(manager);
+  		System.out.println("xiugai");
+  		System.out.println(manager);
+  		return "success";
+  	}
 	
 
 	/**
@@ -88,6 +100,18 @@ public class ManagerController {
     	Manager one = managerService.findOneByAccount(manager);
     	return one;
     }
+    
+    
+    @ResponseBody
+	@RequestMapping("/findOneById")
+    public Manager findOneById(Manager manager){
+    	System.out.println(manager);
+    	Manager one = managerService.findOneByID(manager);
+    	System.out.println(one);
+    	return one;
+    }
+    
+    
     
     /**
      * 根据账号删除员工

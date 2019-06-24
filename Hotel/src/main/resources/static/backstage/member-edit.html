@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="./css/xadmin.css">
         <script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
         <script type="text/javascript" src="./js/xadmin.js"></script>
+         <script type="text/javascript" src="/js/jquery.min.js"></script>
         <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
         <!--[if lt IE 9]>
             <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -19,35 +20,60 @@
     <body>
         <div class="layui-fluid">
             <div class="layui-row">
-                <form class="layui-form">
+                <form class="layui-form" action="/member/update">
                     <div class="layui-form-item">
                         <label for="L_email" class="layui-form-label">
-                            <span class="x-red">*</span>邮箱</label>
+                            <span class="x-red">*</span>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="L_email" name="email" required="" lay-verify="email" autocomplete="off" class="layui-input"></div>
+                            <input type="text" id="L_email" name="name" required=""  readonly="readonly" autocomplete="off" class="layui-input"></div>
                         <div class="layui-form-mid layui-word-aux">
-                            <span class="x-red">*</span>将会成为您唯一的登入名</div></div>
-                    <div class="layui-form-item">
-                        <label for="L_username" class="layui-form-label">
-                            <span class="x-red">*</span>昵称</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="L_username" name="username" required="" lay-verify="nikename" autocomplete="off" class="layui-input"></div>
+                            <span class="x-red">*</span>将会成为您唯一的登入名</div>
                     </div>
-                    <div class="layui-form-item">
-                        <label for="L_pass" class="layui-form-label">
-                            <span class="x-red">*</span>密码</label>
+                    
+                    
+                      <div class="layui-form-item">
+                        <label for="L_email" class="layui-form-label">
+                            <span class="x-red">*</span>手机号码</label>
                         <div class="layui-input-inline">
-                            <input type="password" id="L_pass" name="pass" required="" lay-verify="pass" autocomplete="off" class="layui-input"></div>
-                        <div class="layui-form-mid layui-word-aux">6到16个字符</div></div>
-                    <div class="layui-form-item">
-                        <label for="L_repass" class="layui-form-label">
-                            <span class="x-red">*</span>确认密码</label>
-                        <div class="layui-input-inline">
-                            <input type="password" id="L_repass" name="repass" required="" lay-verify="repass" autocomplete="off" class="layui-input"></div>
+                            <input type="text" id="L_email" name="tel" required=""  autocomplete="off" class="layui-input"></div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red">*</span>11位数手机号码</div>
                     </div>
+                      <div class="layui-form-item">
+                        <label for="L_email" class="layui-form-label">
+                            <span class="x-red">*</span>身份证&nbsp;&nbsp;&nbsp;</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="L_email" name="idcard" required="" readonly="readonly" autocomplete="off" class="layui-input"></div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red">*</span>18位身份证号码</div>
+                    </div>
+                      <div class="layui-form-item">
+                        <label for="L_email" class="layui-form-label">
+                            <span class="x-red">*</span>会员等级</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="L_email" name="rank" required="" readonly="readonly"  autocomplete="off" class="layui-input"></div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red">*</span>0--普通会员，1--铂金会员，2--黑卡会员</div>
+                    </div>
+                      <div class="layui-form-item">
+                        <label for="L_email" class="layui-form-label">
+                            <span class="x-red">*</span>积&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;分</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="L_email" name="grade" required=""  autocomplete="off" class="layui-input"></div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red">*</span>1RMB=1积分</div>
+                    </div>
+                   
+                    
+                   
+                   
+                  
                     <div class="layui-form-item">
                         <label for="L_repass" class="layui-form-label"></label>
-                        <button class="layui-btn" lay-filter="add" lay-submit="">增加</button></div>
+                         
+                       <input type="submit" class="layui-btn"  value="提交"></input></div>
+                   
+                   
                 </form>
             </div>
         </div>
@@ -95,7 +121,61 @@
                 hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
                 var s = document.getElementsByTagName("script")[0];
                 s.parentNode.insertBefore(hm, s);
-            })();</script>
+            })();
+        
+        
+        
+      //根据入住id查询相关信息
+    	//获取url参数
+		(function($){
+		$.getUrlParam = function(name)
+		{
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r!=null) return unescape(r[2]); return null;
+		}
+		})(jQuery);
+
+		var account=$.getUrlParam('manager');
+	
+			findOne(account);
+		
+			
+       function findOne(account){
+    		
+    	    $.ajax({
+    		   url:"/member/findById",
+    		   data:{
+    			  "member_id": account
+    		   },
+    		   success: function (data){
+    			  $("input[name=name]").val(data.name); 
+    			  $("input[name=tel]").val(data.tel); 
+    			  $("input[name=idcard]").val(data.idcard); 
+    			   $("input[name=rank]").val(data.rank);  
+    			  $("input[name=grade]").val(data.grade); 
+    			  
+    		
+    		
+    		   }
+    	   }) 
+       }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </script>
     </body>
 
 </html>

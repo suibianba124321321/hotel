@@ -59,4 +59,10 @@ public class MemberServiceImpl implements MemberService{
 		return member;
 	}
 
+	@Override
+	public void undateTel(Member member) {
+		memberDao.undateTel(member);
+		
+	}
+
 }

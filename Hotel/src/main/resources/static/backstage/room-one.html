@@ -69,21 +69,7 @@
                               </thead>
                               <tbody>
                               
-                              
-                              
-                                <tr>
-                              
-                                  <td id="ild">1</td>
-                                  <td>大床房</td>
-                                  <td>未入住</td>
-                                 
-                          
-                                  <td> <button onclick="">删除</button> <button onclick="">修改</button></td>
-                                </tr>
-                                
-                                
-                                
-                                
+ 
                               </tbody>
                             </table>
                         </div>
@@ -98,31 +84,7 @@
     /* 入口函数，请求管理人员参数 */
 
     
-    function show(){
-    	$.ajax({
-    		url:"/room/all",
-    		type:"post",
-    		data : {
-    		},
-    		success:function(data){
-    			
-    			for(var i=0;i<data.length;i++){
-    				var room=data[i];
-    				var tr="<tr></tr>";
-    				
-    				var id="<td>"+room.room_id+"</td>";
-    				var tid="<td>"+room.type_id+"</td>";
-    				var state="<td>"+room.state+"</td>";
-    				var buten="<td> <button onclick='deletes("+room.room_id+")' class='layui-btn'>删除</button> <button onclick='update("+room.room_id+")' class='layui-btn'>修改</button></td>";
-    				$("tbody").append(tr+id+tid+state+buten);
-    				
-    			}
-    			
-    		
-    			
-    		}
-    	})
-    }
+
     
     /* 删除 */
     function deletes(id){
@@ -151,11 +113,48 @@
 			}
 			})(jQuery);
     
-			var ild=$.getUrlParam('ild');
-
-       $("#ild").html(ild);
+			var account=$.getUrlParam('id');
+       
+			serch(account);
     
-    
+       function serch(account){
+      	 $.ajax({
+      		 url:"/room/findByRoomId",
+      		 data:{
+      			 "room_id":account
+      		 },
+      		 success:function(data){
+      			 var room=data.room;
+      			 
+      			if(room.room_id!=null){
+      				var tr="<tr></tr>";
+      				
+    				var id="<td>"+room.room_id+"</td>";
+    				var tid="<td id='tid'>"+room.type_id+"</td>";
+    				var state="<td name='s'>"+room.state+"</td>";
+    				var buten="<td> <button onclick='deletes("+room.room_id+")' class='layui-btn'>删除</button> <button onclick='update("+room.room_id+")' class='layui-btn'>修改</button></td>";
+    				$("tbody").append(tr+id+tid+state+buten);
+    			
+   				
+       					 $("#tid").html(data.type.type);
+       					 
+       					 if(room.state==0){
+        					 $("td[name=s]").html("可入住");
+         				}else if(room.state==1){
+         					$("td[name=s]").html("已入住");
+         				}else if(room.state==2){
+         					$("td[name=s]").html("待打扫");
+         				}
+   					 
+   				 
+      			}else{
+      				alert("未查询到结果");
+      			}
+      			
+      		 }
+      	 })
+      	
+        }
     
       
       </script>

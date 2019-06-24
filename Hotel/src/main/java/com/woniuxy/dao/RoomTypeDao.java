@@ -39,7 +39,7 @@ public interface RoomTypeDao {
 	 * @return
 	 */
 	@Select("select * from room_type where flag=0")
-	public List<Type> findAll(Type type);
+	public List<Type> findAll();
 	
 	/**
 	 * 修改房间价格通过房间类型ID

@@ -68,4 +68,18 @@ public class ManagerServiceImpl implements ManagerService{
 		
 	}
 
+
+	@Override
+	public Manager findOneByID(Manager manager) {
+		Manager byID = managerDao.findOneByID(manager);
+		return byID;
+	}
+
+
+	@Override
+	public void updateAll(Manager manager) {
+		managerDao.updateAll(manager);
+		
+	}
+
 }

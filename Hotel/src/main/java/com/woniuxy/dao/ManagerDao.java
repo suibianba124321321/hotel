@@ -19,6 +19,14 @@ public interface ManagerDao {
 	Manager findOneByAccount(String account);
 	
 	/**
+	 * 根据账号查询 操作员
+	 * @param account
+	 * @return
+	 */
+	@Select("select * from manager where manager_id=#{manager_id} and falg=0")
+	Manager findOneByID(Manager manager);
+	
+	/**
 	 * 查询所有的操作员
 	 * @return
 	 */
@@ -48,5 +56,9 @@ public interface ManagerDao {
 	
 	@Update("update manager set falg=1 where manager_id=#{manager_id}")
 	public void deleteByID(Manager manager);
+	
+	
+	@Update("update manager set pwd=#{pwd},idcard=#{idcard},role_id=#{role_id},tel=#{tel} where account=#{account} and falg=0")
+	void updateAll(Manager manager);
 
 }

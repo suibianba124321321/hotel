@@ -61,8 +61,8 @@ public class RoomTypeController {
 	 */
 	@ResponseBody
     @RequestMapping("/all")
-    public List<Type> findByRoomID(Type type){
-		List<Type> all = roomTypeService.findAll(type);
+    public List<Type> findByRoomID(){
+		List<Type> all = roomTypeService.findAll();
     	return all;
     }
 	
