@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>欢迎页面-X-admin2.2</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+        <link rel="stylesheet" href="./css/font.css">
+        <link rel="stylesheet" href="./css/xadmin.css">
+        <script src="./lib/layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="./js/xadmin.js"></script>
+        <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        
+         <script type="text/javascript" src="/js/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="x-nav">
+          <span class="layui-breadcrumb">
+            <a href="">首页</a>
+            <a href="">演示</a>
+            <a>
+              <cite>导航元素</cite></a>
+          </span>
+          <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+        </div>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                            <form class="layui-form layui-col-space5">
+                                
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" id="selectname"  placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <button class="layui-btn"  onclick="select($('#selectname'))" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="layui-card-header">
+                           
+                            <button class="layui-btn" onclick="xadmin.open('添加用户','./member-add.html',600,400)"><i class="layui-icon"></i>添加</button>
+                        </div>
+                        <div class="layui-card-body layui-table-body layui-table-main">
+                            <table class="layui-table layui-form">
+                                <thead>
+                                  <tr>
+                                   
+                                    <th>编号</th>
+                                    <th>姓名</th>
+                                    <th>会员等级</th>
+                                    <th>手机</th>
+                                    <th>身份证</th>
+                                    <th>积分</th>
+                                    <th>操作</th></tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                  <td th:text="${member.name}"></td>
+                                  <td>[[name]]</td>
+                                 <!-- 
+                                    <td>1</td>
+                                    <td>小明</td>
+                                    <td>黑卡</td>
+                                    <td>13000000000</td>
+                                    <td>12345654323434532</td>
+                                     <td>2000</td>
+                                    
+                                     <td> <button onclick="">删除</button> <button onclick="">修改</button></td>
+                                    -->
+                                  </tr>
+                                
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        
+                        <div class="layui-card-body ">
+                            <div class="page">
+                                <div>
+                                  <a class="prev" href="">&lt;&lt;</a>
+                                  <a class="num" href="">1</a>
+                                  <span class="current">2</span>
+                                  <a class="num" href="">3</a>
+                                  <a class="num" href="">489</a>
+                                  <a class="next" href="">&gt;&gt;</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </body>
+    <script>
+    
+    function showmember(){
+    	$.ajax({
+    		url:"/member/all",
+    		success:function(data){
+    			
+    			for(var i=0;i<data.length;i++){
+    				var user=data[i];
+    				var tr="<tr></tr>";
+    				
+    				var id="<td>"+user.member_id+"</td>";
+    				var name="<td>"+user.name+"</td>";
+    				var grade="<td>"+user.grade+"</td>";
+    				var tel="<td >"+user.tel+"</td>";
+    				var rank="<td >"+user.rank+"</td>";
+    				var role_id="<td>"+user.idcard+"</td>";
+    				var buten="<td> <button onclick='deletes("+user.manager_id+")' class='layui-btn'>删除</button> <button onclick='update("+user.manager_id+")' class='layui-btn'>修改</button></td>";
+    				$("tbody").append(tr+id+name+rank+tel+role_id+grade+buten);
+    				
+    			}
+    		}
+    	})
+    };
+    
+    
+    
+    
+    
+      layui.use(['laydate','form'], function(){
+        var laydate = layui.laydate;
+        var  form = layui.form;
+
+
+        // 监听全选
+        form.on('checkbox(checkall)', function(data){
+
+          if(data.elem.checked){
+            $('tbody input').prop('checked',true);
+          }else{
+            $('tbody input').prop('checked',false);
+          }
+          form.render('checkbox');
+        }); 
+        
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#start' //指定元素
+        });
+
+        //执行一个laydate实例
+        laydate.render({
+          elem: '#end' //指定元素
+        });
+
+
+      });
+
+    </script>
+</html>

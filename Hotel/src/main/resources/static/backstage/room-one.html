@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="x-admin-sm" xmlns:th="http://www.thymeleaf.org>
+
+
+
+    <head>
+        <meta charset="UTF-8">
+        <title>欢迎页面-X-admin2.2</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <!-- <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+         -->
+        <link rel="stylesheet" href="./css/font.css">
+        <link rel="stylesheet" href="./css/xadmin.css">
+        <script src="./lib/layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="./js/xadmin.js"></script>
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <!--[if lt IE 9]>
+          <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+          <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="x-nav">
+          <span class="layui-breadcrumb">
+            <a href="">首页</a>
+            <a href="">演示</a>
+            <a>
+              <cite>导航元素</cite></a>
+          </span>
+          <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+            <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
+        </div>
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body ">
+                           
+                               <!--  <div class="layui-inline layui-show-xs-block">
+                                    <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start">
+                                </div>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input class="layui-input"  autocomplete="off" placeholder="截止日" name="end" id="end">
+                                </div> -->
+                                <div class="layui-inline layui-show-xs-block">
+                                    <input type="text" name="acount" id="account" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="layui-inline layui-show-xs-block">
+                                    <button class="layui-btn"   onclick="serch($('#account').val())"><i class="layui-icon">&#xe615;</i></button>
+                                </div>
+                           
+                        </div>
+                        <div class="layui-card-header">
+                           <!--  <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button> -->
+                            <button class="layui-btn" onclick="xadmin.open('添加用户','./room-add.html',600,400)"><i class="layui-icon"></i>添加</button>
+                        </div>
+                        <div class="layui-card-body ">
+                            <table class="layui-table layui-form">
+                              <thead>
+                                <tr>
+                                
+                                  <th>房间号码</th>
+                                  <th>房间类型</th>
+                                  <th>状态</th>                           
+                                <!--   <th>加入时间</th> -->
+                                 <!--  <th>状态</th> -->
+                                  <th>操作</th>
+                              </thead>
+                              <tbody>
+                              
+                              
+                              
+                                <tr>
+                              
+                                  <td id="ild">1</td>
+                                  <td>大床房</td>
+                                  <td>未入住</td>
+                                 
+                          
+                                  <td> <button onclick="">删除</button> <button onclick="">修改</button></td>
+                                </tr>
+                                
+                                
+                                
+                                
+                              </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </body>
+    <script>
+    
+    /* 入口函数，请求管理人员参数 */
+
+    
+    function show(){
+    	$.ajax({
+    		url:"/room/all",
+    		type:"post",
+    		data : {
+    		},
+    		success:function(data){
+    			
+    			for(var i=0;i<data.length;i++){
+    				var room=data[i];
+    				var tr="<tr></tr>";
+    				
+    				var id="<td>"+room.room_id+"</td>";
+    				var tid="<td>"+room.type_id+"</td>";
+    				var state="<td>"+room.state+"</td>";
+    				var buten="<td> <button onclick='deletes("+room.room_id+")' class='layui-btn'>删除</button> <button onclick='update("+room.room_id+")' class='layui-btn'>修改</button></td>";
+    				$("tbody").append(tr+id+tid+state+buten);
+    				
+    			}
+    			
+    		
+    			
+    		}
+    	})
+    }
+    
+    /* 删除 */
+    function deletes(id){
+    	$.ajax({
+    		url:"/room/delete",
+    		data:{
+    			"room_id":id
+    		},
+    		success:function(data){
+    			alert(data);
+    			location.reload();
+    		}
+    	})
+    }
+
+
+    
+    //根据入住id查询相关信息
+        	//获取url参数
+			(function($){
+			$.getUrlParam = function(name)
+			{
+			var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			var r = window.location.search.substr(1).match(reg);
+			if (r!=null) return unescape(r[2]); return null;
+			}
+			})(jQuery);
+    
+			var ild=$.getUrlParam('ild');
+
+       $("#ild").html(ild);
+    
+    
+    
+      
+      </script>
+</html>
