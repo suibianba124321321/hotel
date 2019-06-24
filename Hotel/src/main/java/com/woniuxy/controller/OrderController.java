@@ -1,5 +1,6 @@
 package com.woniuxy.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.woniuxy.pojo.Order;
@@ -30,9 +32,13 @@ public class OrderController {
 
 	@RequestMapping("/create")
 	@ResponseBody
-	public String createOrder(@RequestBody Order order){
+	public String createOrder(Order order,@RequestParam(value="persons[]")Integer[] persons){
 		
-		
+		order.setLogin_id(1001);
+		System.out.println(persons);
+		order.setPersonID(persons);
+		System.out.println(order);
+	
 		String msg=orderService.createOrder(order);
 		
 		return msg;
@@ -45,7 +51,7 @@ public class OrderController {
 		
 		order.setLogin_id(1001);
 		List<Order> orders=orderService.findAllOrder(order);
-	
+	   
 		
 		return orders;
 	}

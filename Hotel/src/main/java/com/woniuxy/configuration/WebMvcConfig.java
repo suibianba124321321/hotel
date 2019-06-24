@@ -10,6 +10,8 @@ public class WebMvcConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addRedirectViewController("pay/savemsg", "/pay/savemsg");
+		/*registry.addRedirectViewController("pay/savemsg", "/pay/savemsg");*/
+		registry.addViewController("/order/page").setViewName("/html/orderpage");
+		registry.addViewController("/").setViewName("/html/bookpage");
 	}
 }

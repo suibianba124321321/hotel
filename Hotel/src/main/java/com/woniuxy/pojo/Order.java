@@ -41,11 +41,12 @@ public class Order implements Serializable{
 	private Integer order_state;
 	//总价
 	private BigDecimal sumprice;
+	
 	private Integer flag;
 	
 	private Integer typeID;
 	
-	private List<Integer> personID;
+	private Integer[] personID;
 	
 	private List<Item> items;
 	
@@ -69,18 +70,19 @@ public class Order implements Serializable{
 		this.typeID = typeID;
 	}
 
-	public List<Integer> getPersonID() {
+	
+	
+	
+	
+	
+	public Integer[] getPersonID() {
 		return personID;
 	}
 
-	public void setPersonID(List<Integer> personID) {
+	public void setPersonID(Integer[] personID) {
 		this.personID = personID;
 	}
 
-	
-	
-	
-	
 	public List<Item> getItems() {
 		return items;
 	}
@@ -219,8 +221,11 @@ public class Order implements Serializable{
 				+ creat_time + ", pay_number=" + pay_number + ", order_number=" + order_number + ", auto_cancel="
 				+ auto_cancel + ", in_air=" + in_air + ", msg=" + msg + ", arrive_time=" + arrive_time + ", in_time="
 				+ in_time + ", out_time=" + out_time + ", cancel_time=" + cancel_time + ", order_state=" + order_state
-				+ ", flag=" + flag + "]";
+				+ ", sumprice=" + sumprice + ", flag=" + flag + ", typeID=" + typeID + ", personID=" + personID
+				+ ", items=" + items + "]";
 	}
+
+	
 	
 	
 	

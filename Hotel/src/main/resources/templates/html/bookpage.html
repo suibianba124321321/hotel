@@ -52,7 +52,7 @@ $(document).ready(function(){
  				var price =$("<td></td>").text(data[i].price);
  				
  			  if(data[i].number!=0){
- 				  var state = $("<td><button class='button' onclick='bookdetail("+po+")'>预订</button></td>"); 
+ 				  var state = $("<td><button class='button' onclick='bookdetail("+po+")'>预订</button><button class='button' onclick='teambook("+po+")'>团体预订</button></td>"); 
  				   
  			  }else{
  				  var state = $("<td><button class='buttonfull'>已满</button></td>");
@@ -76,7 +76,15 @@ $(document).ready(function(){
 			            +"&img="+type.img+"&price="+type.price+"&description="+type.description+"&type="+type.type+"&livedays="+$("#livedays").val(); 
 	
  }
-            
+     
+ //点击预定团体预定页面
+ function teambook(type){
+	  
+	  /* var roomtype=encodeURI(encodeURI(type.type)); */
+	  location.href="../html/teambookpage.html?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
+			            +"&img="+type.img+"&price="+type.price+"&description="+type.description+"&type="+type.type+"&livedays="+$("#livedays").val(); 
+	
+ }
 </script>
 
 

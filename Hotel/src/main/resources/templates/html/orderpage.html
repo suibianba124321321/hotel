@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ 
+ <meta charset="UTF-8"> 
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<link href="../css/bookpage.css" rel="stylesheet" type="text/css"/>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script type="text/javascript">
+
+$(document).ready(function(){	
+
+	
+	
+            })
+            
+          
+</script>
+
+
+</head>
+<body>
+	<div class="head">
+	<div class="headtitle">罗马假日酒店</div>
+	<!-- 从session中取值 为空的话显示登录注册-->
+	
+	
+	<div  th:if="${session.uid} ==null" >
+	<div class="login"> 登录 </div>
+	<div class="loginimg"><img src="../img/login1.png" /> </div>
+	<div class="login"> 注册 </div>
+	<div class="loginimg"><img src="../img/register.png" /> </div>
+	</div>
+	<!-- 从session中取值 不为空显示用户信息-->	
+	<div  th:if="${session.uid} != null" >
+	<div class="login" th:text="${session.uid}"></div>
+	<div class="login">用户：</div>
+	<div class="loginimg"><img src="../img/register.png" /> </div>
+	</div>
+	</div>
+
+</body>
+</html>

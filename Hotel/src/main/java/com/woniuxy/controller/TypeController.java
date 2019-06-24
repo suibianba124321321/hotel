@@ -34,7 +34,7 @@ public class TypeController {
 	public List<Type> show(String inTime ,String outTime){
 		
 		List<Type> types=typeService.show(inTime, outTime);
-		
+		System.out.println(types);
 		return types;
 	}
 
@@ -46,20 +46,9 @@ public class TypeController {
 	@RequestMapping("/oneRoomType")
 	@ResponseBody
 	public Type detail(Integer typeid){	
-		System.out.println(typeid);
+		
 		Type type = typeService.findTypeByid(typeid);
 		System.out.println(type);
 		return type;
 	}
-
-	
-	@RequestMapping("/text")	
-	public String text(HttpSession session){
-
-		/*session.setAttribute("uid", 1001);*/
-		return "html/bookpage.html";
-	}
-
-	
-
 }

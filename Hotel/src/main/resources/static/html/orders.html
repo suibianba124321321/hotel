@@ -130,7 +130,7 @@ function pay(orderId){
 }
 
 function refund(orderId){
-	var flag=confirm("确认退房？");
+	var flag=confirm("确认退款？");
 	if(flag==true){
 	$.ajax({
 		url:"/pay/refund",
@@ -139,6 +139,7 @@ function refund(orderId){
 		},
 		success:function(data){
 			alert(data);
+			location.reload(true);
 		}
 	
 	})

@@ -113,7 +113,7 @@ public class OrderServiceImpl implements OrderService{
 		
 		String result="创建成功";
 		//入住人员
-		List<Integer> personIds=order.getPersonID();
+		Integer[] personIds=order.getPersonID();
 		
 		SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd");
 		//获取订单的时间
@@ -157,7 +157,7 @@ public class OrderServiceImpl implements OrderService{
 				room.setType(type);
 				inRoom.add(room);
 				//当房间数量达到要求直接进行插入订单
-				if(inRoom.size()==order.getPersonID().size()){
+				if(inRoom.size()==order.getPersonID().length){
 					break;
 				}
 				continue;
@@ -186,13 +186,13 @@ public class OrderServiceImpl implements OrderService{
 				inRoom.add(room);
 			}
 			//判断可住房间数量足够
-			if(inRoom.size()==order.getPersonID().size()){
+			if(inRoom.size()==order.getPersonID().length){
 				break;
 			}
 			
 		}
 		//判断可住房间数量足够
-		if(inRoom.size()<order.getPersonID().size()){
+		if(inRoom.size()<order.getPersonID().length){
 			return  "抱歉！您来晚一步"+type.getType()+"在该时段房间不足请选择其他类型的房间或者其他时间段";
 		}
 		
@@ -216,9 +216,9 @@ public class OrderServiceImpl implements OrderService{
 		for(int i=0;i<inRoom.size();i++){
 			Room room=inRoom.get(i);
 			if(order.getMember_id()!=null&&order.getMember_id()!=0){
-				itemDAO.insertItem(new Item(orderId, room.getRoom_id(),type.getType_id(),personIds.get(i),orderDates.size(),new BigDecimal(0),room.getType().getPrice()));
+				itemDAO.insertItem(new Item(orderId, room.getRoom_id(),type.getType_id(),personIds[i],orderDates.size(),new BigDecimal(0),room.getType().getPrice()));
 			}else{
-				itemDAO.insertItem(new Item(orderId, room.getRoom_id(),type.getType_id(),personIds.get(i),orderDates.size(),room.getType().getDeposit(),room.getType().getPrice()));
+				itemDAO.insertItem(new Item(orderId, room.getRoom_id(),type.getType_id(),personIds[i],orderDates.size(),room.getType().getDeposit(),room.getType().getPrice()));
 				
 			}
 			
