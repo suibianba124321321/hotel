@@ -3,6 +3,7 @@ package com.woniuxy.service;
 import java.util.List;
 import java.util.Map;
 
+import com.woniuxy.pojo.Item;
 import com.woniuxy.pojo.Order;
 
 public interface OrderService {
@@ -20,5 +21,7 @@ public interface OrderService {
 
 	//删除订单
 	public String deleteOrder(Order order);
+	//通过order_id从order表中查询到order对象（order_state,in_time,out_time）
+	public Order findOrderByOrder_id(Item item);
 	
 }

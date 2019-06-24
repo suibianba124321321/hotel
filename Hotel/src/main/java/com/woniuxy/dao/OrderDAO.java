@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import com.woniuxy.pojo.Item;
 import com.woniuxy.pojo.Order;
 import com.woniuxy.provider.OrderProvider;
 
@@ -31,5 +32,8 @@ public interface OrderDAO {
 	public Order findOrderByNumber(String orderNumber);
 	@Select("select * from `order` where order_id=#{id} and flag=0")
 	public Order findOrderById(Integer id);
+	//通过order_id从order表中查询到order对象（order_state,in_time,out_time）
+	@Select("select * from `order` wherw order_id=#{order_id} and flag =0")
+	public Order findOrderByOrder_id(Item item);
 
 }

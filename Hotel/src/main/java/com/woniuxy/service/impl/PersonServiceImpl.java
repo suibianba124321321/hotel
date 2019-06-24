@@ -1,5 +1,7 @@
 package com.woniuxy.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -42,6 +44,19 @@ public void setPersonDAO(PersonDAO personDAO) {
 		 //插入login-person表 建立loginid与personid的联系
 		 loginDAO.bindloginIdAndPersonId(uid, person_id);
 		
+	}
+	//查找所有person
+	@Override
+	public List<Person> findAllPerson() {
+		
+		return personDAO.findAllPerson();
+	}
+
+	//通过idcard从person表中查询到person对象（入住姓名、手机号、person_id）
+	@Override
+	public Person findPersonByIdCard(String idcard) {
+		Person person =personDAO.findPersonByIdCard(idcard);
+		return person;
 	}
 
 }

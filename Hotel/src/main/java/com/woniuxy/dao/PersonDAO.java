@@ -24,5 +24,11 @@ public void addPerson(Person person);
 //通过idcard查询出该房客的id 
 @Select("select * from person where idcard=#{idcard} ")
 public Person findPersonIdByIdcard(Person person);
+//查找所有person
+@Select("select * from person where flag=0")
+public List<Person> findAllPerson();
+//通过idcard从person表中查询到person对象（入住姓名、手机号、person_id）
+@Select("select * from person where idcard = #{idcard}")
+public Person findPersonByIdCard(String idcard);
 
 }

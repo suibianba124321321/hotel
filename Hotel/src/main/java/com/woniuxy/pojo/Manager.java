@@ -13,6 +13,20 @@ public class Manager implements Serializable{
 	private String pwd;
 	private Integer role_id;
 	private Integer flag;
+	private String idcard;
+	private String tel;
+	public String getIdcard() {
+		return idcard;
+	}
+	public void setIdcard(String idcard) {
+		this.idcard = idcard;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
 	public Integer getManager_id() {
 		return manager_id;
 	}
@@ -43,6 +57,12 @@ public class Manager implements Serializable{
 	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
+	@Override
+	public String toString() {
+		return "Manager [manager_id=" + manager_id + ", account=" + account + ", pwd=" + pwd + ", role_id=" + role_id
+				+ ", flag=" + flag + ", idcard=" + idcard + ", tel=" + tel + "]";
+	}
+
 	
 	
 }

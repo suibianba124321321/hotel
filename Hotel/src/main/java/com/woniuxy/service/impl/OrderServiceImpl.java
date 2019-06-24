@@ -279,6 +279,13 @@ public class OrderServiceImpl implements OrderService{
 		return "退房成功";
 
 	}
+
+	//通过order_id从order表中查询到order对象（order_state,in_time,out_time）
+	@Override
+	public Order findOrderByOrder_id(Item item) {
+		
+		return orderDAO.findOrderByOrder_id(item);
+	}
 	
 	
 	
