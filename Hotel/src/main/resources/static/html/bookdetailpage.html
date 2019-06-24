@@ -127,9 +127,10 @@ $(document).ready(function(){
 		 },
 		 
 		success:function(data){
+			var msg=data.msg;
 			alert(data)
-			if(data.search("成功")!=-1){			
-			 location.href="/order/page"	 		
+			if(msg.search("成功")!=-1){			
+			 location.href="/order/page?orderid="+data.orderid;	 		
 			}
 		} 	 
 	 })    

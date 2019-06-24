@@ -1,15 +1,15 @@
 package com.woniuxy.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import com.woniuxy.pojo.Order;
 import com.woniuxy.service.OrderService;
@@ -32,16 +32,16 @@ public class OrderController {
 
 	@RequestMapping("/create")
 	@ResponseBody
-	public String createOrder(Order order,@RequestParam(value="persons[]")Integer[] persons){
+	public Map<String, Object> createOrder(Order order,@RequestParam(value="persons[]")Integer[] persons){
 		
 		order.setLogin_id(1001);
 		System.out.println(persons);
 		order.setPersonID(persons);
 		System.out.println(order);
 	
-		String msg=orderService.createOrder(order);
+		 Map<String, Object> map=orderService.createOrder(order);
 		
-		return msg;
+		return map;
 	}
 	
 	@RequestMapping("/orders")

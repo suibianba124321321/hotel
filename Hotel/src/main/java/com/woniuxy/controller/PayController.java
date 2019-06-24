@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
 import com.woniuxy.pojo.Order;
@@ -125,7 +124,7 @@ public class PayController {
 	
 	//保存付款结果
 	@RequestMapping("/savemsg")
-	
+	@ResponseBody
 	public void save(HttpServletRequest request) throws UnsupportedEncodingException, AlipayApiException {
 		/* *
 		 * 功能：支付宝服务器异步通知页面
@@ -158,7 +157,7 @@ public class PayController {
 				params.put(name, valueStr);
 			}
 			
-			boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //调用SDK验证签名
+			
 
 			//——请在这里编写您的程序（以下代码仅作参考）——
 			
@@ -171,46 +170,8 @@ public class PayController {
 			String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
 			//商户订单号
 			String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-			if(signVerified) {//验证成功
-				
 			
 				
-			
-				//交易状态
-				String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-				
-				if(trade_status.equals("TRADE_FINISHED")){
-					//判断该笔订单是否在商户网站中已经做过处理
-					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-					//如果有做过处理，不执行商户的业务程序
-						
-					//注意：
-					//退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
-				}else if (trade_status.equals("TRADE_SUCCESS")){
-					//判断该笔订单是否在商户网站中已经做过处理
-					//如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-					//如果有做过处理，不执行商户的业务程序
-					
-					//注意：
-					//付款完成后，支付宝系统发送该交易状态通知
-					//存储交易号，和状态,根据订单号插入交易号和订单状态
-					
-					
-					
-					
-//					response.sendRedirect("http://192.168.8.191:8080/WoniuShop/jsp/order.jsp");
-				}
-				
-				
-				
-			}else {//验证失败
-				
-			
-				//调试用，写文本函数记录程序运行情况是否正常
-				//String sWord = AlipaySignature.getSignCheckContentV1(params);
-				//AlipayConfig.logResult(sWord);
-			}
-			
 			Order order=new Order();
 			order.setPay_number(trade_no);
 			order.setOrder_number(out_trade_no);
@@ -334,9 +295,7 @@ public class PayController {
 			params.put(name, valueStr);
 		}
 		
-		boolean signVerified = AlipaySignature.rsaCheckV1(params, AlipayConfig.alipay_public_key, AlipayConfig.charset, AlipayConfig.sign_type); //调用SDK验证签名
-		//——请在这里编写您的程序（以下代码仅作参考）——
-		if(signVerified) {
+		
 			//商户订单号
 			String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 		
@@ -353,11 +312,7 @@ public class PayController {
 			map.addAttribute("total_amount", total_amount);
 			
 			
-		}else {
-			map.addAttribute("msg", "操作失败");
-			
 		
-		}
 		return "/html/paymsg.html";
 	}
 	

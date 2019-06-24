@@ -5,8 +5,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import com.woniuxy.dao.ItemDAO;
 import com.woniuxy.dao.OrderDAO;
@@ -109,9 +111,10 @@ public class OrderServiceImpl implements OrderService{
 	}
 	//创建订单
 	@Override
-	public String createOrder(Order order) {
+	public Map<String, Object> createOrder(Order order) {
+		Map<String, Object> map=new HashMap<>();
 		
-		String result="创建成功";
+		map.put("msg", "创建成功");
 		//入住人员
 		Integer[] personIds=order.getPersonID();
 		
@@ -193,7 +196,8 @@ public class OrderServiceImpl implements OrderService{
 		}
 		//判断可住房间数量足够
 		if(inRoom.size()<order.getPersonID().length){
-			return  "抱歉！您来晚一步"+type.getType()+"在该时段房间不足请选择其他类型的房间或者其他时间段";
+			map.replace("msg", "抱歉！您来晚一步"+type.getType()+"在该时段房间不足请选择其他类型的房间或者其他时间段");
+			return  map;
 		}
 		
 		//取得订单创建时间
@@ -236,7 +240,8 @@ public class OrderServiceImpl implements OrderService{
 		}
 		//超过规定时间未付款自动取消订单
 		autoCancel(this,orderId);
-		return result;
+		map.put("orderid", orderId);
+		return map;
 	}
 	
 	//插入支付号

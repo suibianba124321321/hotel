@@ -1,13 +1,14 @@
 package com.woniuxy.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.woniuxy.pojo.Order;
 
 public interface OrderService {
 
 	//插入订单
-	public String  createOrder(Order order );
+	public Map<String, Object>   createOrder(Order order );
 	//更新订单的pay_number
 	public  String updatePayNumber(Order order); 
 	//以id查找所有订单
