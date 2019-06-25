@@ -128,11 +128,11 @@
       			 
       			if(room.room_id!=null){
       				var tr="<tr></tr>";
-      				
+      				var mid=room.room_id;
     				var id="<td>"+room.room_id+"</td>";
     				var tid="<td id='tid'>"+room.type_id+"</td>";
     				var state="<td name='s'>"+room.state+"</td>";
-    				var buten="<td> <button onclick='deletes("+room.room_id+")' class='layui-btn'>删除</button> <button onclick='update("+room.room_id+")' class='layui-btn'>修改</button></td>";
+    				var buten="<td> <button onclick='deletes("+room.room_id+")' class='layui-btn'>删除</button> <button onclick=\"xadmin.open('修改用户信息','./room-edit.html?manager="+mid+"',600,400)\" class='layui-btn'>修改</button></td>";
     				$("tbody").append(tr+id+tid+state+buten);
     			
    				

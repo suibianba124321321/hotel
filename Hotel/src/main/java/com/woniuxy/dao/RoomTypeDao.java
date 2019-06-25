@@ -54,6 +54,8 @@ public interface RoomTypeDao {
 	 */
 	@Update("update room_type set number=#{number} where type_id=#{type_id} and flag=0")
 	public void updateNumberByType_id(Type type);
+	@Update("update room_type set description=#{description} where type_id=#{type_id} and flag=0")
+	public void updateDescriptionById(Type type);
 	
 
 	

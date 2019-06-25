@@ -38,6 +38,18 @@ public class RoomController {
     	return map;
     }
     
+    
+    @ResponseBody
+    @RequestMapping("/findOne")
+    public Room findOne(Room room){
+    	Room rooms = roomService.findOneByroom_id(room.getRoom_id());
+    	
+    	
+    	return rooms;
+    }
+    
+    
+    
     @ResponseBody
     @RequestMapping("/findByState")
     public List<Room> findByState(Room room){

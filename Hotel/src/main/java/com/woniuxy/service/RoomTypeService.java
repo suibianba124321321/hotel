@@ -44,4 +44,6 @@ public interface RoomTypeService {
 	 */
 	public void updateNumberByType_id(Type type);
 
+	public void updateDescriptionByType_id(Type type);
+
 }

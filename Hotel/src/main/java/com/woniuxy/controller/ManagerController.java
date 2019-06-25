@@ -3,6 +3,7 @@ package com.woniuxy.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,10 +42,11 @@ public class ManagerController {
      */
     //@ResponseBody
 	@RequestMapping("/login")
-	public String Login(Manager old_Manager){
+	public String Login(Manager old_Manager,HttpSession session){
 		String login = managerService.login(old_Manager);
 		
 		if(login.equals("success")){
+			session.setAttribute("account", old_Manager.getAccount());
 			return "redirect:/backstage/index.html";
 		}
 		return "success";
@@ -61,6 +63,7 @@ public class ManagerController {
 		managerService.updatePwd(manager);
 		return "success";
 	}
+    
     
     
     

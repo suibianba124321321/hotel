@@ -92,11 +92,12 @@
     		
     			for(var i=0;i<data.all.length;i++){
     				 var room=data.all[i];
+    				 var mid=room.room_id;
     				var tr="<tr></tr>";
     				var id="<td>"+room.room_id+"</td>";
     				var tid="<td id='t"+room.room_id+"'>"+room.type_id+"</td>";
     				var state="<td name='s"+i+"'>"+room.state+"</td>";
-    				var buten="<td> <button onclick='deletes("+room.room_id+")' class='layui-btn'>删除</button> <button onclick='update("+room.room_id+")' class='layui-btn'>修改</button></td>";
+    				var buten="<td> <button onclick='deletes("+room.room_id+")' class='layui-btn'>删除</button> <button onclick=\"xadmin.open('修改用户信息','./room-edit.html?manager="+mid+"',600,400)\" class='layui-btn'>修改</button></td>";
     				$("tbody").append(tr+id+tid+state+buten); 
       
     				 for(var j=0;j<data.type.length;j++){

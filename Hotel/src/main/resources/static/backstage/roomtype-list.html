@@ -40,12 +40,12 @@
                                 <div class="layui-inline layui-show-xs-block">
                                     <input class="layui-input"  autocomplete="off" placeholder="截止日" name="end" id="end">
                                 </div> -->
-                                <div class="layui-inline layui-show-xs-block">
+                               <!--  <div class="layui-inline layui-show-xs-block">
                                     <input type="text" name="acount" id="account" placeholder="请输入用户名" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="layui-inline layui-show-xs-block">
                                     <button class="layui-btn"   onclick="serch($('#account').val())"><i class="layui-icon">&#xe615;</i></button>
-                                </div>
+                                </div> -->
                            
                         </div>
                         <div class="layui-card-header">
@@ -97,12 +97,13 @@
     			for(var i=0;i<data.length;i++){
     				var user=data[i];
     				var tr="<tr></tr>";
+    				var mid=user.type_id;
     				var id="<td>"+user.type_id+"</td>";
     				var type="<td>"+user.type+"</td>";
     				var price="<td>"+user.price+"</td>";
     				var description="<td >"+user.description+"</td>";
     				var number="<td>"+user.number+"</td>";
-    				var buten="<td> <button onclick='deletes("+user.type_id+")' class='layui-btn'>删除</button> <button onclick='update("+user.manager_id+")' class='layui-btn'>修改</button></td>";
+    				var buten="<td> <button onclick='deletes("+user.type_id+")' class='layui-btn'>删除</button> <button onclick=\"xadmin.open('修改用户信息','./roomtype-edit.html?manager="+mid+"',600,400)\" class='layui-btn'>修改</button></td>";
     				$("tbody").append(tr+id+type+price+description+number+buten);
     				
     			}

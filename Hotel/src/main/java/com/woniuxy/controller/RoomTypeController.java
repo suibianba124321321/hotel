@@ -85,5 +85,24 @@ public class RoomTypeController {
 	public void updateNumberByType_id(Type type){
 		roomTypeService.updateNumberByType_id(type);
 	}
+	
+	/**
+	 * 修改房间类型描述
+	 * @param type
+	 */
+	@ResponseBody
+    @RequestMapping("/updateDescription")
+	public void updateNumberBydescription(Type type){
+		roomTypeService.updateDescriptionByType_id(type);
+	}
+	
+	@ResponseBody
+    @RequestMapping("/updateRoom")
+	public void updateRoom(Type type){
+		System.out.println(type);
+		roomTypeService.updateDescriptionByType_id(type);
+		roomTypeService.updateNumberByType_id(type);
+		roomTypeService.updatePriceByType_id(type);
+	}
 
 }

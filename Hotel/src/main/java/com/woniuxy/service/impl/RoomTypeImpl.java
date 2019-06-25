@@ -48,4 +48,10 @@ public class RoomTypeImpl implements RoomTypeService{
 		
 	}
 
+	@Override
+	public void updateDescriptionByType_id(Type type) {
+		roomTypeDao.updateDescriptionById(type);
+		
+	}
+
 }
