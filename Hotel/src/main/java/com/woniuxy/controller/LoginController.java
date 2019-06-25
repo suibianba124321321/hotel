@@ -39,7 +39,6 @@ public List<Person>	allPerson(HttpSession session){
 	int uid=1001;
 	Login login = loginService.findLoginByid(uid);
 	List<Person> persons = login.getPersons();
-	System.out.println(persons);	
 	return persons;
 	/*if(attribute!=null){		
 		

@@ -79,12 +79,31 @@ $(document).ready(function(){
 	  }	 
  })
  
+//查询出当前的会员及折扣
+ $.ajax({
+     url:"/member/currentMember",	
+	  success:function(map){
+		 var vipRank=$("<span></span>").text("vip"+map.member.rank+"会员价格:$")
+		 var vipPrice=$("<span></span>").text(parseFloat(map.discount)*parseInt($("#price").html()));
+		 $("#typedetail").append(vipRank)
+	     $("#typedetail").append(vipPrice)
+	  }	 
+})
  
   
             })
             
  /*添加房客  */        
  function addPassenger(){
+	//中文名验证
+	var regName=/^[\u4E00-\u9FA5\uf900-\ufa2d]{2,4}$/;
+	//电话号码校验
+	var regPhone = /1[345678][0-9]{9}$/;
+	//身份证验证
+	var regIdCard=/^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+
+	
+	if(regName.test($("#name").val())&&regPhone.test($("#tel").val())&&regIdCard.test($("#idcard").val())){
 	$.ajax({
 		url:"../person/addperson",
 		data:{
@@ -92,24 +111,20 @@ $(document).ready(function(){
 			tel:$("#tel").val(),
 			idcard:$("#idcard").val(),
 		},
-		success:function(data){
-			var tr=$("<tr></tr>")
-			var radio = $("<td style='text-align:center'></td>").html("<input type='checkbox' name='passenger' value='"+data.person_id+"'>");
-			var name=$("<td style='text-align:center'></td>").html(data.name);
-			var idcard=$("<td style='text-align:center'></td>").html(data.idcard);
-			var tel=$("<td style='text-align:center'></td>").html(data.tel);
-			tr.append(radio);
-			tr.append(name);
-			tr.append(idcard);
-			tr.append(tel);
-			$("#passenger").append(tr);
-		}
-		
-			
+		success:function(msg){
+			alert(msg);
+			if(msg.search("成功")!=-1){
+				location.reload();
+			}
+		}			
 		}) 
 	
+}else{
+     alert("请输入中文名和有效的身份证号与电话号码");
 }
-
+	
+	
+}
   /*提交订单 */ 
   function submitOrder(){
 	  if(confirm("确认提交订单吗？")){
@@ -160,15 +175,13 @@ $(document).ready(function(){
     <div class="login" th:text=${session.uid}></div>
 	</div>	
 
-	<div class="typedetail">
-	预定信息<br>
-	
-	<img  id="pic" style="width:120px"/><br>
+	<div class="typedetail" id="typedetail">
+	<img  id="pic"/><br>
 	房间类型:<span id="type" ></span><br>
 	基本信息:<span id="roominfo" ></span><br>
 	入住时间:<span id="inTime" ></span><br>
 	离开时间:<span id="outTime" ></span><br>
-	单间费用:<span id="price" style="color:red"></span>
+	单间费用:$<span id="price" style="color:red"></span><br>
 	
 	</div>
 	

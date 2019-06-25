@@ -148,8 +148,14 @@ border-radius:6px;
 border:2px solid;
 margin:auto;
 margin-top:60px;
-font-size: 23px;	
+font-size: 20px;	
 }
+
+.typedetail img{
+	width:100%;
+}
+
+
 
 .item img{
 	width:100%;

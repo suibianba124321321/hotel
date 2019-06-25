@@ -26,14 +26,14 @@ public void setPersonService(PersonService personService) {
 
 @RequestMapping("/addperson")
 @ResponseBody
-public Person addPerson(Person person,HttpSession session){
+public String addPerson(Person person,HttpSession session){
 	/*Object ouid = session.getAttribute("uid");
 	int uid=(int) ouid;*/
 	int uid=1001;
+	String result="添加失败";
+	result = personService.addPerson(person, uid);
 	
-	personService.addPerson(person, uid);
 	
-	
-	return person;}	
+	return result;}	
 	
 }

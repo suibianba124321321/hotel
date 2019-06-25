@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.woniuxy.pojo.Type;
 import com.woniuxy.service.TypeService;
+import com.woniuxy.util.MemberUtil;
 
 @Controller
 @RequestMapping("/type")
@@ -34,7 +35,7 @@ public class TypeController {
 	public List<Type> show(String inTime ,String outTime){
 		
 		List<Type> types=typeService.show(inTime, outTime);
-		System.out.println(types);
+
 		return types;
 	}
 
