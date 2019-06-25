@@ -1,6 +1,7 @@
 package com.woniuxy.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
@@ -19,53 +20,88 @@ import com.woniuxy.service.UserService;
 public class UserController {
      @Resource
 	private UserService userService;
-     
+     //手机号码注册
      @RequestMapping("/phoneCheck")
-     public String phongRegCheck(String tel,String code,HttpSession session){
+     @ResponseBody
+     public String phongRegCheck(Login login,HttpSession session,HttpServletRequest request){
     	 String result="注册失败";
     	 Object rcode = session.getAttribute("rcode");
-    	 if(rcode!=null && code.equals(rcode.toString())){
-    		 result = userService.phongRegisterCheck(tel);
-      	       if(result.contains("成功")){
-      	    	 return "redirect:../login.html";
-      	       }
+    	 Object code = request.getParameter("code");
+    		 String rrcode=(String) code;
+    	 if(rcode!=null && rrcode.equals(rcode.toString())){
+    		 result = userService.phongRegisterCheck(login.getTel());
+      	    	 return result;
     	 }
-    	      return "";
+    	      return result;
      }
-     
+     //账号密码注册
      @RequestMapping("/accountCheck")
+     @ResponseBody
      public String accountRegCheck(Login login){
     	 login.setPwd(new SimpleHash("MD5",login.getPwd(),null,1024).toString());
     	 String result = userService.accountRegisterCheck(login); 
-    	 if(result.contains("成功")){
-    	 return "redirect:../login.html";}
-    	 return "";
+    	 System.out.println(result);
+    	 return result;
      }
      
+     //注册发送验证码
      @RequestMapping("/sendMessage")
      @ResponseBody
      public String sendMessage(Login login,HttpSession session){
+    	 System.out.println(89898);
     	 String result="发送失败";
     	 result = userService.codeCheck(login, session);
-    	 return "";
+    	 return result;
      }
      
+     //账号密码登录
      @RequestMapping("/accountLogin")
      @ResponseBody
      public String accountLogin(Login login){
     	 System.out.println(login);
-    	//获取主体对象
+         String result="登录失败";
+    	 //获取主体对象
  		Subject currentUser=SecurityUtils.getSubject();
  		if(!currentUser.isAuthenticated()){
  			UsernamePasswordToken token=
  					new UsernamePasswordToken(login.getAccount(),login.getPwd());
  			try {
  				currentUser.login(token);
- 				System.out.println("登录成功");
+ 				 result="登录成功";
  			} catch (Exception e) {
-                 System.out.println("登录失败");
+ 				result="登录失败";
  			}
  		}
-    	 return "";
+ 		System.out.println(result);
+    	 return result;
+     }
+     
+     //登录时手机号码验证
+     @RequestMapping("/code")
+     @ResponseBody
+     public String offerCode(Login login,HttpSession session){
+    	 String result = userService.ifPhoneExit(login, session);
+    	 System.out.println(result);
+    	 return result;
+     }
+     //手机号码登录
+     @RequestMapping("/phoneLogin")
+     @ResponseBody
+     public String phoneRegister(Login login,HttpServletRequest request,HttpSession session){
+    	 String result="登录失败";
+    	 Object loginCode = session.getAttribute("logincode");
+    	 String code = request.getParameter("code");
+    	 if(loginCode==null){
+    		 return result;
+    	 }
+    	 else{
+    	 if(code.equals(loginCode.toString())){
+    		 
+    		 result="登录成功";
+    	 }
+    	}
+    	 System.out.println(result);
+    	 return result;
+     
      }
 }

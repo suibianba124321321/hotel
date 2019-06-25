@@ -16,5 +16,9 @@ public interface UserService {
 	public String accountLogin(Login login);
 	
 	public String checkPwdByaccount(Login login);
+	
+	public String ifPhoneExit(Login login,HttpSession session);
+	
+	
 
 }

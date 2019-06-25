@@ -64,7 +64,7 @@ public class ShiroConfig {
 		map.put("/user/register", "anon");
 		map.put("/**", "anon");
 	
-		map.put("/user/logout", "logout");
+		map.put("/logout", "logout");
 		
 		bean.setFilterChainDefinitionMap(map);
 		return bean;

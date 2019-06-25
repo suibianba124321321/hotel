@@ -39,35 +39,59 @@
 											<script type="text/javascript" src="./register_files/jquery.poshytip.js.下载"></script>
 											<script type="text/javascript" src="./register_files/jquery.artDialog.js.下载"></script>
                                             <script type="text/javascript" language="javascript">
-                                                function registerCheck(){
+                                               //账号密码注册
+                                            function registerCheck(){
                                                 	 var pwd = $("#company_companyAddress").val();
                                                 	 var rpwd = $("#company_zip").val();
-                                                	if(pwd!=null && pwd==rpwd){
-                                                		document.companyRegisterForm
-														.submit();
+                                                	 if(pwd!="" && pwd==rpwd){
+                                                		$.ajax({
+                                                			url:"user/accountCheck",
+                                                			type:"POST",
+                                                			data:{
+                                                				//获取账号密码
+                                                				account:$("#company_companyName").val(),
+                                                				pwd:$("#company_companyAddress").val(),
+                                                			     },
+                                                	 	   dateType:"json",
+                                                	 	  success:function(data){
+                                                				$("#rrmes").html(data);
+                                                				if(data=="注册成功"){
+                                                                window.location.href="login.html";
+                                                				}
+                                                	 	  }
+                                                		})
                                                 	}
-                                                	else{alert("输入有误，重新输入");
-                                                	window.location.reload();
+                                                	 else{
+                                                		 $("#rrmes").html("输入有误，请重新输入");
+                                                	 }
+                                                }
+                                                //手机号码注册
+                                                function phoneRegister(){
+                                                	var code=$("#user_sms_verifycode").val();
+                                                	if(code==""){
+                                                		$('#rmes').html('验证码不能为空');
+                                                		}
+                                                	else{
+                                                		  $.ajax({
+                                                			  url:"user/phoneCheck",
+                                                			  type:"POST",
+                                                			  data:{
+                                                			    tel:$("#user_mobile").val(),
+                                                			    code:$("#user_sms_verifycode").val(),
+                                                			  },
+                                                		      dateType:"json",
+                                                		      success:function(data){
+                                                		    	  if(data=="注册成功"){
+                                                		    		  window.location.href="login.html";
+                                                      	    	} 
+                                                		    	  else{
+                                                		    		  $("#rmes").html("账号已存在,请重新输入");
+                                                		    		  }
+                                                		      }
+                                                		  })
                                                 	}
                                                 }
                                                 
-                                                function phoneRegister(){
-                                                	var code=$("#user_sms_verifycode").val();
-                                                	if(!code){
-                                                		$('#rmes').html('验证码不能为空');
-                                                		}
-                                                	   else{
-                                                		   $.ajax({
-                                                    		url:"user/phoneCheck",
-                                                    		type:"POST",
-                                                    		data:{
-                                                    			code:$("#user_sms_verifycode").val(),
-                                                    			tel:$("#user_mobile").val(),
-                                                    			},
-                                                    	    dateType:"json",
-                                                    	})
-                                                	}
-                                                }
                                                 <!-- 点击获取验证码--!>
                                                 function OnVerifyCode(){
                                                 	//var phoneNumber=$("#user_mobile").val();
@@ -86,6 +110,14 @@
                                                 			tel:$("#user_mobile").val(),
                                                 			},
                                                 	    dateType:"json",
+                                                	    success:function(data){
+                                                	    	if(data=="发送成功"){
+                                                	    		$('#rmes').html("短信已发送，请注意查收");
+                                                	    	}
+                                                	    	else{
+                                                	    		$('#rmes').html("输入有误，请重新输入");
+                                                	    	}
+                                                	    }
                                                 	})
                                                     }
                                                 }
@@ -489,7 +521,7 @@ display:none;
 									  <div class="form-group">
 										<div class="alert-error" id="user_sms_verifycode_error" style="display: none">短信验证码不能为空！</div>
 										<label class="inputTit"><div class="icon_sms"></div><font color="red">*</font>验证码:</label>
-										<input id="user_sms_verifycode" name="user_sms_verifycode" maxlength="20" type="text" class="form-control inputInf" placeholder="请输入验证码">
+										<input id="user_sms_verifycode" name="code" maxlength="20" type="text" class="form-control inputInf" placeholder="请输入验证码">
 											<span class="send_time"><span class="border_line_left"><button type="button" id="code_btn" onclick="OnVerifyCode()" class="sms-btn">获取</button>
 									</span></span></div>
 									</div>
@@ -524,17 +556,19 @@ display:none;
 								<div class="form-group">
 									<div class="alert-error" id="company_companyAddress_error" style="display: none"></div>
 									<label class="inputTit"><div class="dizhi"></div><font color="red">*</font>密码：</label>
-									<input id="company_companyAddress" name="pwd" maxlength="50" type="text" class="form-control inputInf" placeholder="">
+									<input id="company_companyAddress" name="pwd" maxlength="50" type="password" class="form-control inputInf" placeholder="">
 								</div>
 								<div class="form-group">
 									<div class="alert-error" id="company_zip_error" style="display: none"></div>
-									<label class="inputTit"><div class="emali"></div><font color="red">*</font>确认密码：</label> <input id="company_zip" name="rpwd" maxlength="6" type="text" class="form-control inputInf" placeholder="">
+									<label class="inputTit"><div class="emali"></div><font color="red">*</font>确认密码：</label> <input id="company_zip" name="rpwd" maxlength="6" type="password" class="form-control inputInf" placeholder="">
 								</div>
-							
+							    <br>
+							    <div id="rrmes"></div>
 								<div class="form-group">
 									
 									<button type="button" onclick="registerCheck()" class="btn-loginReg">注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
 								</div>
+								
 							</form>
 						</div>
 						<!--Ordinary Login End-->
@@ -550,18 +584,18 @@ display:none;
 	<!--Bottom Start-->
 	<div class="footer">
 		<div class="footer-copy">
-			<a href="http://www.wyn88.com/about/gsjj_revision.html" target="_blank">关于维也纳</a>
+			<a href="" target="_blank">关于维也纳</a>
 			&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-			<a href="http://www.wyn88.com/index/app.html" target="_blank">APP下载</a>
+			<a href="" target="_blank">APP下载</a>
 			&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-			<!-- <a href="/join/joinwyn.html" target="_blank">招商加盟</a> -->
-			<a href="http://co.wyn88.com/" target="_blank">招商加盟</a>
+			<!-- <a href="" target="_blank">招商加盟</a> -->
+			<a href="" target="_blank">招商加盟</a>
 			&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-			<a href="http://supplier.wyn88.com:8000/OA_HTML/index.html" target="_blank">供应商</a>
+			<a href="" target="_blank">供应商</a>
 			<!-- &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; -->
 		
 			<br>
-			深圳市维也纳国际酒店管理有限公司 版权所有&nbsp;&nbsp;&nbsp;Copyright ©1998-2018&nbsp;&nbsp;&nbsp;wyn88.com&nbsp;&nbsp;&nbsp;粤ICP备09078541号-1
+			成都市维也纳国际酒店管理有限公司 版权所有&nbsp;&nbsp;&nbsp;Copyright ©1998-2018&nbsp;&nbsp;&nbsp;wyn88.com&nbsp;&nbsp;&nbsp;川ICP备09078541号-1
 		</div>
 	</div>
 	

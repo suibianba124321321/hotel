@@ -10,35 +10,109 @@
 		<title>login</title>
 		<meta name="keywords" content="会员注册,免费注册,酒店会员注册">
 		<meta name="description" content="会员注册页面提供维也纳酒店会员在线免费注册，仅需简单填写即可轻松完成酒店会员注册，注册成功预订酒店低至8.5折优惠，2倍积分，赠送早餐，会员注册从这里开始。">
-
-		<link href="./login_files/bootstrap.css" rel="stylesheet" type="text/css">
-		<link href="./login_files/public.css" rel="stylesheet" type="text/css">
-		<link href="./login_files/style.css" rel="stylesheet" type="text/css">
+        
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+		<link href="/login_files/bootstrap.css" rel="stylesheet" type="text/css">
+		<link href="/login_files/public.css" rel="stylesheet" type="text/css">
+		<link href="/login_files/style.css" rel="stylesheet" type="text/css">
 		<script charset="utf-8" src="./login_files/v.js.下载"></script><script type="text/javascript" async="" src="./login_files/ubcfg.js.下载"></script><script type="text/javascript" async="" src="./login_files/gs.js.下载"></script><script type="text/javascript" src="./login_files/jquery-1.12.4.min.js.下载"></script>
 		<script type="text/javascript" src="./login_files/common.js.下载"></script>
-		<script src="./login_files/SpryMenuBar.js.下载" type="text/javascript"></script>
-		<script src="./login_files/bootstrap.js.下载" type="text/javascript"></script>
-		<script src="./login_files/viennaLoginRevision.js.下载" type="text/javascript"></script>
-		<link href="./login_files/artDialog.css" rel="stylesheet" type="text/css">
-		<script type="text/javascript" src="./login_files/jquery.artDialog.js.下载"></script>
+		<script src="/login_files/SpryMenuBar.js.下载" type="text/javascript"></script>
+		<script src="/login_files/bootstrap.js.下载" type="text/javascript"></script>
+		<script src="/login_files/viennaLoginRevision.js.下载" type="text/javascript"></script>
+		<link href="/login_files/artDialog.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="/login_files/jquery.artDialog.js.下载"></script>
 		
 		<script src="./login_files/gt.js.下载"></script>
 		
 		<script type="text/javascript" language="javascript">
-		      function accountLogin(){
-		    	  alert(6666);
-		    	  var account=$("#account").val();
-		    	  var pwd=$("#pwd").val();
-		    	  if(account!=null && pwd !=null){
-		    		  document.personalLoginForm
-						.submit();
-		    	  }
-		    	  else{
-		    		 alert("账号密码不能为空"); 
-		    	  }
-		      }
-		
+		    
+		        //账号密码登录 
+		     $(function(){
+		    	$("#accountLogin").click(function(){
+			    	  var account=$("#account").val();
+			    	  var pwd=$("#pwd").val();
+			    	  if(account!=null && pwd !=null){
+			    		 $.ajax({
+			    			 url:"user/accountLogin",
+			    			 type:"POST",
+			    			 data:{
+			    				 account:$("#account").val(),
+			    				 pwd:$("#pwd").val(),
+			    			 },
+			    		     success:function(data){
+			    		    	 if(data=="登录成功"){
+			    		    		 window.location.href="index.html";
+			    		    	 }
+			    		    	 else{
+			    		    		 $("#rmes").html("登录失败,请重新输入");
+			    		    	 }
+			    		     }
+			    		 })
+			    	  }
+			      } 
+		    )
+			     //点击验证码获取
+			      $("#getcode").click(function(){
+			    	var tel=$("#phoneNumber").val(); 
+			    	var isMobile=/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+	                if(tel==""){
+	                     $('#rrmes').html('请输入手机号码，不能为空');
+	                }else if (!isMobile.test(tel)) {
+	                    $('#rrmes').html('请输入有效的手机号码');
+	                }
+	                else{
+	                	$.ajax({
+	                		url:"user/code",
+	                		type:"POST",
+	                		data:{
+			    				 tel:$("#phoneNumber").val(),
+			    			 },
+			    			 success:function(data){
+			    				 if(data=="账号不存在，请你先注册"){
+			    					 $("#rrmes").html("账号不存在，请先注册");
+			    				 }
+			    				 else if(data=="发送成功"){
+			    					 $("#rrmes").html("验证码发送成功");
+			    				 }
+			    			 }
+	                	})
+	                }
+			    }  
+			      )
+		    	 //手机号码登录
+			      $("#phoneLogin").click(function(){
+			    	  var code=$("#code").val();
+			    	  var tel=$("#phoneNumber").val();
+			    	  if(code==""){
+			    		  $('#rrmes').html("验证码不能为空");
+			    	  }
+			    	  else{
+			    		  $.ajax({
+			    			url:"user/phoneLogin",
+			    			type:"POST",
+	                		data:{
+			    				 tel:$("#phoneNumber").val(),
+			    				 code:$("#code").val(),
+			    			 },
+			    			 success:function(data){
+			    				 if(data=="登录成功"){
+			    					 window.location.href="index.html";
+			    				 }
+			    				 else{
+			    					 $('#rrmes').html("验证码有误，请重新输入");
+			    				 }
+			    			 }
+			    		  })
+			    	  }
+			    	  
+			      }
+			     )
+		     }) 
+		        
 		</script>
+		
+		
 		
 		
 	</head>
@@ -103,22 +177,23 @@
 								<!--Phone Login Start-->
 								<div class="formView" style="display: block;">
 									<form role="form" class="form-horizontal" action="user/accountLogin" method="post" id="personalLoginSmsForm" name="personalLoginForm">
-
+                                        
 										<div class="form-group">
 											<label class="inputTit">账号:</label>
-											<input id="account" onblur="OnVerifyPhone()" name="account" type="text" class="form-control inputInf phoneyz">
+											<input id="account" name="account" type="text" class="form-control inputInf phoneyz">
 										</div>
 										<div class="form-group">
 											<div id="user_sms_loginName_error" style="display: none" class="alert-error"></div>
 											<label class="inputTit">密码:</label>
-											<input id="pwd" onblur="OnVerifyPhone()" name="pwd" type="text" class="form-control inputInf phoneyz">
+											<input id="pwd" name="pwd" type="password" class="form-control inputInf phoneyz">
 											
 										
 										</div>
-						
+						                <br>
+									   <div id="rmes"></div>
 										<div class="form-group">
 											<div class="errMsg" id="p_message2" style="display:none;"></div>
-											<button type="button" onclick="accountLogin();" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button></div>
+											<button type="button" id="accountLogin" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button></div>
 										
 											
 											<div id="popup-captcha"></div>
@@ -142,19 +217,22 @@
 
 									<div class="form-group">
 										<div id="company_companyLoginName_error" style="display: none" class="alert-error"></div>
-										<label class="inputTit">手机号</label>
-										<input id="company_companyLoginName" name="loginName" type="text" class="form-control inputInf" placeholder="请输入手机号">
+										<label class="inputTit">手机号:</label>
+										<input id="phoneNumber" name="loginName" type="text" class="form-control inputInf" placeholder="请输入手机号">
 									</div>
 								
 									<div class="form-group">
-										<div id="company_mobilePhoneCode_error" style="display: none" class="alert-error">手机验证码不能为空！</div>
-										<label class="inputTit">验证码</label>
-										<input id="company_mobilePhoneCode" name="password" type="text" class="form-control inputInf" placeholder="请输入手机验证码">
-						
+										<label class="inputTit">验证码:</label>
+										<input id="code" name="password" type="text" class="form-control inputInf" width="70%" placeholder="请输入手机验证码">
+									     <div style="text-align:right;">
+									        <button type="button" id="getcode">获取验证码</button>
+									     </div>
+									     
 									</div>
+									<div id="rrmes"></div>
 									<div class="form-group">
 										<div class="errMsg" id="p_message3" style="display:none;"></div>
-										<button type="button" onclick="companyLogin()" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+										<button type="button" id="phoneLogin" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
 									</div>
 								</form>
 								
@@ -172,20 +250,20 @@
 		<!--Bottom Start-->
 		<div class="footer">
 			<div class="footer-copy">
-				<a href="http://www.wyn88.com/about/gsjj_revision.html" target="_blank">关于维也纳</a>
+				<a href="" target="_blank">关于维也纳</a>
 				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-				<a href="http://www.wyn88.com/index/app.html" target="_blank">APP下载</a>
+				<a href="" target="_blank">APP下载</a>
 				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 				<!-- <a href="/join/joinwyn.html" target="_blank">招商加盟</a> -->
-				<a href="http://co.wyn88.com/" target="_blank">招商加盟</a>
+				<a href="" target="_blank">招商加盟</a>
 				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-				<a href="http://supplier.wyn88.com:8000/OA_HTML/index.html" target="_blank">供应商</a>
+				<a href="" target="_blank">供应商</a>
 				
 				<br>
-				深圳市维也纳国际酒店管理有限公司&nbsp;&nbsp;&nbsp;Copyright ©1998-2017&nbsp;&nbsp;&nbsp;wyn88.com&nbsp;&nbsp;&nbsp;<a href="http://www.miitbeian.gov.cn/">粤ICP备 09078541</a><a href="http://www.cnzz.com/stat/website.php?web_id=1588170" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./login_files/pic.gif"></a>
-				<a id="_pingansec_bottomimagelarge_brand" target="_blank" href="http://si.trustutn.org/info?sn=133161129025881012488&amp;certType=1"><img style="height:15px" src="./login_files/brand_bottom_large.jpg"></a>
-					<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030702000315" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
-					<img src="./login_files/jgawb.png" style="float:left;"><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">粤公网安备 44030702000315号</p>
+				成都维也纳国际酒店管理有限公司&nbsp;&nbsp;&nbsp;Copyright ©1998-2017&nbsp;&nbsp;&nbsp;wyn88.com&nbsp;&nbsp;&nbsp;<a href="">川ICP备 09078541</a><a href="" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./login_files/pic.gif"></a>
+				<a id="_pingansec_bottomimagelarge_brand" target="_blank" href="" src="./login_files/brand_bottom_large.jpg"></a>
+					<a target="_blank" href="" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+					<img src="./login_files/jgawb.png" style="float:left;"><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">川公网安备 44030702000315号</p>
 			 		</a>
 			 	</div>
 			</div>
@@ -198,4 +276,9 @@
 
 		
 	
-</body></html>
+</body>
+
+
+
+
+</html>

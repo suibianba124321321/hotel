@@ -24,7 +24,7 @@ public class JuHeDemo {
 	public static boolean mobileQuery(String tel,int tpl_id,StringBuffer code ){
 		String result =null;
 		boolean s=false;
-		String key="f790d49b2094bcfde610a6ef16a482dd";    //这是appkey
+		String key="e32497bc82cd0e9e7b30e92353f65f53";    //这是appkey
 		String url ="http://v.juhe.cn/sms/send";//请求接口地址http://v.juhe.cn/sms/send
 		Map params = new HashMap();//请求参数
 			params.put("mobile",tel);//接受短信的用户手机号码

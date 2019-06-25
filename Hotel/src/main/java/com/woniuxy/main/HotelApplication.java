@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan("com.woniuxy.mapper")
+@MapperScan("com.woniuxy.dao")
 @ComponentScan({"com.woniuxy.service",
 	"com.woniuxy.controller",
 	"com.woniuxy.configuration"

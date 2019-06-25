@@ -24,6 +24,65 @@
 		
 		<script src="./login_files/gt.js.下载"></script>
 		
+		<script type="text/javascript" language="javascript" src="">
+		    
+		        //账号密码登录 
+		     function accountLogin(){
+		    	  var account=$("#account").val();
+		    	  var pwd=$("#pwd").val();
+		    	  if(account!=null && pwd !=null){
+		    		 $.ajax({
+		    			 url:"user/accountLogin",
+		    			 type:"POST",
+		    			 data:{
+		    				 account:$("#account").val(),
+		    				 pwd:$("#pwd").val(),
+		    			 },
+		    		     success:function(data){
+		    		    	 alert(data)
+		    		    	 if(data=="登录成功"){
+		    		    		 window.location.href="index.html";
+		    		    	 }
+		    		    	 else{
+		    		    		 $("#rmes").html("登录失败,请重新输入");
+		    		    	 }
+		    		     }
+		    		 })
+		    	  }
+		      }
+		
+		     //点击验证码获取
+		     function offerCode(){
+		    	val tel=$("#phoneNumber").val();
+		    	alert(999);
+		    	var isMobile=/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+                if(!tel){
+                     $('#rrmes').html('请输入手机号码，不能为空');
+                }else if (!isMobile.test(tel)) {
+                    $('#rrmes').html('请输入有效的手机号码');
+                }
+                else{
+                	$.ajax({
+                		url:"user/code",
+                		type:"POST",
+                		data:{
+		    				 tel:$("#phoneNumber").val(),
+		    			 },
+		    			 dataType:"json",
+		    			 success:function(data){
+		    				 if(data=="账号不存在，请你先注册"){
+		    					 $("#rrmes").html("登录失败,请重新输入");
+		    				 }
+		    				 else{
+		    					 $('#rrmes').html(data);
+		    				 }
+		    			 }
+                	})
+                }
+		    }  
+		        
+		</script>
+		
 		
 	</head>
 
@@ -32,7 +91,7 @@
 		<!--Login Reg Header Start-->
 		<div class="loginReg-header">
 			<div class="logo fl"><a href="http://www.wyn88.com/"><img src="./login_files/logo.gif"></a></div>
-			<a href="" class="back-home fr mt10">返回首页</a>
+			<a href="index.html" class="back-home fr mt10">返回首页</a>
 		</div>
 	    <!--Login Reg Header End-->
 		
@@ -84,36 +143,26 @@
 						
 								<div class="typebox">
 
-								
-							
-								
 								<!--Phone Login Start-->
 								<div class="formView" style="display: block;">
-									<form role="form" class="form-horizontal" action="" method="post" id="personalLoginSmsForm" name="personalLoginForm">
-										<input type="hidden" id="p_loginType_Sms" name="loginType" value="4"><!--动态密码登录-->
-
-
-										<input type="hidden" id="verifycodeFlagSms" name="verifycodeFlag" value="0">
-									
+									<form role="form" class="form-horizontal" action="user/accountLogin" method="post" id="personalLoginSmsForm" name="personalLoginForm">
+                                        
 										<div class="form-group">
-											<div id="user_sms_loginName_error" style="display: none" class="alert-error">用户名不能为空！</div>
-											<label class="inputTit">账号</label>
-											<input id="user_sms_loginName" onclick="onkeyPhone()" onblur="OnVerifyPhone()" name="loginName" type="text" class="form-control inputInf phoneyz">
-											
-										
+											<label class="inputTit">账号:</label>
+											<input id="account" name="account" type="text" class="form-control inputInf phoneyz">
 										</div>
-										
 										<div class="form-group">
 											<div id="user_sms_loginName_error" style="display: none" class="alert-error"></div>
-											<label class="inputTit">密码</label>
-											<input id="user_sms_loginName" onclick="onkeyPhone()" onblur="OnVerifyPhone()" name="loginName" type="text" class="form-control inputInf phoneyz">
+											<label class="inputTit">密码:</label>
+											<input id="pwd" name="pwd" type="text" class="form-control inputInf phoneyz">
 											
 										
 										</div>
-						
+						                <br>
+									   <div id="rmes"></div>
 										<div class="form-group">
 											<div class="errMsg" id="p_message2" style="display:none;"></div>
-											<button type="button" onclick="personalSmsPasswordLogin();" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button></div>
+											<button type="button" onclick="accountLogin();" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button></div>
 										
 											
 											<div id="popup-captcha"></div>
@@ -137,19 +186,20 @@
 
 									<div class="form-group">
 										<div id="company_companyLoginName_error" style="display: none" class="alert-error"></div>
-										<label class="inputTit">手机号</label>
-										<input id="company_companyLoginName" name="loginName" type="text" class="form-control inputInf" placeholder="请输入手机号">
+										<label class="inputTit">手机号:</label>
+										<input id="phoneNumber" name="loginName" type="text" class="form-control inputInf" placeholder="请输入手机号">
 									</div>
 								
 									<div class="form-group">
-										<div id="company_mobilePhoneCode_error" style="display: none" class="alert-error">手机验证码不能为空！</div>
-										<label class="inputTit">验证码</label>
-										<input id="company_mobilePhoneCode" name="password" type="text" class="form-control inputInf" placeholder="请输入手机验证码">
-						
+										<label class="inputTit">验证码:</label>
+										<input id="code" name="password" type="text" class="form-control inputInf" width="70%" placeholder="请输入手机验证码">
+										<span class="send_time"><span class="border_line_left"><button type="button" id="code_btn" onclick="offerCode();" class="sms-btn">获取</button>
+									</span></span>
 									</div>
+									
 									<div class="form-group">
 										<div class="errMsg" id="p_message3" style="display:none;"></div>
-										<button type="button" onclick="companyLogin()" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+										<button type="button" onclick="" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
 									</div>
 								</form>
 								
