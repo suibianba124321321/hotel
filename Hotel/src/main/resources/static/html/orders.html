@@ -13,9 +13,6 @@
 $(function(){
 	$.ajax({
 		url:"/order/orders",
-		data:{
-			loginId:"1"
-		},
 		success:function(orders){
 			for(var i=0;i<orders.length;i++){
 				var order=orders[i];

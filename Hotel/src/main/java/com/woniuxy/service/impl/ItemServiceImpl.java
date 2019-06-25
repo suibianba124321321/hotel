@@ -53,10 +53,8 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
-	public List<Item> findItemsByOrderid(Integer id){
-		
-		List<Item> items=itemDAO.findItemsByOrdeId(id);
-		
+	public List<Item> findItemsByOrderid(Integer id){	
+		List<Item> items=itemDAO.findItemsByOrdeId(id);	
 		for(int i=0;i<items.size();i++){
 			Item item=items.get(i);
 			int personId=item.getPerson_id();
@@ -66,6 +64,20 @@ public class ItemServiceImpl implements ItemService{
 			items.get(i).setType(type);
 		}
 		
+		return items;
+	}
+
+	@Override
+	public List<Item> findItemsByOrdeIdAndflagEquelsZero(Integer order_id) {
+		List<Item> items = itemDAO.findItemsByOrdeIdAndflagEquelsZero(order_id);
+		for(int i=0;i<items.size();i++){
+			Item item=items.get(i);
+			int personId=item.getPerson_id();
+			Person person=personDAO.findPersonById(item.getPerson_id());
+			items.get(i).setPerson(person);
+			Type type=typeDAO.findTypeByid(item.getType_id());
+			items.get(i).setType(type);
+		}
 		return items;
 	}
 

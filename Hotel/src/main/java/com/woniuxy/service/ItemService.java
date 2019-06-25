@@ -7,4 +7,6 @@ import com.woniuxy.pojo.Item;
 public interface ItemService {
 
 	public List<Item> findItemsByOrderid(Integer id);
+	
+	public List<Item> findItemsByOrdeIdAndflagEquelsZero(Integer order_id);
 }

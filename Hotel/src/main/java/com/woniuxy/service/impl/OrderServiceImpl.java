@@ -94,7 +94,10 @@ public class OrderServiceImpl implements OrderService{
 		      public void run() {
 	     
 	        Order order=orderService.findOrderById(orderId);
-	       
+	       if(order==null){
+	    	   timer.cancel();
+	    	   return;
+	       }
 	        int orderState=order.getOrder_state();
 	         int auto=order.getAuto_cancel();
 	        
@@ -117,6 +120,7 @@ public class OrderServiceImpl implements OrderService{
 		map.put("msg", "创建成功");
 		//入住人员
 		Integer[] personIds=order.getPersonID();
+		System.out.println(order.getOrder_state()+"啦啦啦啦啦啦啦啦绿绿绿绿绿绿绿绿绿绿绿绿");
 		
 		SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd");
 		//获取订单的时间

@@ -31,4 +31,11 @@ public class ItemController {
 		
 		return itemService.findItemsByOrderid(id);
 	}
+	
+	@RequestMapping("/itemszero")
+	@ResponseBody
+	public List<Item> itemsFlagEquelsZero(Integer id){
+		
+		return itemService.findItemsByOrdeIdAndflagEquelsZero(id);
+	}
 }

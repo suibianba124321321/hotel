@@ -19,6 +19,8 @@ public interface ItemDAO {
 	public void deleteItem(Order order);
 	@Select("select * from item where order_id=#{orderid}")
 	public List<Item> findItemsByOrdeId(Integer order_id);
+	@Select("select * from item where order_id=#{orderid} and flag=0")
+	public List<Item> findItemsByOrdeIdAndflagEquelsZero(Integer order_id);
 
 
 }

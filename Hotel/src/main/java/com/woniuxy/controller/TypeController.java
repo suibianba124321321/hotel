@@ -46,9 +46,7 @@ public class TypeController {
 	@RequestMapping("/oneRoomType")
 	@ResponseBody
 	public Type detail(Integer typeid){	
-		
 		Type type = typeService.findTypeByid(typeid);
-		System.out.println(type);
 		return type;
 	}
 }
