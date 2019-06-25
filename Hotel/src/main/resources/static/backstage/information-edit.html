@@ -97,51 +97,54 @@
         			},
 				dataType:"json",
 				success:function(data){
-					alert("房间号："+data.room_id);
+					console.log(data);
+					var information=data.information;
+					var person=data.person;
+					var type =data.type;
 					var content="";
 					content+='<div class="layui-row">'
                     +'<div class="layui-form-item">'
                     +'<label for="L_email" class="layui-form-label">'
                     +'<span class="x-red">*</span>身份证号</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="idCard" name="idCard" required="" lay-verify="email" autocomplete="off" class="layui-input" disabled="disabled" value="214545435"></div>'
+                    +'<input type="text" id="idCard" name="idCard" required="" lay-verify="email" autocomplete="off" class="layui-input" disabled="disabled" value="'+person.idcard+'"></div>'
                     +'<div class="layui-form-mid layui-word-aux">'
                     +'<span class="x-red">*</span>请输入18位身份证号</div></div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>入住姓名</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="name" name="name" required="" lay-verify="nikename" autocomplete="off" class="layui-input" disabled="disabled" value="张三"></div>'
+                    +'<input type="text" id="name" name="name" required="" lay-verify="nikename" autocomplete="off" class="layui-input" disabled="disabled" value="'+person.name+'"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_pass" class="layui-form-label">'
                     +'<span class="x-red">*</span>手机号</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="tel" name="tel" required="" lay-verify="pass" autocomplete="off" class="layui-input" disabled="disabled" value="13545454545"></div>'
+                    +'<input type="text" id="tel" name="tel" required="" lay-verify="pass" autocomplete="off" class="layui-input" disabled="disabled" value="'+person.tel+'"></div>'
                     +'<div class="layui-form-mid layui-word-aux">请输入11位手机号</div></div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>房型</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="roomType" name="roomType" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="大床房"></div>'
+                    +'<input type="text" id="roomType" name="roomType" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="'+type.type+'"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>房间号</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="text" id="room_id" name="room_id" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="'+data.room_id+'"></div>'
+                    +'<input type="text" id="room_id" name="room_id" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="'+information.room_id+'"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>入住日期</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="date" id="in_time" name="in_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="'+data.in_time+'"></div>'
+                    +'<input type="date" id="in_time" name="in_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="'+information.in_time+'"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
                     +'<span class="x-red">*</span>离店日期</label>'
                     +'<div class="layui-input-inline">'
-                    +'<input type="date" id="out_time" name="out_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="'+data.out_time+'"></div>'
+                    +'<input type="date" id="out_time" name="out_time" required="" lay-verify="nikename" autocomplete="off" class="layui-input" value="'+information.out_time+'"></div>'
                     +'</div>'
                     +'<div class="layui-form-item">'
                     +'<label for="L_username" class="layui-form-label">'
@@ -176,7 +179,6 @@
         <script type="text/javascript">
         	//修改入住信息
         	function information_update(){
-        		alert(information_id);
         		$.ajax({
         			url:"../information/update",
         			type:"post",
@@ -187,9 +189,9 @@
         				out_time:$("#out_time").val(),
         				state:$("#state").val(),
         			},
-        			dataType:"json",
         			success:function(data){
         				alert(data);
+        				window.parent.location.reload();
         		}
         			
         		});

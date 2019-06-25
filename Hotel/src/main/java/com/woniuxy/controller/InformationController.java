@@ -56,6 +56,8 @@ public class InformationController {
 			List<Person> person = personService.findAllPerson();
 			//查找所有room
 			List<Room> room =roomService.findAll();
+			//查找所有的type
+			List<Type> type =roomTypeService.findAll();
 			//获取总页码
 			int totalPage=informationService.findTotalPage();
 			//将当前页入住信息存到map中
@@ -64,8 +66,10 @@ public class InformationController {
 			result.put("person", person);
 			//将room表信息存到map中
 			result.put("room", room);
+			//将type存到map中
+			result.put("type", type);
 			//将总页码存到map中
-			result.put("totalPage", 4);
+			result.put("totalPage", totalPage);
 			return result;
 		}
 		
@@ -108,9 +112,7 @@ public class InformationController {
 			//通过idcard 从person表中找到person_id
 			Person person = personService.findPersonByIdCard(idcard);
 			//将person_id、room_id、in_time、out_time插入到information表中
-//			information.setPerson_id(person.getPerson_id());
-			information.setPerson_id(1);
-			System.out.println(information);
+			information.setPerson_id(person.getPerson_id());
 			result=informationService.add(information);
 			return result;
 			
@@ -121,10 +123,12 @@ public class InformationController {
 		@RequestMapping("/check_out")
 		@ResponseBody
 		public String check_out(Information information){
-			System.out.println(information);
-			String result="退房成功";
+			String result="退房失败";
 			result=informationService.check_out(information);
-			System.out.println(result);
+			if(result.contains("成功")){
+				information=informationService.findOne(information);
+				result=roomService.updateStateByRoom_id(information);
+			}
 			return result;
 		}
 		
@@ -133,9 +137,15 @@ public class InformationController {
 		@RequestMapping("/update")
 		@ResponseBody
 		public String update(Information information){
-			System.out.println(information);
 			String result="修改失败";
+			System.out.println(information);
+			Information oldInformation=informationService.findOne(information);
+			System.out.println(oldInformation);
+			result=roomService.updateOldAndNewRoomStateByRoom_id(information,oldInformation);
 			result=informationService.update(information);
+//			if(result.contains("成功")){
+//				
+//			}
 			return result;
 		}
 		
@@ -168,8 +178,18 @@ public class InformationController {
 		//根据information_id查询单个入住信息
 		@RequestMapping("/findOne")
 		@ResponseBody
-		public Information findOne(Information information){
-			return informationService.findOne(information);
+		public Map<String,Object> findOne(Information information){
+			Map<String,Object> result=new HashMap<String,Object>();
+			information=informationService.findOne(information);
+			System.out.println(information);
+			Person person = personService.findPersonByPerson_id(information);
+			//根据房间号查找房间
+			Room room = roomService.findRoomByRoom_id(information);
+			Type type =roomTypeService.findTypeByRoom(room);
+			result.put("information", information);
+			result.put("person", person);
+			result.put("type", type);
+			return result;
 		}
 
 }

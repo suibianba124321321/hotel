@@ -2,8 +2,7 @@ package com.woniuxy.service;
 
 import java.util.List;
 
-
-
+import com.woniuxy.pojo.Information;
 import com.woniuxy.pojo.Room;
 
 public interface RoomService {
@@ -58,6 +57,12 @@ public interface RoomService {
 	 * 通过房间ID更新房间状态
 	 */
 	public void updateState(Room room);
+
+	public Room findRoomByRoom_id(Information information);
+	//通过房间号更改房间状态
+	public String updateStateByRoom_id(Information information);
+	//通过新旧room_id更改房间状态
+	public String updateOldAndNewRoomStateByRoom_id(Information information, Information oldInformation);
 
 	
 

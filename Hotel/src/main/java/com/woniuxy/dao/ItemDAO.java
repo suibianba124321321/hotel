@@ -21,7 +21,7 @@ public interface ItemDAO {
 	@Select("select * from item where order_id=#{orderid}")
 	public List<Item> findItemsByOrdeId(Integer order_id);
 	//通过person_id从item表中查询到item对象（order_id，price，number，deposit）
-	@Select("select * from item where person_id = #{person_id} and state = 0 and flag=0")
+	@Select("select * from item where person_id = #{person_id} and flag=0")
 	public Item findItemByPerson_id(Person person);
 
 

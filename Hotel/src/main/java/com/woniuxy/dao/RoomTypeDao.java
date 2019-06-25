@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.woniuxy.pojo.Information;
+import com.woniuxy.pojo.Room;
 import com.woniuxy.pojo.RoomDate;
 import com.woniuxy.pojo.Type;
 
@@ -59,6 +61,9 @@ public interface RoomTypeDao {
 	//通过type_id从room_type表中查询到room_type对象（type）
 	@Select("select * from room_type where type_id =#{type_id} and flag=0")
 	public Type findTypeByType_id(RoomDate roomDate);
+
+	@Select("select * from room_type where type_id=#{type_id} and flag=0")
+	public Type findTypeByRoom(Room room);
 	
 
 	

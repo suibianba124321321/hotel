@@ -2,6 +2,8 @@ package com.woniuxy.service;
 
 import java.util.List;
 
+import com.woniuxy.pojo.Information;
+import com.woniuxy.pojo.Room;
 import com.woniuxy.pojo.RoomDate;
 import com.woniuxy.pojo.Type;
 
@@ -46,5 +48,7 @@ public interface RoomTypeService {
 
 	//通过type_id从room_type表中查询到room_type对象（type）
 	public Type findTypeByType_id(RoomDate roomDate);
+
+	public Type findTypeByRoom(Room room);
 
 }

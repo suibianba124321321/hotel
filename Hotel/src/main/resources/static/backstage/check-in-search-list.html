@@ -73,10 +73,6 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="layui-card-header">
-                            <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-                            <button class="layui-btn" onclick="xadmin.open('登记入住','./information-add.html',600,600)"><i class="layui-icon"></i>登记入住</button>
-                        </div>
                         <!--展示页面  -->
                         <div class="layui-card-body layui-table-body layui-table-main" id="show_information_list">
 						
@@ -131,7 +127,6 @@
 				+'<th>离店日期</th>'
 				+'<th>入住价格</th>'
 				+'<th>状态</th>'
-				+'<th>操作</th></tr>'
 				+'</thead>';
 			for (var i = 0; i < informations.length; i++) {
 				for (var j = 0; j < person.length; j++) {
@@ -155,11 +150,6 @@
 				                +'<td>'+type[g].price+'</td>'
 				                +'<td class="td-status"  >'
 				                +'<span class="layui-btn layui-btn-normal layui-btn-mini" id="state'+i+'" >111</span></td>'
-				                +'<td class="td-manage">'
-				                +"<button class='layui-btn' onclick=\"xadmin.open('编辑','./information-edit.html?information_id="+informations[i].information_id+"',600,600)\">修改</button>"
-				                +"<button class='layui-btn' onclick='check_out("+informations[i].information_id+")'>退房</button>"
-				                +"<button class='layui-btn' onclick='check_delete("+informations[i].information_id+")'>删除</button>"
-				                +'</td>'
 				                +'</tr>'
 				                +'</tbody>';
 						}

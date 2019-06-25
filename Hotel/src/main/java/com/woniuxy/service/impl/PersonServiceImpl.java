@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.woniuxy.dao.LoginDAO;
 import com.woniuxy.dao.PersonDAO;
+import com.woniuxy.pojo.Information;
 import com.woniuxy.pojo.Person;
 import com.woniuxy.service.PersonService;
 @Service("personService")
@@ -57,6 +58,12 @@ public void setPersonDAO(PersonDAO personDAO) {
 	public Person findPersonByIdCard(String idcard) {
 		Person person =personDAO.findPersonByIdCard(idcard);
 		return person;
+	}
+
+	//通过person_id从person表中查询到person对象（入住姓名、手机号、person_id）
+	@Override
+	public Person findPersonByPerson_id(Information information) {
+		return personDAO.findPersonByPerson_id(information);
 	}
 
 }

@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import com.woniuxy.pojo.Information;
 import com.woniuxy.pojo.Room;
 
 /**
@@ -77,5 +79,15 @@ public interface RoomDAO {
 
 	@Select("select * from room where type_id=#{typeID}")
 	public List<Room> findRoomByType(Integer typeID);
+	@Select("select * from room where room_id=#{room_id} and flag=0")
+	public Room findRoomByRoom_id(Information information);
+	//修改
+	@Update("update room set state=2 where room_id=#{room_id} and flag=0")
+	public boolean updateOldRoomStateByOldRoom_id(Information oldInformation);
+	@Update("update room set state=1 where room_id=#{room_id} and flag=0")
+	public boolean updateNewRoomStateByNewRoom_id(Information information);
+	//退房
+	@Update("update room set state=2 where room_id=#{room_id} and flag=0")
+	public boolean updateStateByRoom_id(Information information);
 
 }
