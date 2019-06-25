@@ -66,6 +66,10 @@ public class OrderController {
 		
 		return msg;
 	}
-	
-	
+	@RequestMapping("/pay")
+	@ResponseBody
+	public String pay(Order order){
+		String msg=orderService.updateState(order);
+		return msg;
+	}
 }

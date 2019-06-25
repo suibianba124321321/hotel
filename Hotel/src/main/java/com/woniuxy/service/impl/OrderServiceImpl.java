@@ -279,7 +279,20 @@ public class OrderServiceImpl implements OrderService{
 		return "退房成功";
 
 	}
-	
-	
+	//所有订单
+	@Override
+	public List<Order> allOrder(){
+		List<Order> orders=orderDAO.findAllOrder();
+			
+		return orders;
+		}
+
+	@Override
+	public String updateState(Order order) {
+		
+		orderDAO.updateState( order);
+		
+		return "操作成功";
+	}
 	
 }

@@ -20,5 +20,8 @@ public interface OrderService {
 
 	//删除订单
 	public String deleteOrder(Order order);
-	
+	//所有订单
+	public List<Order> allOrder();
+	//线下支付成功后修改订单状态
+	public String updateState(Order order);
 }

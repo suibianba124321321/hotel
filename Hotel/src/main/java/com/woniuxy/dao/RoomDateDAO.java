@@ -21,4 +21,9 @@ public interface RoomDateDAO {
 	@Update("update room_date set flag=1 where order_id=#{order_id}")
 
 	public void delete(Order order);
+	
+	@Select("select room_id from room_date where flag=0 and date=#{today}")
+	public List<Integer> findNowRoom(String today);
+	@Update("update room_date set flag=1 where room_id=#{room_id}")
+	public void deleteByRoomId(Integer room_id);
 }

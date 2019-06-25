@@ -31,4 +31,18 @@ public class ItemController {
 		
 		return itemService.findItemsByOrderid(id);
 	}
+	
+	@RequestMapping("/inroom")
+	@ResponseBody
+	public String inRoom(Item item){
+		String msg=itemService.inRoom(item);
+		return msg;
+	}
+	
+	@RequestMapping("/outroom")
+	@ResponseBody
+	public String outRoom(Item item){
+		String msg=itemService.outRoom(item);
+		return msg;
+	}
 }

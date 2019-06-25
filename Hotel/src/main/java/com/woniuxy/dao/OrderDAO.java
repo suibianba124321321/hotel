@@ -27,9 +27,13 @@ public interface OrderDAO {
 	
 	@Select("update  `order` set flag=1 ,order_state=4 where order_id=#{order_id}")
 	public void deleteOrder(Order order);
-	@Select("select * from `order` where order_number=#{orderNumber} and flag=0")
+	@Select("select * from `order` where order_number=#{orderNumber} ")
 	public Order findOrderByNumber(String orderNumber);
-	@Select("select * from `order` where order_id=#{id} and flag=0")
+	@Select("select * from `order` where order_id=#{id} ")
 	public Order findOrderById(Integer id);
+	@Select("select * from `order` ")
+	public List<Order> findAllOrder();
+	@Update("update `order` set order_state=#{order_state} where  order_id=#{order_id}") 
+	public void updateState(Order order);
 
 }
