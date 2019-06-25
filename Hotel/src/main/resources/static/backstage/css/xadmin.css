@@ -354,7 +354,11 @@ body{
 }
 
 .layui-table td, .layui-table th{
+<<<<<<< HEAD
     min-width: 80px;
+=======
+    min-width: 40px;
+>>>>>>> refs/remotes/origin/zhongjian
 }
 
 table th, table td {
