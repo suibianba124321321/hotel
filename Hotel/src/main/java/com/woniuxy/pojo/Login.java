@@ -14,9 +14,24 @@ public class Login implements Serializable{
 	//会员id
 	private Integer member_id;
 	private Integer flag;
+	private String tel;
+	private Boolean rm;
 	
 	
 	
+	
+	public Boolean getRm() {
+		return rm;
+	}
+	public void setRm(Boolean rm) {
+		this.rm = rm;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
 	public Integer getLogin_id() {
 		return login_id;
 	}
@@ -47,11 +62,30 @@ public class Login implements Serializable{
 	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
+	
+	
+	public Login() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Login(Integer login_id, String account, String pwd, Integer member_id, Integer flag, String tel,
+			Boolean rm) {
+		super();
+		this.login_id = login_id;
+		this.account = account;
+		this.pwd = pwd;
+		this.member_id = member_id;
+		this.flag = flag;
+		this.tel = tel;
+		this.rm = rm;
+	}
 	@Override
 	public String toString() {
 		return "Login [login_id=" + login_id + ", account=" + account + ", pwd=" + pwd + ", member_id=" + member_id
-				+ ", flag=" + flag + "]";
+				+ ", flag=" + flag + ", tel=" + tel + ", rm=" + rm + "]";
 	}
+	
+
 	
 	
 	
