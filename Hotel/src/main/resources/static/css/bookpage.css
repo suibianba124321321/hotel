@@ -219,7 +219,7 @@ border:2px solid;
 .orderRoomInfo{
 width:24%;	
 border:12px solid #c0c0c0;
-margin-left:800px;
+margin:0 auto;
 border-radius:8px;	
 font-size: 23px;	
 }
