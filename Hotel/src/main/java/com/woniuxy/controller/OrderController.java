@@ -61,16 +61,13 @@ public class OrderController {
 	public String delete( Integer id){
 		Order order=new Order();
 		order.setOrder_id(id);
-		System.out.println(order);
 		String msg=orderService.deleteOrder(order);
-		
 		return msg;
 	}
 	
 	@RequestMapping("/oneorder")
 	@ResponseBody
 	public Order currentOrder(Integer orderid){
-		System.out.println(orderid);
 		Order order = orderService.findOrderById(orderid);
 		return order ;
 	}
