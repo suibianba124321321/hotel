@@ -153,20 +153,17 @@ function pay(orderId){
 
 
 	<div class="head">
-	<div class="headtitle"><a href="../">罗马假日酒店</a></div>
-	<!-- 从session中取值 为空的话显示登录注册-->
+	<div class="headtitle"><a href="/">罗马假日酒店</a></div>
+
+	<div  th:if="${session.login} != null" >
+	<div class="login"><a href="login/logout">注销</a></div>
+	<div class="loginimg"><img src="../img/logout.png" /> </div>
 	
+	<div class="login"><a href="../orders/all">订单</a></div>
+	<div class="loginimg"><img src="../img/order.png" /> </div>
 	
-	<div  th:if="${session.uid} ==null" >
-	<div class="login"> 登录 </div>
-	<div class="loginimg"><img src="../img/login1.png" /> </div>
-	<div class="login"> 注册 </div>
-	<div class="loginimg"><img src="../img/register.png" /> </div>
-	</div>
-	<!-- 从session中取值 不为空显示用户信息-->	
-	<div  th:if="${session.uid} != null" >
-	<div class="login" th:text="${session.uid}"></div>
-	<div class="login">用户：</div>
+	<div class="login" th:text="${session.login.account}"></div>
+	<div class="login">用户:</div>
 	<div class="loginimg"><img src="../img/register.png" /> </div>
 	</div>
 	</div>

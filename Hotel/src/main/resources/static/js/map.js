@@ -2,7 +2,7 @@
 window.onload = function(){
 	var map = new AMap.Map('wrapper',{
 		 center: [104.06658,30.659391],
-		 zoom:400
+		 zoom:20
 	});
 
 	var marker = new AMap.Marker({

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.woniuxy.dao.MemberDAO;
 import com.woniuxy.pojo.Member;
 import com.woniuxy.service.MemberService;
-@Service("memberServiceImpl")
+@Service("memberService")
 public class MemberServiceImpl implements MemberService{
 	@Resource
 	private MemberDAO memberDAO;
@@ -22,7 +22,6 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public Member findMemberByid(Integer member_id) {
-		
 		return memberDAO.findMemberByid(member_id);
 	}
 

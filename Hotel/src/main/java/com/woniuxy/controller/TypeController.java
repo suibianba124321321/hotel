@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.woniuxy.pojo.Type;
 import com.woniuxy.service.TypeService;
-import com.woniuxy.util.MemberUtil;
+import com.woniuxy.utils.MemberUtil;
 
 @Controller
 @RequestMapping("/type")
