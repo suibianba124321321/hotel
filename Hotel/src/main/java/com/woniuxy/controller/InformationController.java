@@ -159,7 +159,6 @@ public class InformationController {
 		@RequestMapping("/findList")
 		@ResponseBody
 		public Map<String,Object> findList(Information information,int currentpage){
-			System.out.println(information);
 			Map<String,Object> result=new HashMap<String,Object>();
 			Map<String,Object> queryMap=new HashMap<>();
 			queryMap.put("information", information);
@@ -220,10 +219,5 @@ public class InformationController {
 			} catch (Exception e) {
 				return new Person();
 			}
-			
-			
-			
-			
 		}
-
 }

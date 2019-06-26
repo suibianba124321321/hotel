@@ -67,7 +67,6 @@ public class InformationServiceImpl implements InformationService{
 		//根据页码获取下标
 		int index=(currentpage-1)*5;
 		queryMap.put("index", index);
-		System.out.println(index);
 		informations=informationDao.findList(queryMap);
 		return informations;
 	}
