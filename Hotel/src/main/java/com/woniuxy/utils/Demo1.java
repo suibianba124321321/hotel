@@ -14,14 +14,14 @@ import java.util.Map;
 
 import net.sf.json.JSONObject;
 
-//登录注册短信验证码获取
-public class JuHeDemo {
+// 预定酒店超时短信提醒
+public class Demo1 {
 	public static final String DEF_CHATSET = "UTF-8";
 	public static final int DEF_CONN_TIMEOUT = 30000;
 	public static final int DEF_READ_TIMEOUT = 30000;
 	public static String userAgent =  "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.66 Safari/537.36";
 
-	public static boolean mobileQuery(String tel,int tpl_id,StringBuffer code ){
+	public static boolean mobileQuery(String tel,int tpl_id){
 		String result =null;
 		boolean s=false;
 		String key="e32497bc82cd0e9e7b30e92353f65f53";    //这是appkey
@@ -29,7 +29,6 @@ public class JuHeDemo {
 		Map params = new HashMap();//请求参数
 			params.put("mobile",tel);//接受短信的用户手机号码
                         params.put("tpl_id",tpl_id);//您申请的短信模板ID，根据实际情况修改
-                        params.put("tpl_value","%23code%23%3d"+code);//您设置的模板变量，根据实际情况修改
 			params.put("key",key);//应用APPKEY(应用详细页查询)
 		try {
 			result = net(url, params, "GET");

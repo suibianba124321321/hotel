@@ -60,9 +60,9 @@ public class ShiroConfig {
 		map.put("/index.html", "anon");
 		map.put("/login.html", "anon");
 		map.put("/druid/**", "anon");
-		map.put("/user/login", "anon");
-		map.put("/user/register", "anon");
-		map.put("/**", "anon");
+		map.put("/register", "anon");
+		
+		map.put("/aaa.html", "user");
 	
 		map.put("/logout", "logout");
 		

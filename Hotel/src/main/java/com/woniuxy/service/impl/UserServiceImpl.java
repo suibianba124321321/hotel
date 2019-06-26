@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.woniuxy.dao.UserDao;
 import com.woniuxy.pojo.Login;
 import com.woniuxy.service.UserService;
+import com.woniuxy.utils.Demo1;
 import com.woniuxy.utils.JuHeDemo;
 import com.woniuxy.utils.RegexUtil;
 
@@ -116,9 +117,10 @@ public class UserServiceImpl implements UserService{
         session.setAttribute("logincode", rcode);
         //我的模板id
         int tpl_id=167814;
+        
         System.out.println("登录时验证码："+rcode);
 		if(ifPhoneExit!= null){
-			boolean flag = JuHeDemo.mobileQuery(login.getTel(), tpl_id, rcode);
+		boolean flag = JuHeDemo.mobileQuery(login.getTel(), tpl_id, rcode);
 			if(flag){
 				result="发送成功";
 			}

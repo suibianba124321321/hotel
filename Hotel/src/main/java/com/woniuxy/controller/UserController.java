@@ -57,7 +57,7 @@ public class UserController {
      //账号密码登录
      @RequestMapping("/accountLogin")
      @ResponseBody
-     public String accountLogin(Login login){
+     public String accountLogin(Login login,HttpSession session){
     	 System.out.println(login);
          String result="登录失败";
     	 //获取主体对象
@@ -65,8 +65,15 @@ public class UserController {
  		if(!currentUser.isAuthenticated()){
  			UsernamePasswordToken token=
  					new UsernamePasswordToken(login.getAccount(),login.getPwd());
+ 			if (login.getRm()==true) {
+ 				System.out.println(666);
+				token.setRememberMe(true);//记住我
+				//第一次登陆之后，关闭了浏览器，可以保证在session有效期内下一次打开浏览器时
+				//能够直接访问指定的页面   /url = user
+			}
  			try {
  				currentUser.login(token);
+ 				session.setAttribute("login", login);
  				 result="登录成功";
  			} catch (Exception e) {
  				result="登录失败";
@@ -96,7 +103,7 @@ public class UserController {
     	 }
     	 else{
     	 if(code.equals(loginCode.toString())){
-    		 
+    		 session.setAttribute("login", login);
     		 result="登录成功";
     	 }
     	}

@@ -32,6 +32,10 @@
 		    	$("#accountLogin").click(function(){
 			    	  var account=$("#account").val();
 			    	  var pwd=$("#pwd").val();
+			    	  var flag=false;
+			    	  if($("#rm").is(":checked")){
+			    		  flag=true;
+			    		    }
 			    	  if(account!=null && pwd !=null){
 			    		 $.ajax({
 			    			 url:"user/accountLogin",
@@ -39,6 +43,7 @@
 			    			 data:{
 			    				 account:$("#account").val(),
 			    				 pwd:$("#pwd").val(),
+			    				 rm:flag,
 			    			 },
 			    		     success:function(data){
 			    		    	 if(data=="登录成功"){
@@ -121,7 +126,7 @@
 	    <input type="hidden" id="ctx" value="">
 		<!--Login Reg Header Start-->
 		<div class="loginReg-header">
-			<div class="logo fl"><a href="http://www.wyn88.com/"><img src="./login_files/logo.gif"></a></div>
+			<div class="logo fl"><a><img src="./login_files/logo.jpg" height="65px" width="100px">&nbsp;罗&nbsp;马&nbsp;假&nbsp;日&nbsp;酒&nbsp;店</a></div>
 			<a href="index.html" class="back-home fr mt10">返回首页</a>
 		</div>
 	    <!--Login Reg Header End-->
@@ -134,7 +139,7 @@
 				<div class="loginReg-phone">
 					<img src="./login_files/phone.png" class="imgPhone">
 					<div class="infPhone">
-						<b>维也纳酒店微信</b>
+						<b>罗马假日酒店微信</b>
 						<ul>
 							<li>特价专区优惠享不停</li>
 							<li>真人客服24小时候命</li>
@@ -142,7 +147,7 @@
 						</ul>
 						<div class="code">
 							<img src="./login_files/code.png">
-							<i>扫描二维码关注维也纳官方微信</i>
+							<i>扫描二维码关注罗马酒店官方微信</i>
 						</div>
 					</div>
 				</div>
@@ -191,6 +196,10 @@
 										</div>
 						                <br>
 									   <div id="rmes"></div>
+									     <div align="right" >
+									      <input type="checkbox" id="rm" name="rm"><span style="font-size:18px;color:red;">记住我</span><br>
+									     </div>
+									   
 										<div class="form-group">
 											<div class="errMsg" id="p_message2" style="display:none;"></div>
 											<button type="button" id="accountLogin" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button></div>
@@ -225,9 +234,8 @@
 										<label class="inputTit">验证码:</label>
 										<input id="code" name="password" type="text" class="form-control inputInf" width="70%" placeholder="请输入手机验证码">
 									     <div style="text-align:right;">
-									        <button type="button" id="getcode">获取验证码</button>
+									        <button type="button" id="getcode"><span style="font-size:18px;color:black;">获取验证码</span></button>
 									     </div>
-									     
 									</div>
 									<div id="rrmes"></div>
 									<div class="form-group">
@@ -250,7 +258,7 @@
 		<!--Bottom Start-->
 		<div class="footer">
 			<div class="footer-copy">
-				<a href="" target="_blank">关于维也纳</a>
+				<a href="" target="_blank">关于罗马假日</a>
 				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 				<a href="" target="_blank">APP下载</a>
 				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -260,7 +268,7 @@
 				<a href="" target="_blank">供应商</a>
 				
 				<br>
-				成都维也纳国际酒店管理有限公司&nbsp;&nbsp;&nbsp;Copyright ©1998-2017&nbsp;&nbsp;&nbsp;wyn88.com&nbsp;&nbsp;&nbsp;<a href="">川ICP备 09078541</a><a href="" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./login_files/pic.gif"></a>
+				成都罗马假日酒店管理有限公司&nbsp;&nbsp;&nbsp;Copyright ©1998-2017&nbsp;&nbsp;&nbsp;wyn88.com&nbsp;&nbsp;&nbsp;<a href="">川ICP备 09078541</a><a href="" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./login_files/pic.gif"></a>
 				<a id="_pingansec_bottomimagelarge_brand" target="_blank" href="" src="./login_files/brand_bottom_large.jpg"></a>
 					<a target="_blank" href="" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
 					<img src="./login_files/jgawb.png" style="float:left;"><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">川公网安备 44030702000315号</p>
