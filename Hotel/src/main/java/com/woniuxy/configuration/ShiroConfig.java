@@ -12,10 +12,16 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.woniuxy.realms.AdmineRealms;
 
 
-/*@Configuration*/
+
+@Configuration
 public class ShiroConfig {
+	/**
+	 * 加密配置
+	 * @return
+	 */
 	@Bean
 	public CredentialsMatcher credentialsMatcher(){
 		HashedCredentialsMatcher matcher=new HashedCredentialsMatcher();
@@ -32,32 +38,57 @@ public class ShiroConfig {
 		userRealm.setCredentialsMatcher(matcher);
 		return userRealm;
 	}*/
+	
 	@Bean
-	public SecurityManager securityManager(){
-		DefaultSecurityManager securityManager=new DefaultWebSecurityManager();
+	public AdmineRealms admineRealms(CredentialsMatcher matcher){
 		
+		AdmineRealms admineRealms=new AdmineRealms();
+		admineRealms.setCredentialsMatcher(matcher);
+		return admineRealms;
+	}
+	
+	
+	/**
+	 * 安全管理器
+	 * @return
+	 */
+	@Bean
+	public SecurityManager securityManager(AdmineRealms admineRealms){
+		DefaultSecurityManager securityManager=new DefaultWebSecurityManager();
+		securityManager.setRealm(admineRealms);
 		
 		return securityManager;
 	}
+	
+	/**
+	 * 工厂设置对应的过滤条件
+	 * @param securityManager
+	 * @return
+	 */
 	@Bean
 	public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager){
 		
 		ShiroFilterFactoryBean bean=new ShiroFilterFactoryBean();
 		bean.setSecurityManager(securityManager);
 		
-		bean.setLoginUrl("/html/login.html");
+		bean.setLoginUrl("/backstage/login.html");
 		
-		bean.setUnauthorizedUrl("/html/error.html");
+		bean.setUnauthorizedUrl("/backstage/error.html");
 		
 		Map<String, String> map=new HashMap<>();
-		map.put("/index.html", "anon");
-		map.put("/html/login.html", "anon");
-		map.put("/druid/**", "anon");
-		map.put("/user/login", "anon");
-		map.put("/user/register", "anon");
+        //后台页面登录+资源
+		map.put("/js/**", "anon");
+		map.put("/lib/**", "anon");
+		map.put("/manager/login", "anon");
+		map.put("/backstage/css/**", "anon");
+		map.put("/backstage/error.html", "anon");
+		map.put("/backstage/images/**", "anon");
+		map.put("/manager/logout", "logout");
+		map.put("/manager/updateall", "roles[Superuser]");
+		map.put("/manager/delete", "roles[Superuser]");
+		map.put("/manager/add", "roles[Superuser]");
 		
 		
-		map.put("/user/logout", "logout");
 		
 		map.put("/**", "authc");
 		

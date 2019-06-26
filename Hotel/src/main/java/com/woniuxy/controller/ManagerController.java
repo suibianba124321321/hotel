@@ -5,12 +5,23 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.crypto.hash.SimpleHashRequest;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.woniuxy.datacenter.DataCenter;
 import com.woniuxy.pojo.Manager;
 import com.woniuxy.service.ManagerService;
+import com.woniuxy.util.CustomizedToken;
+import com.woniuxy.util.LoginType;
 /**
  * 后台人员controller操作   manager
  * @author Administrator
@@ -26,7 +37,7 @@ import com.woniuxy.service.ManagerService;
 public class ManagerController {
 	@Resource
 	private ManagerService managerService;
-	
+	private static final String ADMIN_LOGIN_TYPE = LoginType.ADMIN.toString();
 	
 	public ManagerService getManagerService() {
 		return managerService;
@@ -40,11 +51,31 @@ public class ManagerController {
      * @param account  登录账号
      * @return 返回成功、失败
      */
-    //@ResponseBody
+    
 	@RequestMapping("/login")
 	public String Login(Manager old_Manager,HttpSession session){
 		String login = managerService.login(old_Manager);
 		
+		  // 1、得到Subject
+	    Subject subject = SecurityUtils.getSubject();
+
+	    if(!subject.isAuthenticated()){
+	    	
+	    		CustomizedToken token = new CustomizedToken(old_Manager.getAccount(),old_Manager.getPwd(),ADMIN_LOGIN_TYPE );
+	    		token.setRememberMe(false);
+	    		try {	
+	    			subject.login(token);
+	    			session.setAttribute("account", old_Manager.getAccount());
+	    			return "redirect:/backstage/index.html";
+			} catch (IncorrectCredentialsException ice) {
+				   System.out.println("密码不正确");
+				    return "redirect:/backstage/login.html";
+			}catch (AuthenticationException ae) {
+                System.out.println(ae.getMessage());
+                return "redirect:/backstage/error.html";
+            }
+	    	
+	    }
 		if(login.equals("success")){
 			session.setAttribute("account", old_Manager.getAccount());
 			return "redirect:/backstage/index.html";
@@ -60,6 +91,8 @@ public class ManagerController {
     @ResponseBody
 	@RequestMapping("/updatePwd")
 	public String changePwdByAccount(Manager manager){
+    	String pwd = manager.getPwd();
+    	manager.setPwd(new SimpleHash("MD5", pwd, null, 1024).toString());
 		managerService.updatePwd(manager);
 		return "success";
 	}
@@ -70,9 +103,10 @@ public class ManagerController {
     @ResponseBody
   	@RequestMapping("/updateall")
   	public String updateAll(Manager manager){
+    	String pwd = manager.getPwd();
+    	manager.setPwd(new SimpleHash("MD5", pwd, null, 1024).toString());
   		managerService.updateAll(manager);
-  		System.out.println("xiugai");
-  		System.out.println(manager);
+
   		return "success";
   	}
 	
@@ -108,9 +142,7 @@ public class ManagerController {
     @ResponseBody
 	@RequestMapping("/findOneById")
     public Manager findOneById(Manager manager){
-    	System.out.println(manager);
     	Manager one = managerService.findOneByID(manager);
-    	System.out.println(one);
     	return one;
     }
     
@@ -137,10 +169,13 @@ public class ManagerController {
     @ResponseBody
 	@RequestMapping("/adds")
     public String add(Manager manager){
+    	String pwd = manager.getPwd();
+    	manager.setPwd(new SimpleHash("MD5", pwd, null, 1024).toString());
     	managerService.insert(manager);
     	return "新增成功";
     }
-	
+    
+ 
 	
 
 }

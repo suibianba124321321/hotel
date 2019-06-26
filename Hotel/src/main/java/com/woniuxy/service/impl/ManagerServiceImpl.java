@@ -3,6 +3,7 @@ package com.woniuxy.service.impl;
 
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,7 @@ public class ManagerServiceImpl implements ManagerService{
 
 
 	@Override
+	@RequiresRoles(value={"Superuser"})
 	public void insert(Manager manager) {
 
 		managerDao.insert(manager);
@@ -57,12 +59,14 @@ public class ManagerServiceImpl implements ManagerService{
 
 
 	@Override
+	@RequiresRoles(value={"Superuser"})
 	public void deleteByName(Manager manager) {
 		managerDao.deleteByName(manager);
 		
 	}
 	
 	@Override
+	@RequiresRoles(value={"Superuser"})
 	public void deleteByID(Manager manager) {
 		managerDao.deleteByID(manager);
 		

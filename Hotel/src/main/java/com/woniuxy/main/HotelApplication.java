@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @MapperScan("com.woniuxy.dao")
 @ComponentScan({"com.woniuxy.service",
 	"com.woniuxy.controller",
-	/*"com.woniuxy.configuration"*/
+	"com.woniuxy.configuration"
 	})
 public class HotelApplication {
 

@@ -14,7 +14,7 @@ import com.woniuxy.pojo.Room;
  * @author Administrator
  *
  */
-public interface RoomDao {
+public interface RoomDAO {
 	/**
 	 * 新增房间
 	 */
