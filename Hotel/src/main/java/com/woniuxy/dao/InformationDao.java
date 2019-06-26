@@ -5,9 +5,12 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 
 import com.woniuxy.pojo.Information;
+import com.woniuxy.provider.InformationProvider;
+import com.woniuxy.provider.OrderProvider;
 
 public interface InformationDao {
 	//添加入住信息
@@ -23,9 +26,10 @@ public interface InformationDao {
 	@Update("update information set flag=1 where information_id=#{information_id} and flag=0")
 	public boolean delete(Information information);
 	//根据条件查询入住信息
-	@Select("select * from information where 1=1")
+	@SelectProvider(type=InformationProvider.class,method="select")
 	public List<Information> findList(Map<String,Object> queryMap);
 	//模糊搜索总条数
+	@SelectProvider(type=InformationProvider.class,method="selectCount")
 	public Integer getTotal(Map<String,Object> queryMap);
 	//根据information_id查询单个入住信息
 	@Select("select * from information where information_id=#{information_id}")

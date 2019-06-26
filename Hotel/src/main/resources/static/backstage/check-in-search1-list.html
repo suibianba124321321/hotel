@@ -58,6 +58,7 @@
                 <div class="layui-col-md12">
                     <div class="layui-card">
                         <div class="layui-card-body ">
+                            <form class="layui-form layui-col-space5">
                                 <div class="layui-inline layui-show-xs-block">
                                     <input class="layui-input"  autocomplete="off" placeholder="开始日" name="start" id="start">
                                 </div>
@@ -68,9 +69,10 @@
                                     <input type="text" name="username"  placeholder="请输入姓名" autocomplete="off" class="layui-input" id="username">
                                 </div>
                                 <div class="layui-inline layui-show-xs-block">
-                                    <button class="layui-btn" onclick="findList()">
-                                    <i class="layui-icon">&#xe615;</i></button>
+                                    <button class="layui-btn"  lay-submit="" lay-filter="sreach"><a onclick="findList()">
+                                    <i class="layui-icon">&#xe615;</i></a></button>
                                 </div>
+                            </form>
                         </div>
                         <!--展示页面  -->
                         <div class="layui-card-body layui-table-body layui-table-main" id="show_information_list">
@@ -94,108 +96,101 @@
     
     
     <script type="text/javascript">
-    //展示页面
-	function showInformation(pcurrentpage){
-	$.ajax({
-		url:"../information/list",
-		type:"POST",
-		data:{
-			currentpage:pcurrentpage
-		},
-		success:function(data){
-			console.log(data)
-			var informations=data.informations;
-			var totalPage=data.totalPage;
-			var person=data.person;
-			var room=data.room;
-			var type=data.type;
-			var content="";
-			content+='<table class="layui-table layui-form">'
-				+'<thead>'
-				+'<tr>'
-				+'<th>'
-				+'<input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">'
-				+'</th>'
-				+'<th>ID</th>'
-				+'<th>身份证号</th>'
-				+'<th>入住姓名</th>'
-				+'<th>手机号</th>'
-				+'<th>房型</th>'
-				+'<th>房间号</th>'
-				+'<th>入住日期</th>'
-				+'<th>离店日期</th>'
-				+'<th>入住价格</th>'
-				+'<th>状态</th>'
-				+'</thead>';
-			for (var i = 0; i < informations.length; i++) {
-				for (var j = 0; j < person.length; j++) {
-					for (var k = 0; k < room.length; k++) {
-						for (var g = 0; g < type.length; g++) {
-						if(informations[i].person_id==person[j].person_id && 
-								informations[i].room_id==room[k].room_id && room[k].type_id==type[g].type_id){
-							content+='<tbody>'
-				                +'<tr>'
-				                +'<td>'
-				                +'<input type="checkbox" name="id" value="1"   lay-skin="primary">' 
-				                +'</td>'
-				                +'<td >'+informations[i].information_id+'</td>'
-				                +'<td>'+person[j].idcard+'</td>'
-				                +'<td>'+person[j].name+'</td>'
-				                +'<td>'+person[j].tel+'</td>'
-				                +'<td>'+type[g].type+'</td>'
-				                +'<td>'+room[k].room_id+'</td>'
-				                +'<td>'+informations[i].in_time+'</td>'
-				                +'<td>'+informations[i].out_time+'</td>'
-				                +'<td>'+type[g].price+'</td>'
-				                +'<td class="td-status"  >'
-				                +'<span class="layui-btn layui-btn-normal layui-btn-mini" id="state'+i+'" >111</span></td>'
-				                +'</tr>'
-				                +'</tbody>';
-						}
-							
-						}
-					}
-					
-				}
-				
-			}
-			+'</table>';
-			$("#show_information_list").html(content);
-			for (var i = 0; i < informations.length; i++) {
-				if(informations[i].state==0){
-                	$("#state"+i).text("已入住 ");
-                }else{
-                	$("#state"+i).text("已结算");
-                }
-			}
-			 $("#totalPage").html(totalPage);
-			$("#currentPage").html(pcurrentpage);
+    (function($){
+		$.getUrlParam = function(name)
+		{
+		var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r!=null) return unescape(r[2]); return null;
 		}
-	});
-	}
-	showInformation(1);
-	
-	function findList(){
+		})(jQuery);
+    //展示页面
+	function findList(pcurrentpage){
 		$.ajax({
-			url:"../information/findPersonByName",
-			type:"post",
+			url:"../information/findList",
+			type:"POST",
 			data:{
-				name:$("#username").val(),
+				currentpage:pcurrentpage,
+				in_time:$.getUrlParam('start'),
+				out_time:$.getUrlParam('end'),
+				person_id:$.getUrlParam('personid')
 			},
 			success:function(data){
-				var personid=data.person_id;
-				if(personid==null){
-					personid=0;
+				alert(7)
+				console.log(data)
+				var informations=data.informations;
+				var totalPage=data.totalPage;
+				var person=data.person;
+				var room=data.room;
+				var type=data.type;
+				var content="";
+				content+='<table class="layui-table layui-form">'
+					+'<thead>'
+					+'<tr>'
+					+'<th>'
+					+'<input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">'
+					+'</th>'
+					+'<th>ID</th>'
+					+'<th>身份证号</th>'
+					+'<th>入住姓名</th>'
+					+'<th>手机号</th>'
+					+'<th>房型</th>'
+					+'<th>房间号</th>'
+					+'<th>入住日期</th>'
+					+'<th>离店日期</th>'
+					+'<th>入住价格</th>'
+					+'<th>状态</th>'
+					+'</thead>';
+				 for (var i = 0; i < informations.length; i++) {
+					for (var j = 0; j < person.length; j++) {
+						for (var k = 0; k < room.length; k++) {
+							for (var g = 0; g < type.length; g++) {
+							if(informations[i].person_id==person[j].person_id && 
+									informations[i].room_id==room[k].room_id && room[k].type_id==type[g].type_id){
+								content+='<tbody>'
+					                +'<tr>'
+					                +'<td>'
+					                +'<input type="checkbox" name="id" value="1"   lay-skin="primary">' 
+					                +'</td>'
+					                +'<td >'+informations[i].information_id+'</td>'
+					                +'<td>'+person[j].idcard+'</td>'
+					                +'<td>'+person[j].name+'</td>'
+					                +'<td>'+person[j].tel+'</td>'
+					                +'<td>'+type[g].type+'</td>'
+					                +'<td>'+room[k].room_id+'</td>'
+					                +'<td>'+informations[i].in_time+'</td>'
+					                +'<td>'+informations[i].out_time+'</td>'
+					                +'<td>'+type[g].price+'</td>'
+					                +'<td class="td-status"  >'
+					                +'<span class="layui-btn layui-btn-normal layui-btn-mini" id="state'+i+'" >111</span></td>'
+					                +'</tr>'
+					                +'</tbody>';
+							}
+								
+							}
+						}
+						
+					}
+					
+				} 
+				+'</table>';
+				$("#show_information_list").html(content);
+				for (var i = 0; i < informations.length; i++) {
+					if(informations[i].state==0){
+	                	$("#state"+i).text("入住中");
+	                }else{
+	                	$("#state"+i).text("已结算");
+	                }
 				}
-		window.location.href ="./check-in-search1-list.html?start="+$("#start").val()+"&end="+$("#end").val()+"&personid="+personid; 
+				 $("#totalPage").html(totalPage);
+				$("#currentPage").html(pcurrentpage);
 			}
-		})
-		
+		});
 		}
+	findList(1);
 	
     //退房
     function check_out(information_id){
-    	alert(information_id);
     	$.ajax({
     		url:"../information/check_out",
     		type:"post",
@@ -211,7 +206,6 @@
     
     //删除
     function check_delete(information_id){
-    	alert(information_id);
     	$.ajax({
     		url:"../information/delete",
     		type:"post",
@@ -230,18 +224,18 @@
     	var currentpage=parseInt($("#currentPage").html());
     	var totalPage=parseInt($("#totalPage").html());
     	if(totalPage>currentpage){
-    		showInformation(currentpage+1);
+    		findList(currentpage+1);
     	}
     }
     function prePage(){
     	var currentpage=parseInt($("#currentPage").html());
     	if(currentpage>1){
-    		showInformation(currentpage-1);
+    		findList(currentpage-1);
     	}
     }
     function endPage(){
     	var totalPage=parseInt($("#totalPage").html());
-    	showInformation(totalPage);
+    	findList(totalPage);
     }
     
     

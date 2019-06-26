@@ -34,5 +34,7 @@ public Person findPersonByIdCard(String idcard);
 //通过person_id从person表中查询到person对象（入住姓名、手机号、person_id）
 @Select("select * from person where person_id=#{person_id} and flag=0")
 public Person findPersonByPerson_id(Information information);
+@Select("select * from person where name like CONCAT('%',#{name},'%') and flag =0")
+public Person findPersonByName(Person person);
 
 }

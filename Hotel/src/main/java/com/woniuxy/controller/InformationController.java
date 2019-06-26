@@ -138,14 +138,11 @@ public class InformationController {
 		@ResponseBody
 		public String update(Information information){
 			String result="修改失败";
-			System.out.println(information);
 			Information oldInformation=informationService.findOne(information);
-			System.out.println(oldInformation);
 			result=roomService.updateOldAndNewRoomStateByRoom_id(information,oldInformation);
-			result=informationService.update(information);
-//			if(result.contains("成功")){
-//				
-//			}
+			if(result.contains("成功")){
+				result=informationService.update(information);
+			}
 			return result;
 		}
 		
@@ -161,18 +158,40 @@ public class InformationController {
 		//根据条件查询入住信息
 		@RequestMapping("/findList")
 		@ResponseBody
-		public List<Information> findList(Map<String,Object> queryMap){
-			
-			return informationService.findList(queryMap);
-			
-		}
-		
-		//模糊搜索总条数
-		@RequestMapping("/getTotal")
-		@ResponseBody
-		public Integer getTotal(Map<String,Object> queryMap){
-			return informationService.getTotal(queryMap);
-			
+		public Map<String,Object> findList(Information information,int currentpage){
+			System.out.println(information);
+			Map<String,Object> result=new HashMap<String,Object>();
+			Map<String,Object> queryMap=new HashMap<>();
+			queryMap.put("information", information);
+			if(information.getPerson_id()==0){
+				queryMap.put("name", "");
+			}else{
+			Person person1=personService.findPersonByPerson_id(information);
+			String name=person1.getName();
+			queryMap.put("name", name);}
+			queryMap.put("currentpage", currentpage);
+			//根据当前页码查询入住信息
+			List<Information> informations = informationService.findList(queryMap);
+			System.out.println(informations);
+			//查找所有person
+			List<Person> person = personService.findAllPerson();
+			//查找所有room
+			List<Room> room =roomService.findAll();
+			//查找所有的type
+			List<Type> type =roomTypeService.findAll();
+			//获取总页码
+			int totalPage=informationService.getTotal(queryMap);
+			//将当前页入住信息存到map中
+			result.put("informations", informations);
+			//将person表信息存到map中
+			result.put("person", person);
+			//将room表信息存到map中
+			result.put("room", room);
+			//将type存到map中
+			result.put("type", type);
+			//将总页码存到map中
+			result.put("totalPage", totalPage);
+			return result;
 		}
 		
 		//根据information_id查询单个入住信息
@@ -181,7 +200,6 @@ public class InformationController {
 		public Map<String,Object> findOne(Information information){
 			Map<String,Object> result=new HashMap<String,Object>();
 			information=informationService.findOne(information);
-			System.out.println(information);
 			Person person = personService.findPersonByPerson_id(information);
 			//根据房间号查找房间
 			Room room = roomService.findRoomByRoom_id(information);
@@ -190,6 +208,22 @@ public class InformationController {
 			result.put("person", person);
 			result.put("type", type);
 			return result;
+		}
+		
+		//模糊搜索，通过姓名查询person对象
+		@RequestMapping("/findPersonByName")
+		@ResponseBody
+		public Person findPersonByName(Person person){
+			try {
+				person=personService.findPersonByName(person);
+				return person;
+			} catch (Exception e) {
+				return new Person();
+			}
+			
+			
+			
+			
 		}
 
 }

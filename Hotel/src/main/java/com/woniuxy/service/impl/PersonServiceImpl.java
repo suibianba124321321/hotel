@@ -66,4 +66,10 @@ public void setPersonDAO(PersonDAO personDAO) {
 		return personDAO.findPersonByPerson_id(information);
 	}
 
+	@Override
+	public Person findPersonByName(Person person) {
+		
+		return personDAO.findPersonByName(person);
+	}
+
 }

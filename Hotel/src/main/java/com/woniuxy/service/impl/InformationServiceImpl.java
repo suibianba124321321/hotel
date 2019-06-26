@@ -62,14 +62,23 @@ public class InformationServiceImpl implements InformationService{
 	//根据条件查询入住信息
 	@Override
 	public List<Information> findList(Map<String, Object> queryMap) {
-		return informationDao.findList(queryMap);
+		List<Information> informations=null;
+		int currentpage=(int) queryMap.get("currentpage");
+		//根据页码获取下标
+		int index=(currentpage-1)*5;
+		queryMap.put("index", index);
+		System.out.println(index);
+		informations=informationDao.findList(queryMap);
+		return informations;
 	}
 
 	//模糊搜索总条数
 	@Override
 	public Integer getTotal(Map<String, Object> queryMap) {
-		// TODO Auto-generated method stub
-		return informationDao.getTotal(queryMap);
+		int totalPage=0;
+		int totalIndex=informationDao.getTotal(queryMap);
+		totalPage=totalIndex%5==0?totalIndex/5:totalIndex/5+1;
+		return totalPage;
 	}
 
 	//根据information_id查询单个入住信息
