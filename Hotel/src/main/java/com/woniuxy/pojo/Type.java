@@ -109,7 +109,6 @@ public class Type implements Serializable {
 	public String toString() {
 		return "Type [type_id=" + type_id + ", type=" + type + ", price=" + price + ", description=" + description
 				+ ", deposit=" + deposit + ", number=" + number + ", flag=" + flag + ", img=" + img + "]";
-
 	}
 	
 }

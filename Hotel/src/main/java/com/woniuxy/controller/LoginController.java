@@ -14,7 +14,7 @@ import com.woniuxy.pojo.Person;
 import com.woniuxy.service.LoginService;
 
 @Controller
-@RequestMapping("/loginer")
+@RequestMapping("/login")
 public class LoginController {
 @Resource
 private LoginService loginService;	
@@ -34,17 +34,21 @@ public void setLoginService(LoginService loginService) {
 @ResponseBody
 //通过登录用户查询出已存在的person住户 
 public List<Person>	allPerson(HttpSession session){
-	/*Object attribute = session.getAttribute("uid");
-	int uid=(int) attribute;*/
-	int uid=1001;
-	Login login = loginService.findLoginByid(uid);
+	Object object = session.getAttribute("login");
+	Login ologin=(Login) object;
+System.out.println(ologin);
+	Login login = loginService.findLoginByid(ologin.getLogin_id());
 	List<Person> persons = login.getPersons();
 	return persons;
-	/*if(attribute!=null){		
-		
-	}*/
-	/*return null*/
 	
 	}
-	
+@RequestMapping("/logout")
+public String logout(HttpSession session){
+	session.removeAttribute("login");
+	return "html/bookpage.html";
+}
+
+
+
+
 }

@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0036)http://www.wyn88.com/user/login.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=9">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<!-- Favicon -->
+		
+		<link rel="shortcut icon" href="http://www.wyn88.com/images/favicon.ico">
+		<title>login</title>
+		<meta name="keywords" content="会员注册,免费注册,酒店会员注册">
+		<meta name="description" content="会员注册页面提供维也纳酒店会员在线免费注册，仅需简单填写即可轻松完成酒店会员注册，注册成功预订酒店低至8.5折优惠，2倍积分，赠送早餐，会员注册从这里开始。">
+
+		<link href="./login_files/bootstrap.css" rel="stylesheet" type="text/css">
+		<link href="./login_files/public.css" rel="stylesheet" type="text/css">
+		<link href="./login_files/style.css" rel="stylesheet" type="text/css">
+		<script charset="utf-8" src="./login_files/v.js.下载"></script><script type="text/javascript" async="" src="./login_files/ubcfg.js.下载"></script><script type="text/javascript" async="" src="./login_files/gs.js.下载"></script><script type="text/javascript" src="./login_files/jquery-1.12.4.min.js.下载"></script>
+		<script type="text/javascript" src="./login_files/common.js.下载"></script>
+		<script src="./login_files/SpryMenuBar.js.下载" type="text/javascript"></script>
+		<script src="./login_files/bootstrap.js.下载" type="text/javascript"></script>
+		<script src="./login_files/viennaLoginRevision.js.下载" type="text/javascript"></script>
+		<link href="./login_files/artDialog.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="./login_files/jquery.artDialog.js.下载"></script>
+		
+		<script src="./login_files/gt.js.下载"></script>
+		
+		<script type="text/javascript" language="javascript" src="">
+		    
+		        //账号密码登录 
+		     function accountLogin(){
+		    	  var account=$("#account").val();
+		    	  var pwd=$("#pwd").val();
+		    	  if(account!=null && pwd !=null){
+		    		 $.ajax({
+		    			 url:"user/accountLogin",
+		    			 type:"POST",
+		    			 data:{
+		    				 account:$("#account").val(),
+		    				 pwd:$("#pwd").val(),
+		    			 },
+		    		     success:function(data){
+		    		    	 alert(data)
+		    		    	 if(data=="登录成功"){
+		    		    		 window.location.href="index.html";
+		    		    	 }
+		    		    	 else{
+		    		    		 $("#rmes").html("登录失败,请重新输入");
+		    		    	 }
+		    		     }
+		    		 })
+		    	  }
+		      }
+		
+		     //点击验证码获取
+		     function offerCode(){
+		    	val tel=$("#phoneNumber").val();
+		    	alert(999);
+		    	var isMobile=/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+                if(!tel){
+                     $('#rrmes').html('请输入手机号码，不能为空');
+                }else if (!isMobile.test(tel)) {
+                    $('#rrmes').html('请输入有效的手机号码');
+                }
+                else{
+                	$.ajax({
+                		url:"user/code",
+                		type:"POST",
+                		data:{
+		    				 tel:$("#phoneNumber").val(),
+		    			 },
+		    			 dataType:"json",
+		    			 success:function(data){
+		    				 if(data=="账号不存在，请你先注册"){
+		    					 $("#rrmes").html("登录失败,请重新输入");
+		    				 }
+		    				 else{
+		    					 $('#rrmes').html(data);
+		    				 }
+		    			 }
+                	})
+                }
+		    }  
+		        
+		</script>
+		
+		
+	</head>
+
+	<body><div class="" style="display: none; position: absolute;"><div class="aui_outer"><table class="aui_border"><tbody><tr><td class="aui_nw"></td><td class="aui_n"></td><td class="aui_ne"></td></tr><tr><td class="aui_w"></td><td class="aui_c"><div class="aui_inner"><table class="aui_dialog"><tbody><tr><td colspan="2" class="aui_header"><div class="aui_titleBar"><div class="aui_title" style="cursor: move;"></div><a class="aui_close" href="javascript:/*artDialog*/;">×</a></div></td></tr><tr><td class="aui_icon" style="display: none;"><div class="aui_iconBg" style="background: none;"></div></td><td colspan="2" class="aui_main" style="width: auto; height: auto;"><div class="aui_content" style="padding: 20px 25px;"></div></td></tr><tr><td colspan="2" class="aui_footer"><div class="aui_buttons" style="display: none;"></div></td></tr></tbody></table></div></td><td class="aui_e"></td></tr><tr><td class="aui_sw"></td><td class="aui_s"></td><td class="aui_se" style="cursor: se-resize;"></td></tr></tbody></table></div></div>
+	    <input type="hidden" id="ctx" value="">
+		<!--Login Reg Header Start-->
+		<div class="loginReg-header">
+			<div class="logo fl"><a href="http://www.wyn88.com/"><img src="./login_files/logo.gif"></a></div>
+			<a href="index.html" class="back-home fr mt10">返回首页</a>
+		</div>
+	    <!--Login Reg Header End-->
+		
+
+		<!--Login Reg Box Start-->
+		<div class="loginReg-wrapper login-height">
+			<!--Login Reg inBox-->
+			<div class="loginReg-viewbox login-margin login-weight">
+				<div class="loginReg-phone">
+					<img src="./login_files/phone.png" class="imgPhone">
+					<div class="infPhone">
+						<b>维也纳酒店微信</b>
+						<ul>
+							<li>特价专区优惠享不停</li>
+							<li>真人客服24小时候命</li>
+							<li>参与互动赢丰厚大奖</li>
+						</ul>
+						<div class="code">
+							<img src="./login_files/code.png">
+							<i>扫描二维码关注维也纳官方微信</i>
+						</div>
+					</div>
+				</div>
+				<div class="loginReg-panel">
+					<input type="hidden" id="actionType" name="actionType" value="0">
+					<input type="hidden" id="CodeToken" name="CodeToken" value="a0848dfffe416d36ed1ee5fe2b369e8b">
+					<input type="hidden" id="imagePersonalUrl" name="imagePersonalUrl" value="user/imagePersonalLogin.html">
+					<input type="hidden" id="generateDynPasswordUrl" name="generateDynPasswordUrl" value="user/generateDynPassword.html">
+					<input type="hidden" id="imageCompanyUrl" name="imageCompanyUrl" value="user/imageCompanyLogin.html">
+					<input type="hidden" id="toRegisterUrl" name="toRegisterUrl" value="user/joinstep.html">
+					<input type="hidden" id="toQQLoginUrl" name="toQQLoginUrl" value="user/qqlogin.html">
+					<input type="hidden" id="toWeiboLoginUrl" name="toWeiboLoginUrl" value="user/weibologin.html">
+					<input type="hidden" id="toWeixinLoginUrl" name="toWeixinLoginUrl" value="user/weixinlogin.html">
+					<input type="hidden" id="toAlipayUrl" name="toAlipayUrl" value="user/alipaylogin.html">
+					<input type="hidden" id="loginTypeInHidden" name="loginTypeInHidden" value="1">
+					<input type="hidden" id="verifycodePersonal" name="verifycodePersonal" value="">
+					<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="" id="homeTabLi"><a href="http://www.wyn88.com/user/login.html#home" role="tab" data-toggle="tab" aria-expanded="false">账号密码登录</a></li>
+						<li role="presentation" id="profileTabLi" class="active"><a href="http://www.wyn88.com/user/login.html#profile" role="tab" data-toggle="tab" aria-expanded="true">手机号码登录</a></li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<!--Person Login Start-->
+						<div role="tabpanel" class="tab-pane" id="home">
+							<!--Radio Choose JS&CSS Start-->
+							<link rel="stylesheet" href="./login_files/jquery-ui.css">
+							<script src="./login_files/jquery-ui.min.js.下载" language="javascript" type="text/javascript"></script>
+						
+								<div class="typebox">
+
+								<!--Phone Login Start-->
+								<div class="formView" style="display: block;">
+									<form role="form" class="form-horizontal" action="user/accountLogin" method="post" id="personalLoginSmsForm" name="personalLoginForm">
+                                        
+										<div class="form-group">
+											<label class="inputTit">账号:</label>
+											<input id="account" name="account" type="text" class="form-control inputInf phoneyz">
+										</div>
+										<div class="form-group">
+											<div id="user_sms_loginName_error" style="display: none" class="alert-error"></div>
+											<label class="inputTit">密码:</label>
+											<input id="pwd" name="pwd" type="text" class="form-control inputInf phoneyz">
+											
+										
+										</div>
+						                <br>
+									   <div id="rmes"></div>
+										<div class="form-group">
+											<div class="errMsg" id="p_message2" style="display:none;"></div>
+											<button type="button" onclick="accountLogin();" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button></div>
+										
+											
+											<div id="popup-captcha"></div>
+									</form>
+									<div style="padding-bottom: 40px;" class="form-adv">会员最高可享8折预订,<a href="http://www.wyn88.com/user/joinstep.html">立即注册</a></div>
+									
+								</div>
+								<!--Phone Login End-->
+							</div>
+							<!--Form End-->
+						</div>
+						<!--Person Login End-->
+						<!--Company Login Start-->
+						<div role="tabpanel" class="tab-pane active" id="profile">
+							<!--Ordinary Login Start-->
+							<div class="formView mt20" style="display:block;">
+								<form role="form" class="form-horizontal" action="" method="post" id="companyLoginForm" name="companyLoginForm">
+									<input type="hidden" id="p_loginType_Company" name="loginType" value="2">
+									<input type="hidden" id="companyVerifycodeFlag" name="companyVerifycodeFlag" value="0">
+
+
+									<div class="form-group">
+										<div id="company_companyLoginName_error" style="display: none" class="alert-error"></div>
+										<label class="inputTit">手机号:</label>
+										<input id="phoneNumber" name="loginName" type="text" class="form-control inputInf" placeholder="请输入手机号">
+									</div>
+								
+									<div class="form-group">
+										<label class="inputTit">验证码:</label>
+										<input id="code" name="password" type="text" class="form-control inputInf" width="70%" placeholder="请输入手机验证码">
+										<span class="send_time"><span class="border_line_left"><button type="button" id="code_btn" onclick="offerCode();" class="sms-btn">获取</button>
+									</span></span>
+									</div>
+									
+									<div class="form-group">
+										<div class="errMsg" id="p_message3" style="display:none;"></div>
+										<button type="button" onclick="" class="btn-loginReg">登&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+									</div>
+								</form>
+								
+							</div>
+							<a target="_blank" style="margin-top: 20px;display: block;padding: 20px;" href="http://www.lhao88.com/"><img src="./login_files/pc_login_entry.png" style="width:100%"></a>
+							<!--Ordinary Login End-->
+						</div>
+						
+						<!--Company Login End-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--Login Reg Box Start-->
+		<!--Bottom Start-->
+		<div class="footer">
+			<div class="footer-copy">
+				<a href="http://www.wyn88.com/about/gsjj_revision.html" target="_blank">关于维也纳</a>
+				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+				<a href="http://www.wyn88.com/index/app.html" target="_blank">APP下载</a>
+				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+				<!-- <a href="/join/joinwyn.html" target="_blank">招商加盟</a> -->
+				<a href="http://co.wyn88.com/" target="_blank">招商加盟</a>
+				&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+				<a href="http://supplier.wyn88.com:8000/OA_HTML/index.html" target="_blank">供应商</a>
+				
+				<br>
+				深圳市维也纳国际酒店管理有限公司&nbsp;&nbsp;&nbsp;Copyright ©1998-2017&nbsp;&nbsp;&nbsp;wyn88.com&nbsp;&nbsp;&nbsp;<a href="http://www.miitbeian.gov.cn/">粤ICP备 09078541</a><a href="http://www.cnzz.com/stat/website.php?web_id=1588170" target="_blank" title="站长统计"><img border="0" hspace="0" vspace="0" src="./login_files/pic.gif"></a>
+				<a id="_pingansec_bottomimagelarge_brand" target="_blank" href="http://si.trustutn.org/info?sn=133161129025881012488&amp;certType=1"><img style="height:15px" src="./login_files/brand_bottom_large.jpg"></a>
+					<a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030702000315" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;">
+					<img src="./login_files/jgawb.png" style="float:left;"><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#939393;">粤公网安备 44030702000315号</p>
+			 		</a>
+			 	</div>
+			</div>
+		
+		<!--Bottom End-->
+		<link rel="stylesheet" type="text/css" href="./login_files/tip-yellow.css">
+		<script type="text/javascript" src="./login_files/jquery.poshytip.js.下载"></script>
+		<script src="./login_files/emailSuffix.js.下载" type="text/javascript"></script>
+
+
+		
+	
+</body></html>

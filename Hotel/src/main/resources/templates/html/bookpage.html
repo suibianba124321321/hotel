@@ -22,7 +22,7 @@
 <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.8&key=73ffdbe93adbe571eb3697538cc70707"></script> 
 
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 $(document).ready(function(){	
 	  //使入住时间 直接显示当天的日期
 	        var time = new Date();
@@ -82,21 +82,27 @@ $(document).ready(function(){
 }        
  //点击预定购跳转页面
  function bookdetail(type){
-	  
+	 if([[${session.login}]]==null)
+	 {alert("请先登录，老铁")}
+	 else{
 	  /* var roomtype=encodeURI(encodeURI(type.type)); */
-	  location.href="../html/bookdetailpage.html?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
+	  location.href="../one/book?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
 			            +"&img="+type.img+"&price="+type.price+"&description="+type.description+"&type="+type.type+"&livedays="+$("#livedays").val(); 
-	
+	 }
  }
      
  //点击预定团体预定页面
  function teambook(type){
-	  
+	 if([[${session.login}]]==null)
+	 {alert("请先登录，老铁")}
+	 else{
 	  /* var roomtype=encodeURI(encodeURI(type.type)); */
-	  location.href="../html/teambookpage.html?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
+	  location.href="../team/book?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
 			            +"&img="+type.img+"&price="+type.price+"&description="+type.description+"&type="+type.type+"&livedays="+$("#livedays").val(); 
-	
+	 }
  }
+
+
 </script>
 
 
@@ -108,20 +114,24 @@ $(document).ready(function(){
 	<!-- 从session中取值 为空的话显示登录注册-->
 	
 	
-	<div  th:if="${session.uid} ==null" >
-	<div class="login"> 登录 </div>
+	<div  th:if="${session.login} ==null" >
+	<div class="login"> <a href="../login.html">登录 </a></div>
 	<div class="loginimg"><img src="../img/login1.png" /> </div>
-	<div class="login"> 注册 </div>
+	<div class="login"><a href="../register.html">注册 </a></div>
 	<div class="loginimg"><img src="../img/register.png" /> </div>
-	<div class="login"><a href="html/orders.html">订单</a></div>
-	<div class="loginimg"><img src="../img/order.png" /> </div>
 	</div>
 	<!-- 从session中取值 不为空显示用户信息-->	
 	
 	
-	<div  th:if="${session.uid} != null" >
-	<div class="login" th:text="${session.uid}"></div>
-	<div class="login">用户：</div>
+	<div  th:if="${session.login} != null" >
+	<div class="login"><a href="login/logout">注销</a></div>
+	<div class="loginimg"><img src="../img/logout.png" /> </div>
+	
+	<div class="login"><a href="orders/all">订单</a></div>
+	<div class="loginimg"><img src="../img/order.png" /> </div>
+	
+	<div class="login" th:text="${session.login.account}"></div>
+	<div class="login">用户:</div>
 	<div class="loginimg"><img src="../img/register.png" /> </div>
 	</div>
 	</div>
@@ -193,6 +203,19 @@ $(document).ready(function(){
 			罗马假日酒店-hotel&copy; 版权所有|<a>后台管理登录</a>
 		</div>
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
 var backButton=$('.back_to_top');
 function backToTop() {

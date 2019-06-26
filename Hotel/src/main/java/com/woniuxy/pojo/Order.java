@@ -225,16 +225,6 @@ public class Order implements Serializable{
 				+ ", items=" + items + "]";
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

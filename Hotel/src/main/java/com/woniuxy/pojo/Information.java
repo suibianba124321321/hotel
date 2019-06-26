@@ -19,6 +19,7 @@ public class Information implements Serializable{
 	private Integer person_id;
 	private Integer room_id;
 	//入住时间
+
 	private String in_time;
 	//离开时间
 	private String out_time;

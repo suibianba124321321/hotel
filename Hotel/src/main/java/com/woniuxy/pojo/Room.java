@@ -1,7 +1,7 @@
 package com.woniuxy.pojo;
 
 import java.io.Serializable;
-import java.util.List;
+
 
 
 
