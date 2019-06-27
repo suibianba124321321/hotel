@@ -13,6 +13,14 @@ public class Room implements Serializable {
 	//房间状态（0：可入住  1：已入住  3：待打扫）
 	private Integer state;
 	private Integer flag;
+    private Type type;
+	
+	public Type getType() {
+		return type;
+	}
+	public void setType(Type type) {
+		this.type = type;
+	}
 	public Integer getRoom_id() {
 		return room_id;
 	}

@@ -2,8 +2,7 @@ package com.woniuxy.pojo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.util.Date;
+import java.util.List;
 
 public class Order implements Serializable{
 	/**
@@ -17,7 +16,7 @@ public class Order implements Serializable{
 	//会员id
 	private Integer member_id;
 	//订单创建时间
-	private Date  creat_time;
+	private String  creat_time;
 	//支付号
 	private String  pay_number;
 	//订单号
@@ -30,31 +29,67 @@ public class Order implements Serializable{
 	private String  msg;
 	
 	//预抵时间
-	private Date arrive_time;
+	private String arrive_time;
 	//入住时间
-	private Date 	in_time;
+	
+	private String 	in_time;
 	//离开时间
-	private Date out_time;
+	private String out_time;
 	//取消时间
-	private Date cancel_time;
+	private String cancel_time;
 	//订单状态
 	private Integer order_state;
-	//总价格
-	private BigDecimal sunprice;
+	//总价
+	private BigDecimal sumprice;
 	
-	public BigDecimal getSunprice() {
-		return sunprice;
-	}
-
-	public void setSunprice(BigDecimal sunprice) {
-		this.sunprice = sunprice;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	private Integer flag;
+	
+	private Integer typeID;
+	
+	private Integer[] personID;
+	
+	private List<Item> items;
+	
+
+	
+	
+	public BigDecimal getSumprice() {
+		return sumprice;
+	}
+
+	public void setSumprice(BigDecimal sumprice) {
+		this.sumprice = sumprice;
+	}
+
+
+	public Integer getTypeID() {
+		return typeID;
+	}
+
+	public void setTypeID(Integer typeID) {
+		this.typeID = typeID;
+	}
+
+	
+	
+	
+	
+	
+	public Integer[] getPersonID() {
+		return personID;
+	}
+
+	public void setPersonID(Integer[] personID) {
+		this.personID = personID;
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
+	}
 
 	public Integer getOrder_id() {
 		return order_id;
@@ -80,13 +115,7 @@ public class Order implements Serializable{
 		this.member_id = member_id;
 	}
 
-	public Date getCreat_time() {
-		return creat_time;
-	}
-
-	public void setCreat_time(Date creat_time) {
-		this.creat_time = creat_time;
-	}
+	
 
 	public String getPay_number() {
 		return pay_number;
@@ -128,35 +157,45 @@ public class Order implements Serializable{
 		this.msg = msg;
 	}
 
-	public Date getArrive_time() {
+	
+
+	public String getCreat_time() {
+		return creat_time;
+	}
+
+	public void setCreat_time(String creat_time) {
+		this.creat_time = creat_time;
+	}
+
+	public String getArrive_time() {
 		return arrive_time;
 	}
 
-	public void setArrive_time(Date arrive_time) {
+	public void setArrive_time(String arrive_time) {
 		this.arrive_time = arrive_time;
 	}
 
-	public Date getIn_time() {
+	public String getIn_time() {
 		return in_time;
 	}
 
-	public void setIn_time(Date in_time) {
+	public void setIn_time(String in_time) {
 		this.in_time = in_time;
 	}
 
-	public Date getOut_time() {
+	public String getOut_time() {
 		return out_time;
 	}
 
-	public void setOut_time(Date out_time) {
+	public void setOut_time(String out_time) {
 		this.out_time = out_time;
 	}
 
-	public Date getCancel_time() {
+	public String getCancel_time() {
 		return cancel_time;
 	}
 
-	public void setCancel_time(Date cancel_time) {
+	public void setCancel_time(String cancel_time) {
 		this.cancel_time = cancel_time;
 	}
 
@@ -182,17 +221,10 @@ public class Order implements Serializable{
 				+ creat_time + ", pay_number=" + pay_number + ", order_number=" + order_number + ", auto_cancel="
 				+ auto_cancel + ", in_air=" + in_air + ", msg=" + msg + ", arrive_time=" + arrive_time + ", in_time="
 				+ in_time + ", out_time=" + out_time + ", cancel_time=" + cancel_time + ", order_state=" + order_state
-				+ ", flag=" + flag + "]";
+				+ ", sumprice=" + sumprice + ", flag=" + flag + ", typeID=" + typeID + ", personID=" + personID
+				+ ", items=" + items + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 	
 }

@@ -15,7 +15,7 @@
 	<name>Hotel</name>
 	<description>Demo project for Spring Boot</description>
 
-	<properties>
+	<properties> 
 		<java.version>1.8</java.version>
 	</properties>
 
@@ -121,7 +121,7 @@
 			<version>1.1.1</version>
 		</dependency>
 		
-<dependency>
+         <dependency>
 			<groupId>net.sf.ezmorph</groupId>
 			<artifactId>ezmorph</artifactId>
 			<version>1.0.6</version>
@@ -132,15 +132,15 @@
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
 			<version>2.2.3</version>
-			<classifier>jdk15</classifier><!-- jdk版本 -->
+			<classifier>jdk15</classifier>
 		</dependency>
 		
 		<dependency>
 		    <groupId>javax.servlet</groupId>
-		    <artifactId>javax.servlet-api</artifactId>
+		    <artifactId>javax.servlet-api</artifactId>  
 		    <version>4.0.0</version>
-		    <scope>provided</scope>
-		</dependency>
+		    <scope>provided</scope> 
+		</dependency>   
  
 		
 		

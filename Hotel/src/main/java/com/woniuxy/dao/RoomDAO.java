@@ -74,6 +74,9 @@ public interface RoomDAO {
 	 */
 	@Update("update room set state=#{state} where room_id=#{room_id} and flag=0")
 	public void updateState(Room room);
+	
+	@Select("select * from room where type_id=#{typeID}")
+	public List<Room> findRoomByType(Integer typeID);
 
 	
 

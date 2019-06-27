@@ -21,13 +21,19 @@ public class CustomizedModularRealmAuthenticator extends ModularRealmAuthenticat
 	        CustomizedToken customizedToken = (CustomizedToken) authenticationToken;
 	        // 登录类型
 	        String loginType = customizedToken.getLoginType();
+	        
+	        System.out.println(loginType);
+	        
+	        
 	        // 所有Realm
 	        Collection<Realm> realms = getRealms();
 	        // 登录类型对应的所有Realm
 	        Collection<Realm> typeRealms = new ArrayList<>();
+	        
 	        for (Realm realm : realms) {
-	            if (realm.getName().contains(loginType))
-	                typeRealms.add(realm);
+	            if (realm.getName().contains(loginType)){
+	            	System.out.println(realm.getName()+"当前realm");
+	                typeRealms.add(realm);}
 	        }
 
 	        // 判断是单Realm还是多Realm

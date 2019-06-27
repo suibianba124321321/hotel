@@ -25,7 +25,7 @@ public class UserRealm extends AuthorizingRealm{
 	//认证
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		 System.out.println("正在认证");
+		 System.out.println("--------------------------正在认证--------------------------");
 		 //获取账号
 		 
 		// 1. 把AuthenticationToken转换为CustomizedToken
@@ -42,7 +42,8 @@ public class UserRealm extends AuthorizingRealm{
 		 login.setPwd(pwd);
 		 if(pwd==null){return null;}
 		 SimpleAuthenticationInfo info=new SimpleAuthenticationInfo(login.getAccount(),login.getPwd(),getName());
-		return info;
+		System.out.println("--------------------ok------------------");
+		 return info;
 	}
 
 }

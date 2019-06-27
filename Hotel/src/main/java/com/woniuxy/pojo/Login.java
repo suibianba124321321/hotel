@@ -1,6 +1,10 @@
 package com.woniuxy.pojo;
 
+	
+	
+
 import java.io.Serializable;
+import java.util.List;
 
 public class Login implements Serializable{
 
@@ -11,27 +15,33 @@ public class Login implements Serializable{
 	private Integer login_id;
 	private String account;
 	private String pwd;
+	private String tel;
 	//会员id
 	private Integer member_id;
 	private Integer flag;
-	private String tel;
 	private Boolean rm;
+	private List<Person> persons;
 	
 	
-	
-	
-	public Boolean getRm() {
-		return rm;
-	}
-	public void setRm(Boolean rm) {
-		this.rm = rm;
-	}
 	public String getTel() {
 		return tel;
 	}
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
+	public Boolean getRm() {
+		return rm;
+	}
+	public void setRm(Boolean rm) {
+		this.rm = rm;
+	}
+	public List<Person> getPersons() {
+		return persons;
+	}
+	public void setPersons(List<Person> persons) {
+		this.persons = persons;
+	}
+
 	public Integer getLogin_id() {
 		return login_id;
 	}
@@ -62,8 +72,6 @@ public class Login implements Serializable{
 	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
-	
-	
 	public Login() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -81,14 +89,10 @@ public class Login implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "Login [login_id=" + login_id + ", account=" + account + ", pwd=" + pwd + ", member_id=" + member_id
-				+ ", flag=" + flag + ", tel=" + tel + ", rm=" + rm + "]";
+		return "Login [login_id=" + login_id + ", account=" + account + ", pwd=" + pwd + ", tel=" + tel + ", member_id="
+				+ member_id + ", flag=" + flag + ", rm=" + rm + ", persons=" + persons + "]";
 	}
 	
 
-	
-	
-	
-	
 	
 }

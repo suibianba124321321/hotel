@@ -43,7 +43,7 @@ public class AdmineRealms extends AuthorizingRealm{
 		Role role = roleService.findRoleeById(role_id);
 		System.out.println("正在授权，当前角色"+role.getRole());
 		info.addRole(role.getRole());
-
+   System.out.println("黄锐的认证结束");
 		return info;
 	}
 

@@ -22,7 +22,7 @@ public class OrderProvider {
 	public String insert(Order order){
 		
 		SQL sql=new SQL();
-		sql.INSERT_INTO("`order`").VALUES("creat_time","'"+order.getCreat_time()+"'").VALUES("order_number", "'"+order.getOrder_number()+"'").VALUES("in_time","'"+ order.getIn_time()+"'");
+		sql.INSERT_INTO("`order`").VALUES("creat_time","'"+order.getCreat_time()+"'").VALUES("order_number", "'"+order.getOrder_number()+"'").VALUES("in_time","'"+ order.getIn_time()+"'").VALUES("order_state","'"+ order.getOrder_state()+"'");
 		sql.VALUES("out_time","'"+ order.getOut_time()+"'").VALUES("cancel_time","'"+order.getCancel_time()+"'").VALUES("sumprice", order.getSumprice().toString());
 
 		if(order.getIn_air()!=null){
