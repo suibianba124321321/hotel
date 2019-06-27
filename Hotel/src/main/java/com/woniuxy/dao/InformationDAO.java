@@ -16,7 +16,7 @@ import com.woniuxy.provider.InformationProvider;
 @Repository
 public interface InformationDAO {
 
-	@Insert("insert into information values(default,#{person_id},#{room_id},#{in_time},#{out_time},default)")
+	@Insert("insert into information values(default,#{person_id},#{room_id},#{in_time},#{out_time},default，#{state})")
 	public void insertInformation(Information information);
 	@Select("select * from information where flag=0")
 	public List<Information> findAllInformation();

@@ -1,36 +1,40 @@
 package com.woniuxy.datacenter;
 
+import java.math.BigDecimal;
+
 public class DataCenter {
 	//每日折扣
-	private static  Double discount=1.0;
+	private static  BigDecimal discount= new BigDecimal("1.0");
 
-	public static Double getDiscount() {
+
+	
+	public static BigDecimal getDiscount() {
 		return discount;
 	}
 
-	public static void setDiscount(Double discount) {
+	public static void setDiscount(BigDecimal discount) {
 		DataCenter.discount = discount;
 	}
-	
+
 	/**
 	 * 线上
 	 * @return
 	 */
 	//普通会员 
-	public Double on1( ){
-		Double discount2 = getDiscount()*0.95;
+	public BigDecimal on1( ){
+		BigDecimal discount2 = getDiscount().multiply(new BigDecimal("0.9"));
 		return discount2;
 	}
 	
 	//铂金会员 
-	public Double on2( ){
-		Double discount2 = getDiscount()*0.9;
+	public BigDecimal on2( ){
+		BigDecimal discount2 = getDiscount().multiply(new BigDecimal("0.85"));
 		return discount2;
 	}
 	
 	//普通会员 
-	public Double on3( ){
-		Double discount2 = getDiscount()*0.85;
+	public BigDecimal on3( ){
+		BigDecimal discount2 = getDiscount().multiply(new BigDecimal("0.8"));
 		return discount2;
 	}
 	
@@ -38,20 +42,20 @@ public class DataCenter {
 	 * 线下
 	 */
 	//普通会员 
-	public Double down1( ){
-		Double discount2 = getDiscount()*0.97;
+	public  BigDecimal down1( ){
+		BigDecimal discount2 = getDiscount().multiply(new BigDecimal("0.92"));
 		return discount2;
 	}
 	
 	//铂金会员 
-	public Double down2( ){
-		Double discount2 = getDiscount()*0.92;
+	public BigDecimal down2( ){
+		BigDecimal discount2 = getDiscount().multiply(new BigDecimal("0.87"));
 		return discount2;
 	}
 	
 	//普通会员 
-	public Double down3( ){
-		Double discount2 = getDiscount()*0.88;
+	public BigDecimal down3( ){
+		BigDecimal discount2 = getDiscount().multiply(new BigDecimal("0.83"));
 		return discount2;
 	}
 	
