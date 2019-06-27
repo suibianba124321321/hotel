@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Bootstrap 实例 - 上下文类</title>
+<link rel="stylesheet" href="/css/bootstrap.css">
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="/backstage/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/backstage/js/xadmin.js"></script>
+<script type="text/javascript">
+function searchMember(){
+	var idcard=$("#memberidcard").val();
+	
+	if(idcard==undefined){
+		alert("身份证不可为空");
+	}else{
+		$.ajax({
+			url:"/member/findMember",
+			data:{
+				name:$("#memberbname").val(),
+				idcard:$("#memberidcard").val(),
+				tel:$("#membertel").val()
+			},
+			success:function(map){
+				
+				if(map.mag !="非会员"){
+					$("#memberid").val(map.id);
+				}else{
+					alert(map.msg);
+				}
+			}
+		})	
+	}
+	
+}
+function searchPerson(){
+	var idcard=$("#idcard").val();
+	
+	if(idcard==undefined){
+		alert("身份证不可为空");
+	}else{
+	$.ajax({
+		url:"/person/searchPerson",
+		data:{
+			idcard:$("#idcard").val()
+		},
+		success:function(map){
+			var msg=map.msg;
+			
+			if(msg=="成功"){
+				var person=map.person;
+				$("#id").val(person.person_id);
+				$("#name").val(person.name);
+				$("#tel").val(person.tel)
+			}else{
+				alert(msg);
+			}
+		}
+		
+	})
+	}
+}
+//预定
+function preCreatOrder(){
+	$.ajax({
+		url:"/order/preCreatOrder",
+		type:"POST",
+		data:{
+			roomid:$("#roomid").val(),
+			"in_time":$("#inTime").val(),
+			"out_time":$("#outTime").val(),
+			"arrive_time":$("#arriveTime").val(),
+			"in_air":$('input[name="airService"]:checked').val(),
+			"order_state":$('input[name="paytype"]:checked').val(),
+			"person_id":$("#id").val(),
+			"name":$("#name").val(),
+			"tel":$("#tel").val(),
+			"idcard":$("#idcard").val(),
+			"member_id":$("#memberid").val()
+		},
+		success:function(data){
+			alert(data.msg);
+			if(data.msg.search("成功")!=-1){
+			xadmin.open("订单详情","/back/orderInformation.html?orderid="+data.orderid);
+			}
+		}
+	})
+}
+//开单
+function creatOrder(){
+$.ajax({
+	url:"/order/openOrder",
+	type:"POST",
+	data:{
+		roomid:$("#roomid").val(),
+		"in_time":$("#inTime").val(),
+		"out_time":$("#outTime").val(),
+		"arrive_time":$("#arriveTime").val(),
+		"in_air":$('input[name="airService"]:checked').val(),
+		"order_state":$('input[name="paytype"]:checked').val(),
+		"person_id":$("#id").val(),
+		"name":$("#name").val(),
+		"tel":$("#tel").val(),
+		"idcard":$("#idcard").val(),
+		memberid:$("#memberid").val()
+	},
+	success:function(data){
+		alert(data.msg);
+		if(data.msg.search("成功")!=-1){
+			xadmin.open("订单详情","/back/orderInformation.html?orderid="+data.orderid);
+			}
+	}
+	})
+}
+</script>
+</head>
+<body>
+<div class="row" style="font-size: 20px">
+  <div align="center" >
+    <form class="form-inline" role="form" onsubmit="return false;">
+	<div class="form-group">
+		<label class="sr-only" for="memberbname">会员姓名：</label>
+		<input type="text" class="form-control" id="memberbname" 
+			   placeholder="请输入姓名" value="">
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="memberidcard">身份证：</label>
+		<input type="text" class="form-control" id="memberidcard" 
+			   placeholder="请输身份证" value="">
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="membertel">电话：</label>
+		<input type="text" class="form-control" id="membertel" 
+			   placeholder="请输电话" value="">
+	</div>
+	
+	<button type="submit" class="btn btn-default" onclick="searchMember()">搜索</button>
+</form>
+  </div>
+</div>
+	<div class="container">
+		<div class="panel-group" id="accordion">
+			<table class=" table">
+				<tr>
+				<th>房间：</th>
+				<td><input type="text" id="roomid" th:value="${roomid}"  disabled="disabled"><td>
+				</tr>
+				<tr>
+				<tr>
+				<th>入住时间：</th>
+				<td><input type="text" id="inTime"  th:value="${inTime}" disabled="disabled"><td>
+				</tr>
+				<tr>
+				<tr>
+				<th>离开时间：</th>
+				<td><input type="text" id="outTime" th:value="${outTime}" disabled="disabled"><td>
+				</tr>
+				<tr>
+				<th>姓名：</th>
+				<td><input type="hidden" value="0" id="id"><input type="text" id="name"><td>
+				</tr>
+				<tr>
+				<th>手机号：</th>
+				<td><input type="text" id="tel"><td>
+				</tr>
+				<tr>
+				<th>身份证：</th>
+				<td><input type="text" id="idcard" value=""><button type="button" onclick="searchPerson()">查找</button><td>
+				</tr>
+				<tr>
+				<th>是否需要接机：</th>
+				<td>是：<input type="radio" name="airService" value=0 >
+  		            	 否：<input type="radio" name="airService" value=1 checked="checked">
+  		          </td>
+				</tr>
+				<tr>
+				<th>预抵时间：</th>
+				<td>
+					<input type="date" id="arriveTime" th:value="${inTime}">
+  		         </td>
+				</tr>
+				<tr>
+				<th>支付方式：</th>
+				<td> 线上支付：<input type="radio" name="paytype" value=0 checked="checked">
+  						线下支付：<input type="radio" name="paytype" value=2>
+  		          </td>
+				</tr>
+				<tr>
+				<th>会员id:</th>
+				<td><input type="text" id="memberid" disabled="disabled"><td>
+				</tr>
+				<tr>
+				<td><button type="submit" class="btn btn-success" onclick="preCreatOrder()">预定</button></td>
+				<td><button type="submit" class="btn btn-success" onclick="creatOrder()">开单</button></td>
+				
+				</tr>
+			</table>
+		</div>
+	</div>
+<script type="text/javascript">
+
+
+</script>
+
+</body>
+</html>

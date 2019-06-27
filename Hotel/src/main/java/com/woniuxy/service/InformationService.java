@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.woniuxy.pojo.Information;
+import com.woniuxy.pojo.Person;
 
 public interface InformationService {
 	
@@ -25,5 +26,11 @@ public interface InformationService {
 		public List<Information> findInformationByPage(int currentpage);
 		//计算总页码
 		public int findTotalPage();
+
+
+	
+	public List<Information> allInformation();
+
+	public List<Information> searchInformations(Person person);
 
 }

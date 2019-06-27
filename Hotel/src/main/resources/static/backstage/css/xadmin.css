@@ -355,10 +355,14 @@ body{
 
 .layui-table td, .layui-table th{
 <<<<<<< HEAD
+<<<<<<< HEAD
     min-width: 80px;
 =======
     min-width: 40px;
 >>>>>>> refs/remotes/origin/zhongjian
+=======
+    min-width: 80px;
+>>>>>>> refs/remotes/origin/liangxiang
 }
 
 table th, table td {

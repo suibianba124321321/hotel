@@ -13,6 +13,7 @@ public class Manager implements Serializable{
 	private String pwd;
 	private Integer role_id;
 	private Integer flag;
+
 	private String idcard;
 	private String tel;
 	public String getIdcard() {
@@ -62,6 +63,7 @@ public class Manager implements Serializable{
 		return "Manager [manager_id=" + manager_id + ", account=" + account + ", pwd=" + pwd + ", role_id=" + role_id
 				+ ", flag=" + flag + ", idcard=" + idcard + ", tel=" + tel + "]";
 	}
+
 
 	
 	

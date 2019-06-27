@@ -2,7 +2,7 @@ package com.woniuxy.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -92,5 +92,13 @@ public interface RoomDAO {
 		@Update("update room set state=2 where room_id=#{room_id} and flag=0")
 		public boolean updateStateByRoom_id(Information information);
 
+
+
+		
+		@Select("select * from room where  flag=0")
+		public List<Room> allRoom();
+
+		@Select ("select * from room where room_id=#{roomid}")
+		public Room findRoomById(Integer roomid);
 
 }

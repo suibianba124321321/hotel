@@ -146,10 +146,25 @@ public class ShiroConfig {
 		map.put("/index_files/**", "anon");
 		map.put("/register_files/**", "anon");
 		map.put("/index.html", "anon");
+
 		map.put("/login.html", "anon");
+
+		map.put("/html/login.html", "anon");
+		map.put("/html/bookpage.html", "anon");
+		map.put("/html/bookdetailpage.html", "anon");
+		map.put("/type/text", "anon");
+		map.put("/css/**", "anon");
+		map.put("/js/**", "anon");
+		map.put("/img/**", "anon");
+		map.put("/type/show", "anon");
+		
+		
+		
+
 		map.put("/druid/**", "anon");
 		map.put("/user/accountCheck", "anon");
 		
+
 		map.put("/user/phoneLogin", "anon");
 		map.put("/user/code", "anon");
 		map.put("/user/accountLogin", "anon");
@@ -157,7 +172,11 @@ public class ShiroConfig {
 	
 		map.put("/logout", "logout");
 		map.put("/login/logout", "logout");
-		//map.put("/**", "authc");
+		
+		
+		
+		/*map.put("/**", "authc");*/
+
 		
 		
 		bean.setFilterChainDefinitionMap(map);

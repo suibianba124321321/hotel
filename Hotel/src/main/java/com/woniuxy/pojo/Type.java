@@ -17,15 +17,6 @@ public class Type implements Serializable {
 	private Integer type_id;
 	private String type;
 	private String img;
-	public String getImg() {
-		return img;
-	}
-	public void setImg(String img) {
-		this.img = img;
-	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 	private BigDecimal price;
 	private String description;
 	private BigDecimal deposit;
@@ -43,6 +34,12 @@ public class Type implements Serializable {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 	public BigDecimal getPrice() {
 		return price;
@@ -74,10 +71,22 @@ public class Type implements Serializable {
 	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	@Override
 	public String toString() {
 		return "Type [type_id=" + type_id + ", type=" + type + ", img=" + img + ", price=" + price + ", description="
 				+ description + ", deposit=" + deposit + ", number=" + number + ", flag=" + flag + "]";
 	}
+
+
+
+	
+
+	
+
+
+
 	
 }

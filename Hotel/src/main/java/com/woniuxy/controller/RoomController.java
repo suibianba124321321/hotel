@@ -1,5 +1,6 @@
 package com.woniuxy.controller;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,6 +107,19 @@ public class RoomController {
     	roomService.updateState(room);
     	return "success";
     } 
+    @RequestMapping("/searchRooms")
+	@ResponseBody
+	public List<Room> searchRooms(String inTime,String outTime,Integer typeid){
+		List<Room> rooms=null;
+		if(typeid==null || typeid!= 0){
+			rooms=roomService.findRoomsByTimeAndType(inTime,outTime,typeid);
+		}else{
+			rooms=roomService.findAllRooms(inTime, outTime);
+		}
+		
+	
+		return rooms;
+	}
     
-    
+
 }

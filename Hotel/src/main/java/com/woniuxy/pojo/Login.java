@@ -1,5 +1,6 @@
 package com.woniuxy.pojo;
 
+
 	
 	
 
@@ -93,6 +94,7 @@ public class Login implements Serializable{
 				+ member_id + ", flag=" + flag + ", rm=" + rm + ", persons=" + persons + "]";
 	}
 	
+
 
 	
 }

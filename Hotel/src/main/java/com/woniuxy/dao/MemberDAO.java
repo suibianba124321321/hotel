@@ -2,14 +2,28 @@ package com.woniuxy.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Repository;
 
 import com.woniuxy.pojo.Member;
+import com.woniuxy.provider.MemberProvice;
+@Repository
+public interface MemberDAO {
 
-public interface MemberDao {
+	@Select("select * from member where flag=0")
+	public List<Member> allMember();
+	@Select("select * from member where flag=0")
+	public Member findMemberBId(int id);
+	
+	@SelectProvider(type=MemberProvice.class,method="select")
+	public Member findMember(Member member);
+	
+	
+	
+	
 	@Insert("insert into member(name,tel,idcard,grade,rank,flag) values(#{name},#{tel},#{idcard},#{grade},#{rank},0)")
 	public void insert(Member member);
 	

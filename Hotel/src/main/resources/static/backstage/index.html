@@ -26,6 +26,7 @@
         <!-- 顶部开始 -->
         <div class="container">
             <div class="logo">
+
                 <a href="./index.html">罗马度假酒店</a></div>
             <div class="left_open">
                 <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
@@ -127,9 +128,56 @@
                         
                         </ul>
                     </li>
-                    
-                    
-                    
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="开单或预定">&#xe723;</i>
+                            <cite>开单或预定</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('开单或预定','/back/bookroom.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>开单或预订</cite></a>
+                            </li>
+                           
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="订单管理">&#xe723;</i>
+                            <cite>订单管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('订单列表','/back/order-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>订单列表</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('订单项列表','/back/item-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>订单项列表</cite></a>
+                            </li>
+
+                        </ul>
+                    </li>
+                     <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="已住人员信息">&#xe6b8;</i>
+                            <cite>人员历史信息</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+
+                            <li>
+                                <a onclick="xadmin.add_tab('已住人员信息','/back/information-list.html')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>人员历史信息列表</cite></a>
+                            </li>
+
+
+                        </ul>
+                    </li>
                     
                     <li>
                         <a href="javascript:;">
@@ -264,6 +312,7 @@
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
                         <iframe src='./welcome.html' frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+
                     </div>
                 </div>
                 <div id="tab_show"></div>

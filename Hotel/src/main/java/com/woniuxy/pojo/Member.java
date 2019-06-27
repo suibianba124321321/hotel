@@ -59,11 +59,13 @@ public class Member implements Serializable{
 	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
+
 	@Override
 	public String toString() {
 		return "Member [member_id=" + member_id + ", name=" + name + ", tel=" + tel + ", idcard=" + idcard + ", grade="
 				+ grade + ", rank=" + rank + ", flag=" + flag + "]";
 	}
+
 	
 	
 	

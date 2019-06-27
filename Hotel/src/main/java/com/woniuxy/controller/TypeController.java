@@ -35,7 +35,7 @@ public class TypeController {
 	public List<Type> show(String inTime ,String outTime){
 		
 		List<Type> types=typeService.show(inTime, outTime);
-
+		
 		return types;
 	}
 
@@ -46,9 +46,11 @@ public class TypeController {
 	//通过房间类型id查找到一个房间
 	@RequestMapping("/oneRoomType")
 	@ResponseBody
-	public Type detail(Integer typeid){
-	
+	public Type detail(Integer typeid){	
+
 		Type type = typeService.findTypeByid(typeid);
 		return type;
 	}
+
+
 }

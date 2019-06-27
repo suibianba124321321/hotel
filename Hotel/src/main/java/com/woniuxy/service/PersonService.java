@@ -1,5 +1,6 @@
 package com.woniuxy.service;
 
+
 import java.util.List;
 
 import com.woniuxy.pojo.Information;
@@ -15,4 +16,20 @@ public interface PersonService {
 	//通过person_id从person表中查询到person对象（入住姓名、手机号、person_id）
 	public Person findPersonByPerson_id(Information information);
 	public Person findPersonByName(Person person);
+
+	
+	
+	
+	
+	
+	
+	
+	
+
+	public Person findPersonByIdcard(String idcard);
+
+	public String changeItemPerson(Integer itemid, Person person);
+	
+	
+	
 }

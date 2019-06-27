@@ -1,15 +1,14 @@
 package com.woniuxy.controller;
 
+
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.woniuxy.pojo.Member;
 import com.woniuxy.service.MemberService;
@@ -99,6 +98,12 @@ public class MemberController {
 		return "success";
 	}
 	
-	
+	@RequestMapping("/findMember")
+	@ResponseBody
+	public Map<String, Object> searchMember(Member member){
+		Map<String, Object> map =memberService.findMemberBymember(member);
+		return map;
+	}
+
 
 }

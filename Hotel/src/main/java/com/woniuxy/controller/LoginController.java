@@ -45,10 +45,8 @@ public List<Person>	allPerson(HttpSession session){
 @RequestMapping("/logout")
 public String logout(HttpSession session){
 	session.removeAttribute("login");
-	return "/logout";
+	return "/index.html";
 }
-
-
 
 
 }

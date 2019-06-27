@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Bootstrap 实例 - 上下文类</title>
+ <link rel="stylesheet" href="/backstage/css/font.css">
+  <link rel="stylesheet" href="/backstage/css/xadmin.css">
+<link rel="stylesheet" href="/css/bootstrap.css">
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+
+<script src="/js/bootstrap.min.js"></script>
+ <script src="/backstage/lib/layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="/backstage/js/xadmin.js"></script>
+
+
+<script type="text/javascript" >
+function searchRoom(){
+	$.ajax({
+		url:"/room/searchRooms",
+		data:{
+			inTime:$("#inTime").val(),
+			outTime:$("#outTime").val(),
+			typeid:$("#type").val()
+		},
+		success:function(rooms){
+			var inTime=$('#intime').val();
+			var outTime=$('#outTime').val();
+			$("tbody").html("");
+			if(rooms == null){
+				alert("没有房间");
+			}else{
+				for(var i=0;i<rooms.length;i++){
+					
+					var room=rooms[i];
+					var tr=$("<tr></tr>");	
+					var roomId=$("<td ></td>").html(room.room_id);
+					var type=$("<td ></td>").html(room.type.type);
+					var deposit=$("<td></td>").html( room.type.deposit);	
+					var price=$("<td ></td>").html(room.type.price);	
+					var button=$("<td></td>").append('<button type="button" class="btn btn-success" onclick="go('+room.room_id+')">操作</button>');
+						
+					tr.append(roomId);
+					tr.append(type);
+					tr.append(deposit);
+					tr.append(price);
+					tr.append(button);
+					$("tbody").append(tr);
+					
+					}
+			}
+			
+		}
+		
+	})
+}
+
+</script>
+</head>
+<body>
+ <div class="x-nav">
+            <span class="layui-breadcrumb">
+                <a href="">首页</a>
+                <a href="">演示</a>
+                <a>
+                    <cite>导航元素</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
+                <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
+            </a>
+        </div>
+<div class="row" style="font-size: 20px">
+  <div align="center" >
+    <form class="form-inline" role="form" onsubmit="return false;">
+	<div class="form-group">
+		<label class="sr-only" for="inTime">入住时间：</label>
+		<input type="date" class="form-control" id="inTime" th:value="${inTime}">
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="outTime">离开时间：</label>
+		<input type="date" class="form-control" id="outTime" th:value="${outTime}">
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="type">房间类型：</label>
+		<select class="form-control" id="type" >
+		 <option value="0">请选择房间类型</option>
+          <option th:each="type : ${types}" th:value="${type.type_id}" th:text="${type.type}"></option>                             
+		</select>
+		
+	</div>
+	
+	<button type="submit" class="btn btn-warnning" onclick="searchRoom()">搜索</button>
+</form>
+  </div>
+</div>
+	<div class="container">
+		<div class="panel-group" id="accordion">
+			<table class=" table">
+				<thead>
+				<tr><td colspan="5"></td></tr>
+				<tr><td colspan="5"></td></tr>
+				<tr><td colspan="5"></td></tr>
+					<tr>
+						<th>房间号</th>
+						<th>房间类型</th>
+						<th>押金</th>
+						<th>价格</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+				
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+<script type="text/javascript" th:inline="javascript">
+var list=[[${rooms}]];
+
+for(var i=0;i<list.length;i++){
+	var room=list[i];
+	
+	var tr=$("<tr></tr>");	
+	var roomId=$("<td ></td>").html(room.room_id);
+	var type=$("<td ></td>").html(room.type.type);
+	var deposit=$("<td></td>").html(room.type.deposit);	
+	var price=$("<td ></td>").html(room.type.price);	
+	var buttontd=$("<td></td>");
+	var button=$('<button type="button" onclick="go('+room.room_id+')" class="btn btn-success" >操作</button>');
+	
+	
+	buttontd.append(button);
+	tr.append(roomId);
+	tr.append(type);
+	tr.append(deposit);
+	tr.append(price);
+	tr.append(buttontd);
+	$("tbody").append(tr);
+	}
+
+
+function go(id){
+		alert(id);
+		var inTime=$('#inTime').val();
+		var outTime=$('#outTime').val();
+		xadmin.open("入住人员信息","/back/creatorder.html?roomid="+id+"&inTime="+inTime+"&outTime="+outTime);
+}
+
+</script>
+
+</body>
+</html>

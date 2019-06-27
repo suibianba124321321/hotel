@@ -6,11 +6,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.woniuxy.dao.RoomDateDAO;
 import com.woniuxy.pojo.Information;
@@ -220,4 +218,14 @@ public class InformationController {
 				return new Person();
 			}
 		}
+	
+
+		@RequestMapping("search")
+		@ResponseBody
+		public List<Information> searchInformations(Person person){
+			List<Information> informations=informationService.searchInformations(person);
+			return informations;
+		}
+
+
 }

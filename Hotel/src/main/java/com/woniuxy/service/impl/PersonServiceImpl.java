@@ -1,5 +1,7 @@
 package com.woniuxy.service.impl;
 
+
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -7,25 +9,38 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.woniuxy.dao.ItemDAO;
 import com.woniuxy.dao.LoginDAO;
 import com.woniuxy.dao.PersonDAO;
 import com.woniuxy.pojo.Information;
+import com.woniuxy.pojo.Item;
 import com.woniuxy.pojo.Person;
 import com.woniuxy.service.PersonService;
-
 @Service("personService")
 @Transactional
-public class PersonServiceImpl implements PersonService {
+public class PersonServiceImpl implements PersonService{
+	
 	@Resource
 	private PersonDAO personDAO;
 	@Resource
 	private LoginDAO loginDAO;
 
-	public PersonDAO getPersonDAO() {
-		return personDAO;
-	}
+@Resource
+private ItemDAO itemDAO;
 
-	public LoginDAO getLoginDAO() {
+	public ItemDAO getItemDAO() {
+	return itemDAO;
+}
+
+public void setItemDAO(ItemDAO itemDAO) {
+	this.itemDAO = itemDAO;
+}
+
+	public PersonDAO getPersonDAO() {
+	return personDAO;
+}
+
+public LoginDAO getLoginDAO() {
 		return loginDAO;
 	}
 
@@ -33,9 +48,10 @@ public class PersonServiceImpl implements PersonService {
 		this.loginDAO = loginDAO;
 	}
 
-	public void setPersonDAO(PersonDAO personDAO) {
-		this.personDAO = personDAO;
-	}
+public void setPersonDAO(PersonDAO personDAO) {
+	this.personDAO = personDAO;
+}
+
 
 	@Override
 	public String addPerson(Person person, int uid) {
@@ -55,6 +71,34 @@ public class PersonServiceImpl implements PersonService {
 
 		return "添加成功";
 	}
+	@Override
+	public Person findPersonByIdcard(String idcard) {
+		Person person=new Person();
+		person.setIdcard(idcard);
+		return personDAO.findPersonIdByIdcard(person);
+	}
+
+	@Override
+	public String changeItemPerson(Integer itemid, Person person) {
+		String msg="修改成功";
+		Person per=personDAO.findPersonIdByIdcard(person);
+		if(per!=null){
+			person.setPerson_id(per.getPerson_id());
+			personDAO.updatePersonByid(person);
+			
+		}else{
+			personDAO.addPerson(person);
+			person=personDAO.findPersonIdByIdcard(person);
+		}
+		Item item=new Item();
+		item.setItem_id(itemid);
+		item.setPerson_id(person.getPerson_id());
+		itemDAO.updatePerson(item);
+		
+		return msg;
+
+	}
+	
 
 	// 查找所有person
 	@Override
@@ -75,11 +119,12 @@ public class PersonServiceImpl implements PersonService {
 	public Person findPersonByPerson_id(Information information) {
 		return personDAO.findPersonByPerson_id(information);
 	}
-
 	@Override
 	public Person findPersonByName(Person person) {
 
-		return personDAO.findPersonByName(person);
+		return personDAO.findOnePersonByName(person);
 	}
+
+
 
 }

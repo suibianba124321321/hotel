@@ -1,5 +1,6 @@
 package com.woniuxy.pojo;
 
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -50,9 +51,27 @@ public class Order implements Serializable{
 	
 	private List<Item> items;
 	
+	private Login login;
+	
+	private Member member;
+	
+	
+	public Login getLogin() {
+		return login;
+	}
 
-	
-	
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
 	public BigDecimal getSumprice() {
 		return sumprice;
 	}
@@ -224,7 +243,6 @@ public class Order implements Serializable{
 				+ ", sumprice=" + sumprice + ", flag=" + flag + ", typeID=" + typeID + ", personID=" + personID
 				+ ", items=" + items + "]";
 	}
-
 
 	
 }

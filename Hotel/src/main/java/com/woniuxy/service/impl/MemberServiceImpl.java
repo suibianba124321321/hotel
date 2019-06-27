@@ -1,23 +1,45 @@
 package com.woniuxy.service.impl;
 
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.woniuxy.dao.MemberDao;
+import com.woniuxy.dao.MemberDAO;
 import com.woniuxy.pojo.Member;
 import com.woniuxy.service.MemberService;
-@Service
+@Service("memberService")
 public class MemberServiceImpl implements MemberService{
 	@Resource
-	private MemberDao memberDao;
+	private MemberDAO memberDao;
 
 	@Override
 	public void insert(Member member) {
 		memberDao.insert(member);
 		
+	}
+
+	@Override
+	public Member findMemberByid(int id) {
+		memberDao.findMemberBId(id);
+		return memberDao.findMemberBId(id);
+	}
+	@Override
+	public Map<String, Object> findMemberBymember(Member member) {
+		Map<String, Object> map=new HashMap<>();
+		map.put("msg", "成功");
+		Member m=memberDao.findMember(member);
+		if(m==null){
+			map.put("msg", "非会员");
+		}else{
+			map.put("id", m.getMember_id());
+		}
+		return map;
+
 	}
 
 	@Override
@@ -64,5 +86,6 @@ public class MemberServiceImpl implements MemberService{
 		memberDao.undateTel(member);
 		
 	}
+
 
 }

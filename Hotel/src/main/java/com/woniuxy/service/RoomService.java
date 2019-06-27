@@ -63,6 +63,8 @@ public interface RoomService {
 	//通过新旧room_id更改房间状态
 	public String updateOldAndNewRoomStateByRoom_id(Information information, Information oldInformation);
 
-	
+	public List<Room> findAllRooms(String startTime,String endTime);
+
+	public List<Room> findRoomsByTimeAndType(String inTime, String outTime, Integer typeid);
 
 }
