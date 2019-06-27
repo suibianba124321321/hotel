@@ -24,5 +24,14 @@ public class Role implements Serializable{
 	public void setRole(String role) {
 		this.role = role;
 	}
+	public Role(Integer role_id, String role) {
+		super();
+		this.role_id = role_id;
+		this.role = role;
+	}
+	public Role() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 }

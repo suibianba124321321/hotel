@@ -22,6 +22,15 @@ public class Permission implements Serializable{
 	public void setPermission(String permission) {
 		this.permission = permission;
 	}
+	public Permission(Integer permission_id, String permission) {
+		super();
+		this.permission_id = permission_id;
+		this.permission = permission;
+	}
+	public Permission() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 }

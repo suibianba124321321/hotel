@@ -59,6 +59,21 @@ public class Member implements Serializable{
 	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
+	public Member(Integer member_id, String name, String tel, String idcard, Integer grade, Integer rank,
+			Integer flag) {
+		super();
+		this.member_id = member_id;
+		this.name = name;
+		this.tel = tel;
+		this.idcard = idcard;
+		this.grade = grade;
+		this.rank = rank;
+		this.flag = flag;
+	}
+	public Member() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	

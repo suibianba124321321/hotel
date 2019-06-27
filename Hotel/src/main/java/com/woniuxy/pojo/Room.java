@@ -54,6 +54,18 @@ public class Room implements Serializable {
 		return "Room [room_id=" + room_id + ", type_id=" + type_id + ", state=" + state + ", flag=" + flag + ", type="
 				+ type + "]";
 	}
+	public Room(Integer room_id, Integer type_id, Integer state, Integer flag, Type type) {
+		super();
+		this.room_id = room_id;
+		this.type_id = type_id;
+		this.state = state;
+		this.flag = flag;
+		this.type = type;
+	}
+	public Room() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 }

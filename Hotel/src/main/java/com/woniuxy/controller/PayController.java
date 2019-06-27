@@ -42,7 +42,7 @@ public class PayController {
 	@RequestMapping("/pay")
 	
 	public void pay(Integer id,HttpServletRequest request,HttpServletResponse response){
-		
+		System.out.println("开始支付");
 		//检查订单号是否存在
 		
 		if(id==null){
@@ -280,6 +280,7 @@ public class PayController {
 	
 	public String ui(HttpServletRequest request,ModelMap map) throws Exception {
 		//获取支付宝GET过来反馈信息
+		System.out.println("支付完成");
 		Map<String,String> params = new HashMap<String,String>();
 		Map<String,String[]> requestParams = request.getParameterMap();
 		for (Iterator<String> iter = requestParams.keySet().iterator(); iter.hasNext();) {

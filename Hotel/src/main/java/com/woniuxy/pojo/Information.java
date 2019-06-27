@@ -11,6 +11,22 @@ import java.util.Date;
 
 public class Information implements Serializable{
 
+	public Information() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Information(Integer information_id, Integer person_id, Integer room_id, String in_time, String out_time,
+			Integer flag) {
+		super();
+		this.information_id = information_id;
+		this.person_id = person_id;
+		this.room_id = room_id;
+		this.in_time = in_time;
+		this.out_time = out_time;
+		this.flag = flag;
+	}
+
 	/**
 	 * 
 	 */

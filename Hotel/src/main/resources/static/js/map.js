@@ -19,8 +19,8 @@ window.onload = function(){
 	var title = '罗马假日酒店<span style="font-size:11px;color:#F00;">价格:99999</span>',
 	    content = [];   //内容
 	content.push("<img src='http://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：天府大道8888号");
-	content.push("电话：010-64733333");
-	content.push("<a href='http://ditu.amap.com/detail/B000A8URXB?citycode=110105'>详细信息</a>");
+	content.push("电话：028-88888888");
+	content.push("<a href='/'>详细信息</a>");
 
 	//创建信息窗体
 	var infoWindow = new AMap.InfoWindow({
@@ -74,7 +74,6 @@ window.onload = function(){
 	    info.appendChild(bottom);  //信息窗体增加底部的div
 	    return info;
 	}
-
 	//关闭信息窗体
 	function closeInfoWindow() {
 	    map.clearInfoWindow();
@@ -82,6 +81,3 @@ window.onload = function(){
 	map.add(marker);
 	
 }
-
-
-

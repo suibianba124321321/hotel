@@ -110,5 +110,25 @@ public class Type implements Serializable {
 		return "Type [type_id=" + type_id + ", type=" + type + ", price=" + price + ", description=" + description
 				+ ", deposit=" + deposit + ", number=" + number + ", flag=" + flag + ", img=" + img + "]";
 	}
+
+
+	public Type(Integer type_id, String type, String img, BigDecimal price, String description, BigDecimal deposit,
+			Integer number, Integer flag) {
+		super();
+		this.type_id = type_id;
+		this.type = type;
+		this.img = img;
+		this.price = price;
+		this.description = description;
+		this.deposit = deposit;
+		this.number = number;
+		this.flag = flag;
+	}
+
+
+	public Type() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 }

@@ -43,6 +43,18 @@ public class Manager implements Serializable{
 	public void setFlag(Integer flag) {
 		this.flag = flag;
 	}
+	public Manager(Integer manager_id, String account, String pwd, Integer role_id, Integer flag) {
+		super();
+		this.manager_id = manager_id;
+		this.account = account;
+		this.pwd = pwd;
+		this.role_id = role_id;
+		this.flag = flag;
+	}
+	public Manager() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 }

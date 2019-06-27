@@ -58,6 +58,18 @@ public class Person implements Serializable{
 		return "Person [person_id=" + person_id + ", name=" + name + ", tel=" + tel + ", idcard=" + idcard + ", flag="
 				+ flag + "]";
 	}
+	public Person(Integer person_id, String name, String tel, String idcard, Integer flag) {
+		super();
+		this.person_id = person_id;
+		this.name = name;
+		this.tel = tel;
+		this.idcard = idcard;
+		this.flag = flag;
+	}
+	public Person() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 	
 	

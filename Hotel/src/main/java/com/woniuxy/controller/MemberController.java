@@ -37,7 +37,7 @@ public Map currentMember(HttpSession session){
 	Object object = session.getAttribute("login");
 	Login login=(Login) object;
 	Map<String, Object> map = new HashMap<String, Object>();	
-	Integer member_id=login.getLogin_id();
+	Integer member_id=login.getMember_id();
 	Member member = memberService.findMemberByid(member_id);
 	String discount = MemberUtil.map.get(member.getRank());	
 	map.put("member", member);

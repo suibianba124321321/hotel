@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Bootstrap 实例 - 上下文类</title>
+<link rel="stylesheet" href="../css/bootstrap.css">
+<link rel="stylesheet" href="../css/bookpage.css">
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.js"></script>
+
+<script src="../js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		url:"/order/orders",
+		success:function(orders){
+			for(var i=0;i<orders.length;i++){
+				var order=orders[i];
+				var tr=$("<tr></tr>");
+				var orderNumber=$("<td></td>").html(order.order_number);
+				var creatTime=$("<td></td>").html(order.creat_time);
+				var inTime=$("<td></td>").html(order.in_time);
+				
+				var payType=$("<td></td>");
+					
+				 if(order.order_state == 2){
+					payType.html("线下支付");
+				}else{ 
+					payType.html("线上支付");
+			 	}
+				var sumPrice=$("<td></td>").html("￥：").append($("<span></span>").html(order.sumprice));
+				var operation=$("<td></td>");
+				if(order.order_state == 0){
+					operation.append($('<button type="button"class="btn btn-success" onclick="pay('+order.order_id+')">支付</button>'));
+					operation.append($('<button type="button"class="btn btn-warning" onclick="cancel('+order.order_id+')">取消</button>'));
+				}
+				if(order.order_state == 1){
+					
+					operation.append($('<button type="button"class="btn btn-danger" onclick="refund('+order.order_id+')">退款</button>'));
+				}
+				if(order.order_state == 2){
+					
+					operation.append($('<button type="button"class="btn btn-warning" onclick="cancel('+order.order_id+')">取消</button>'));
+				}
+				if(order.order_state == 3){
+					
+					operation.append($('<button type="button"class="btn btn-default" >已入住</button>'));
+				}
+				if(order.order_state == 4){
+					
+					operation.append($('<button type="button"class="btn btn-default" >已退房</button>'));
+					
+				}
+				operation.append($('<a data-toggle="collapse" data-parent="#accordion" href="#'+order.order_id+'"><button type="button"class="btn btn-info" onclick="item('+order.order_id+')">详情</button></a>'));
+				var item=$("<tr><td id='"+order.order_number+"' colspan='6'><div id='"+order.order_id+"' class='panel-collapse collapse '><div class='panel-body'><td><tr>");
+				tr.append(orderNumber);
+				tr.append(creatTime);
+				tr.append(inTime);
+				tr.append(payType); 
+				tr.append(sumPrice);
+				tr.append(operation);
+				$("tbody").append(tr);
+				$("tbody").append(item);
+			}
+		}
+	})
+	
+})
+
+function item(orderId){
+	$.ajax({
+		url:"/item/items",
+		data:{
+			id:orderId
+		},
+		success:function(items){
+			var table=$('<table class="table table-hover"><thead><tr><th>姓名</th><th>房间类型</th><th>押金</th><th>单价</th><th>入住天数</th></tr></thead></table>');
+			var tbody=$("<tbody></tbody>");
+			for(var i=0;i<items.length;i++){
+				var item=items[i];
+				var person=item.person;
+				var type=item.type;
+				var tr=$("<tr></tr>");
+				var name=$("<td></td>").html(person.name);
+				var roomType=$("<td></td>").html(type.type);
+				var deposit=$("<td></td>").html(type.deposit);
+				var price=$("<td></td>").html(item.price);
+				var dayNumber=$("<td></td>").html(item.day_number);
+			tr.append(name);
+			tr.append(roomType);
+			tr.append(deposit);
+			tr.append(price);
+			tr.append(dayNumber);
+			tbody.append(tr);
+			
+			}
+			table.append(tbody);
+			$("#"+orderId).html(table);
+		}
+	
+	})
+}
+//取消订单
+function cancel(orderId){
+	var flag=confirm("确认取消？");
+	if(flag==true){
+	$.ajax({
+		url:"/order/delete",
+		data:{
+			id:orderId
+		},
+		success:function(data){
+			alert(data);
+			location.reload(true);
+		}
+	
+	})
+	
+	}
+}
+function pay(orderId){
+	var flag=confirm("确认支付？");
+	if(flag==true){
+		location.href="/pay/pay?id="+orderId;;
+
+	}
+}
+
+function refund(orderId){
+	var flag=confirm("确认退款？");
+	if(flag==true){
+	$.ajax({
+		url:"/pay/refund",
+		data:{
+			id:orderId
+		},
+		success:function(data){
+			alert(data);
+			location.reload(true);
+		}
+	
+	})
+	}
+}
+
+</script>
+</head>
+<body>
+<div class="head">
+	<div class="headtitle">罗马假日酒店</div>
+	<div  th:if="${session.login} != null" >
+	<div class="login"><a href="../login/logout">注销</a></div>
+	<div class="loginimg"><img src="../img/logout.png" /> </div>
+	
+	<div class="login" th:text="${session.login.account}"></div>
+	<div class="login">用户:</div>
+	<div class="loginimg"><img src="../img/register.png" /> </div>
+	</div>
+	</div>
+	<div class="container">
+		<div class="panel-group" id="accordion">
+			<table class=" table">
+				<caption></caption>
+				<thead>
+					<tr>
+						<th>订单号</th>
+						<th>生成时间时间</th>
+						<th>入住时间</th>
+						<th>支付方式</th>
+						<th>总价</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+<!-- 					<tr th:each="order : ${orders}">
+						<td th:text="${order.order_number}"></td>
+
+						<td th:text="${order.creat_time}"></td>
+						<td th:text="${order.in_time}"></td>
+						<td th:if="${order.order_state == 2}">线下支付</td>
+						<td th:if="${order.order_state != 2}">线上支付</td>
+						<td>￥ :<span th:text="${order.sumprice}"></span>
+						<td>
+						<td th:if="${order.order_state == 0}"><button type="button"
+								class="btn btn-success">支付</button>
+							<button type="button" class="btn btn-warning">取消</button>
+							<button type="button" class="btn btn-info">详情</button></td>
+						<td th:if="${order.order_state == 1}"><button type="button"
+								class="btn btn-success">退款</button>
+							<button type="button" class="btn btn-info">详情</button></td>
+						<td th:if="${order.order_state == 2}"><button type="button"
+								class="btn btn-warning">取消</button>
+							<button type="button" class="btn btn-info">详情</button></td>
+						<td th:if="${order.order_state == 3}"><button type="button"
+								class="btn btn-info">详情</button></td>
+						<td th:if="${order.order_state == 4}"><button type="button"
+								class="btn btn-deafult">已退房</button>
+							<button type="button" class="btn btn-info">详情</button></td>
+					</tr>
+					
+					
+					<tr>
+						<td>1234456767</td>
+
+						<td>2018-06-14</td>
+						<td>2018-06-15</td>
+						<td>线上支付</td>
+						<td><button type="button" class="btn btn-danger">
+								退款：￥<span>120</span>
+							</button> <a data-toggle="collapse" data-parent="#accordion"
+							href="#collapseOne">
+								<button type="button" class="btn btn-info">详情</button>
+						</a></td>
+					</tr>
+					<td colspan="5">
+						<div id="collapseOne" class="panel-collapse collapse in">
+							<div class="panel-body">
+
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>姓名</th>
+											<th>房间类型</th>
+											<th>押金</th>
+											<th>价格</th>
+											<th>入住天数</th>
+
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Tanmay</td>
+											<td>xxx</td>
+											<td>￥<span>120</sapn></td>
+											<td>￥<span>220</sapn></td>
+											<td>9</td>
+
+										</tr>
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+					</td>
+					<tr>
+					</tr>
+					<tr>
+						<td>1234456767</td>
+
+						<td>2018-06-14</td>
+						<td>2018-06-15</td>
+						<td>线下支付</td>
+						<td><button type="button" class="btn btn-warning">取消</button>
+
+						</td>
+					</tr>
+					<tr>
+						<td>1234456767</td>
+
+						<td>2018-06-14</td>
+						<td>2018-06-15</td>
+						<td>线下支付/线上支付</td>
+						<td>已取消</td>
+					</tr> -->
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+</body>
+</html>

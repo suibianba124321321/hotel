@@ -225,6 +225,37 @@ public class Order implements Serializable{
 				+ ", items=" + items + "]";
 	}
 
+	public Order(Integer order_id, Integer login_id, Integer member_id, String creat_time, String pay_number,
+			String order_number, Integer auto_cancel, Integer in_air, String msg, String arrive_time, String in_time,
+			String out_time, String cancel_time, Integer order_state, BigDecimal sumprice, Integer flag, Integer typeID,
+			Integer[] personID, List<Item> items) {
+		super();
+		this.order_id = order_id;
+		this.login_id = login_id;
+		this.member_id = member_id;
+		this.creat_time = creat_time;
+		this.pay_number = pay_number;
+		this.order_number = order_number;
+		this.auto_cancel = auto_cancel;
+		this.in_air = in_air;
+		this.msg = msg;
+		this.arrive_time = arrive_time;
+		this.in_time = in_time;
+		this.out_time = out_time;
+		this.cancel_time = cancel_time;
+		this.order_state = order_state;
+		this.sumprice = sumprice;
+		this.flag = flag;
+		this.typeID = typeID;
+		this.personID = personID;
+		this.items = items;
+	}
+
+	public Order() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 
 	
 }
