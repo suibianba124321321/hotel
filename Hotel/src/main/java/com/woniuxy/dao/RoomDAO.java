@@ -79,6 +79,7 @@ public interface RoomDAO {
 
 	@Select("select * from room where type_id=#{typeID}")
 	public List<Room> findRoomByType(Integer typeID);
+	//通过room_id查询room对象
 	@Select("select * from room where room_id=#{room_id} and flag=0")
 	public Room findRoomByRoom_id(Information information);
 	//修改

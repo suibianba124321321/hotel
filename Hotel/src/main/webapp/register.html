@@ -1,0 +1,604 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0039)http://www.wyn88.com/user/joinstep.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+	
+	<link rel="shortcut icon" href="http://www.wyn88.com/images/favicon.ico">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=9">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title>register</title>
+		<meta name="keywords" content="会员注册,免费注册,酒店会员注册">
+		<meta name="description" content="会员注册页面提供维也纳酒店会员在线免费注册，仅需简单填写即可轻松完成酒店会员注册，注册成功预订酒店低至9折优惠，2倍积分，赠送早餐，会员注册从这里开始。">
+
+		<!-- Favicon -->
+		
+		
+		<link rel="icon" href="http://www.wyn88.com/images/favicon.ico">
+			<link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://www.wyn88.com/images/favicon.png">
+				<link rel="apple-touch-icon-precomposed" sizes="114x114" href="http://www.wyn88.com/images/favicon.png">
+					<link rel="apple-touch-icon-precomposed" sizes="72x72" href="http://www.wyn88.com/images/favicon.png">
+						<link rel="apple-touch-icon-precomposed" href="http://www.wyn88.com/images/favicon.png">
+							<link rel="shortcut icon" href="http://www.wyn88.com/images/favicon.png">
+								<!--CSS-->
+								<link href="./register_files/bootstrap.css" rel="stylesheet">
+									<link href="./register_files/public.css" rel="stylesheet">
+										<link href="./register_files/style.css" rel="stylesheet">
+
+											<script type="text/javascript" async="" src="./register_files/ubcfg.js.下载"></script><script type="text/javascript" async="" src="./register_files/gs.js.下载"></script><script charset="utf-8" src="./register_files/v.js.下载"></script><script type="text/javascript" src="./register_files/jquery-1.12.4.min.js.下载"></script>
+											<script type="text/javascript" src="./register_files/bootstrap.js.下载"></script>
+											<script type="text/javascript" src="./register_files/common.js.下载"></script>
+											<script src="./register_files/SpryMenuBar.js.下载" type="text/javascript"></script>
+											<script src="./register_files/viennaLoginRevision.js.下载" type="text/javascript"></script>
+											<script src="./register_files/emailSuffix.js.下载" type="text/javascript"></script>
+											
+											<link rel="stylesheet" type="text/css" href="./register_files/tip-yellow.css">
+											<link href="./register_files/artDialog.css" rel="stylesheet" type="text/css">
+											
+											<script type="text/javascript" src="./register_files/jquery.poshytip.js.下载"></script>
+											<script type="text/javascript" src="./register_files/jquery.artDialog.js.下载"></script>
+                                            <script type="text/javascript" language="javascript">
+                                               //
+                                            function registerCheck(){
+                                                	 var pwd = $("#company_companyAddress").val();
+                                                	 var rpwd = $("#company_zip").val();
+                                                	 alert(pwd);
+                                                	 alert(rpwd);
+                                                	 if(pwd!="" && pwd==rpwd){
+                                                		$.ajax({
+                                                			url:"user/accountCheck",
+                                                			type:"POST",
+                                                			data:{
+                                                				//获取账号密码
+                                                				account:$("#company_companyName").val(),
+                                                				pwd:$("#company_companyAddress").val(),
+                                                			     },
+                                                	 	   dateType:"json",
+                                                	 	  success:function(data){
+                                                				$("#rrmes").html(data);
+                                                				if(data=="注册成功"){
+                                                                window.location.href="login.html";
+                                                				}
+                                                	 	  }
+                                                		})
+                                                	}
+                                                	 else{
+                                                		 $("#rrmes").html("输入有误，请重新输入");
+                                                	 }
+                                                }
+                                                //手机号码注册
+                                                function phoneRegister(){
+                                                	var code=$("#user_sms_verifycode").val();
+                                                	if(code==""){
+                                                		$('#rmes').html('验证码不能为空');
+                                                		}
+                                                	else{
+                                                		  $.ajax({
+                                                			  url:"user/phoneCheck",
+                                                			  type:"POST",
+                                                			  data:{
+                                                			    tel:$("#user_mobile").val(),
+                                                			    code:$("#user_sms_verifycode").val(),
+                                                			  },
+                                                		      dateType:"json",
+                                                		      success:function(data){
+                                                		    	  if(data=="注册成功"){
+                                                		    		  window.location.href="login.html";
+                                                      	    	} 
+                                                		    	  else{
+                                                		    		  $("#rmes").html("注册失败,请重新输入");
+                                                		    		  }
+                                                		      }
+                                                		  })
+                                                	}
+                                                }
+                                                
+                                                <!-- 点击获取验证码--!>
+                                                function OnVerifyCode(){
+                                                	//var phoneNumber=$("#user_mobile").val();
+                                                	var phones = $.trim($("#user_mobile").val());
+                                                    var isMobile=/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+                                                    if(!phones){
+                                                         $('#rmes').html('请输入手机号码，不能为空');
+                                                    }else if (!isMobile.test(phones)) {
+                                                        $('#rmes').html('请输入有效的手机号码');
+                                                    }
+                                                    else{
+                                                	$.ajax({
+                                                		url:"user/sendMessage",
+                                                		type:"POST",
+                                                		data:{
+                                                			tel:$("#user_mobile").val(),
+                                                			},
+                                                	    dateType:"json",
+                                                	    success:function(data){
+                                                	    	if(data=="发送成功"){
+                                                	    		$('#rmes').html("短信已发送，请注意查收");
+                                                	    	}
+                                                	    	else{
+                                                	    		$('#rmes').html("输入有误，请重新输入");
+                                                	    	}
+                                                	    }
+                                                	})
+                                                    }
+                                                }
+                                            </script>
+											
+<style>
+.nav-tabs > li a {
+    border-top: 3px solid #eee;
+}
+
+		    .loginReg-wrapper .loginReg-viewbox .loginReg-member {
+                  background: #8C8C8C;
+    				margin-top: 0;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus {
+    border-top: 3px solid #E77818;
+}
+.loginReg-wrapper .loginReg-viewbox .loginReg-panelview .regFormView .inputInf {
+    text-indent: 120px;
+    height: 50px;
+    font-size: 14px;
+    font-weight: normal;
+     background: #FCFCFC;
+}
+.loginReg-wrapper .loginReg-viewbox .loginReg-panelview {
+    width: 400px;
+     height: auto; 
+    background: #FFFFFF;
+    box-shadow: 0px 0px 20px 0px rgba(94,94,94,0.50);
+    border-radius: 2px;
+    float: right;
+}
+.loginReg-wrapper .loginReg-viewbox .loginReg-panelview .regFormView .randomCode {
+    width: 120px;
+    height: 34px;
+    z-index: 5;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    background: #fdf2e5;
+    border-radius: 1px;
+    text-align: center;
+    line-height: 30px;
+}
+.loginReg-wrapper .loginReg-viewbox .loginReg-panelview .regFormView .inputTit {
+    width: 120px;
+    text-align: center;
+    height: 50px;
+    line-height: 52px;
+    font-weight: normal;
+    font-size: 14px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding-left: 10px;
+    text-align: left;
+
+}
+.loginReg-wrapper .loginReg-viewbox .loginReg-panelview .regFormView font {
+    line-height: 4;
+}
+.phone_icon{
+     background-image: url(../images/index_new/phone_icon.png);
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 24px;
+    display: inline-block;
+     margin-top: 15px;
+    background-size: 85%;
+    float: left;
+}
+.icon_email{
+     background-image: url(../images/index_new/icon_email.png);
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 24px;
+    display: inline-block;
+     margin-top: 15px;
+    background-size: 85%;
+    float: left;
+}
+.icon_id{
+     background-image: url(../images/index_new/icon_id.png);
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 24px;
+    display: inline-block;
+     margin-top: 15px;
+    background-size: 85%;
+    float: left;
+}
+.icon_idcard{
+     background-image: url(../images/index_new/icon_idcard.png);
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 24px;
+    display: inline-block;
+     margin-top: 15px;
+    background-size: 85%;
+    float: left;
+}
+.icon_lock{
+     background-image: url(../images/index_new/icon_lock.png);
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 24px;
+    display: inline-block;
+     margin-top: 15px;
+    background-size: 85%;
+    float: left;
+}
+.icon_qr{
+     background-image: url(../images/index_new/icon_qr.png);
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 24px;
+    display: inline-block;
+     margin-top: 15px;
+    background-size: 85%;
+    float: left;
+}
+.icon_sms{
+     background-image: url(../images/index_new/icon_sms.png);
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 24px;
+    display: inline-block;
+    margin-top: 15px;
+    background-size: 85%;
+    float: left;
+}
+.icon_MailCode{
+	background-image: url(../images/index_new/icon_MailCode.png);
+	background-repeat: no-repeat;
+	width: 26px;
+	height: 24px;
+	display: inline-block;
+	margin-top: 15px;
+	background-size: 85%;
+	float: left;
+}
+.icon_Mailnew{
+	background-image: url(../images/index_new/icon_Mailnew.png);
+	background-repeat: no-repeat;
+	width: 26px;
+	height: 24px;
+	display: inline-block;
+	margin-top: 15px;
+	background-size: 85%;
+	float: left;
+}
+.icon_user{
+     background-image: url(../images/index_new/icon_user.png);
+    background-repeat: no-repeat;
+    width: 26px;
+    height: 24px;
+    display: inline-block;
+    margin-top: 15px;
+    background-size: 85%;
+    float: left;
+}
+.bussiness{
+     background-image: url(../images/index_new/bussiness.png);
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-top: 15px;
+    background-size: 90%;
+    float: left;
+}
+.biaozhu{
+     background-image: url(../images/index_new/biaozhu.png);
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-top: 15px;
+    background-size: 90%;
+    float: left;
+}
+.chuanzhen{
+     background-image: url(../images/index_new/chuanzhen.png);
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-top: 15px;
+    background-size: 90%;
+    float: left;
+}
+.company{
+     background-image: url(../images/index_new/company.png);
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-top: 15px;
+    background-size: 90%;
+    float: left;
+}
+.dizhi{
+     background-image: url(../images/index_new/dizhi.png);
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-top: 15px;
+    background-size: 90%;
+    float: left;
+}
+.emali{
+     background-image: url(../images/index_new/emali.png);
+    background-repeat: no-repeat;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-top: 25px;
+    background-size: 90%;
+    float: left;
+}
+
+.send_time{
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    display: inline-block;
+    width: 94px;
+    height: 46px;
+    line-height: 50px !important;
+    font-size: 16px !important;
+    text-align: center;
+    color: #ff8000 !important;
+	background: #fff;
+}
+.border_line_left{
+    border-left: 1px solid #ccc;
+    display: inline-block;
+    float: left !important;
+    height: 26px;
+    margin-top: 10px;
+}
+.line_bottom{
+   border-bottom: dashed 1px #D5D5D5;;
+}
+.iagree_icon{
+    background: url("../images/index_new/icon_fangxuan_nor.png") no-repeat center;
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 8px;
+    margin-top: 4px;
+    float: left !important;
+}
+.active_i .iagree_icon{
+    background: url("../images/index_new/icon_fangxuan_selected.png") no-repeat center;
+    width: 12px;
+    height: 12px;
+    vertical-align: middle;
+    display: inline-block;
+    margin-right: 8px;
+    margin-top: 4px;
+    float: left !important;
+}
+.reg-model-title .close {
+    top: 16px;
+    right: 20px; 
+}
+.iagree_info{
+display:none;
+}
+.checkbox .iagree_lable{
+    padding-left: 0;
+    }
+    
+.checkbox .iagree_lable_2{
+    padding-left: 0;
+    }
+    
+.iagree_box{
+display:none;
+}
+.loginReg-wrapper .loginReg-viewbox .loginReg-panelview .regFormView .btn-loginReg.active {
+    background: #ccc;
+}
+.sms-btn{
+    border-left: #ededed solid 1px;
+    text-align: center;
+    line-height: 30px;
+    display: block;
+    font-size: 14px;
+    color: #F08519;
+    background: none;
+    padding-left: 10px;
+    }
+		</style></head>
+
+<body onload="resetForm();"><div class="" style="display: none; position: absolute;"><div class="aui_outer"><table class="aui_border"><tbody><tr><td class="aui_nw"></td><td class="aui_n"></td><td class="aui_ne"></td></tr><tr><td class="aui_w"></td><td class="aui_c"><div class="aui_inner"><table class="aui_dialog"><tbody><tr><td colspan="2" class="aui_header"><div class="aui_titleBar"><div class="aui_title" style="cursor: move;"></div><a class="aui_close" href="javascript:/*artDialog*/;">×</a></div></td></tr><tr><td class="aui_icon" style="display: none;"><div class="aui_iconBg" style="background: none;"></div></td><td colspan="2" class="aui_main" style="width: auto; height: auto;"><div class="aui_content" style="padding: 20px 25px;"></div></td></tr><tr><td colspan="2" class="aui_footer"><div class="aui_buttons" style="display: none;"></div></td></tr></tbody></table></div></td><td class="aui_e"></td></tr><tr><td class="aui_sw"></td><td class="aui_s"></td><td class="aui_se" style="cursor: se-resize;"></td></tr></tbody></table></div></div>
+	<input type="hidden" id="overseasmark" value="">
+	<input type="hidden" id="ctx" value="">
+	<input type="hidden" id="actionType" name="actionType" value="1">
+	<input type="hidden" id="CodeToken" name="CodeToken" value="c865e2897ee335fba5acc3d0489a5ad3">
+	<input type="hidden" id="imagePersonalUrl" name="imagePersonalUrl" value="user/imagePersonalLogin.html">
+	<input type="hidden" id="generateDynPasswordUrl" name="generateDynPasswordUrl" value="user/generateDynPassword.html">
+	<input type="hidden" id="imageCompanyUrl" name="imageCompanyUrl" value="user/imageCompanyLogin.html">
+	<!--Login Reg Header Start-->
+	<div class="loginReg-header">
+		<div class="logo fl">
+			<a href="http://www.wyn88.com/"><img src="./register_files/logo.gif"></a>
+		</div>
+		
+		<a href="login.html" class="back-home fr mt10">返回登录</a>
+	</div>
+	<!--Login Reg Header End-->
+	<!--Login Reg Box Start-->
+	<!--Login Reg Box Start-->
+	<div class="loginReg-wrapper reg-height">
+		<!--Login Reg inBox-->
+		<div class="loginReg-viewbox reg-margin reg-weight">
+			<div class="loginReg-member">
+				<div class="mb-tit">
+					<img src="./register_files/vip.png">
+				</div>
+				<a href="http://www.wyn88.com/gentleman/memberrights.html"><button type="button" class="mb-btn">了解会员权益</button></a>
+
+				<div class="mb-intro">
+					<ul>
+						<li><b>普通会员</b>
+							<p>
+								<span class="fl">房费</span> <span class="fr"><i>9.0</i>折</span>
+							</p>
+							<p>
+								<span class="fl">房费积分</span> <span class="fr"><i>1</i>倍</span>
+							</p> <em>免费</em></li>
+						<li><b>铂金会员</b>
+							<p>
+								<span class="fl">房费</span> <span class="fr"><i>8.5</i>折</span>
+							</p>
+							<p>
+								<span class="fl">房费积分</span> <span class="fr"><i>2</i>倍</span>
+							</p> <em>58元/张</em></li>
+						<li><b>黑卡会员</b>
+							<p>
+								<span class="fl">房费</span> <span class="fr"><i>8.0</i>折</span>
+							</p>
+							<p>
+								<span class="fl">房费积分</span> <span class="fr"><i>2.5</i>倍</span>
+							</p> <em>98元/张</em></li>
+				
+					</ul>
+				</div>
+
+				<div class="mb-font">你还可以查看我们的合作伙伴</div>
+				<a href="http://www.wyn88.com/home/cooperationcard.html"><button type="button" class="mb-btn">合作伙伴用户注册</button></a>
+			</div>
+			<div class="loginReg-panelview">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active"><a href="http://www.wyn88.com/user/joinstep.html#home" role="tab" data-toggle="tab" aria-expanded="true">手机号码注册</a></li>
+					<li role="presentation" class=""><a href="http://www.wyn88.com/user/joinstep.html#profile" role="tab" data-toggle="tab" aria-expanded="false">账号密码注册</a></li>
+				</ul>
+				<!-- Tab panes -->
+				<div class="tab-content">
+					<!--Person Login Start-->
+					<div role="tabpanel" class="tab-pane active" id="home">
+						<!--Form Start-->
+						<!--<div class="regFormFont">
+							注册维也纳会员 网络预订立享9折房价优惠<br>为了给你提供更好的服务以下“*”为必填，谢谢配合
+						</div>-->
+						<!--Ordinary Login Start-->
+
+						<div class="regFormView">
+							<input type="hidden" id="imagePersonalUrl" value="user/imagePersonalLogin.html">
+								<form role="form" class="form-horizontal" action="user/phoneCheck" method="post" id="personalRegisterForm" name="personalRegisterForm">
+									<input type="hidden" id="checkCertNo" name="checkCertNo" value="">
+									<div class="form-group">
+										
+										<div style="width: 148px;" class="inputTit dropdown"><div class="phone_icon"></div><font color="red">*</font>
+											<button type="button" class="btn dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown">
+                <span class="phoneTitel">中国大陆+86:
+                </span>
+
+
+											</button>
+											<ul class="dropdown-menu" role="menu" >
+												<li class="chinaTip" role="presentation">
+													<a role="menuitem">中国大陆+86:</a>
+												</li>
+												
+
+											</ul>
+										</div>
+
+										<input style="text-indent: 150px" id="user_mobile" name="tel" maxlength="11" value="" type="text" class="form-control inputInf" placeholder="请输入手机号码">
+									</div>
+
+									
+									<div class="phoneBox active">
+									  
+									  <div class="form-group">
+										<div class="alert-error" id="user_sms_verifycode_error" style="display: none">短信验证码不能为空！</div>
+										<label class="inputTit"><div class="icon_sms"></div><font color="red">*</font>验证码:</label>
+										<input id="user_sms_verifycode" name="code" maxlength="20" type="text" class="form-control inputInf" placeholder="请输入验证码">
+											<span class="send_time"><span class="border_line_left"><button type="button" id="code_btn" onclick="OnVerifyCode()" class="sms-btn">获取</button>
+									</span></span></div>
+									</div>
+                                     <br>
+									<div id="rmes"></div>
+									<div class="form-group">
+									<br>	
+										<button name="p_register_btn" type="button" style="background:#777;" id="mdzz" onclick="phoneRegister()" class="btn-loginReg">注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
+									</div>
+
+								</form>
+						</div>
+						<!--Ordinary Login End-->
+						<!--Form End-->
+					</div>
+					<!--Person Login End-->
+					<!--Company Login Start-->
+					<div role="tabpanel" class="tab-pane" id="profile">
+						<!--Ordinary Login Start-->
+						<div class="regFormView">
+							<form action="user/accountCheck" method="post" id="companyRegisterForm" name="companyRegisterForm" role="form" class="form-horizontal">
+								<input type="hidden" id="c_registerType" name="registerType" value="2">
+								<p class="regTips"></p>
+								<div class="message_tip errMsg" id="c_message" style="display:none;"></div>
+								
+
+								<div class="form-group">
+									<div class="alert-error" id="company_companyName_error" style="display: none"></div>
+									<label class="inputTit"><div class="company"></div><font color="red">*</font>账号：</label>
+									<input id="company_companyName" name="account" maxlength="30" type="text" class="form-control inputInf" placeholder="">
+								</div>
+								<div class="form-group">
+									<div class="alert-error" id="company_companyAddress_error" style="display: none"></div>
+									<label class="inputTit"><div class="dizhi"></div><font color="red">*</font>密码：</label>
+									<input id="company_companyAddress" name="pwd" maxlength="50" type="text" class="form-control inputInf" placeholder="">
+								</div>
+								<div class="form-group">
+									<div class="alert-error" id="company_zip_error" style="display: none"></div>
+									<label class="inputTit"><div class="emali"></div><font color="red">*</font>确认密码：</label> <input id="company_zip" name="rpwd" maxlength="6" type="text" class="form-control inputInf" placeholder="">
+								</div>
+							    <br>
+							    <div id="rrmes"></div>
+								<div class="form-group">
+									
+									<button type="button" onclick="registerCheck()" class="btn-loginReg">注&nbsp;&nbsp;&nbsp;&nbsp;册</button>
+								</div>
+								
+							</form>
+						</div>
+						<!--Ordinary Login End-->
+					</div>
+					<!--Company Login End-->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+	<!--Login Reg Box Start-->
+	<!--Bottom Start-->
+	<div class="footer">
+		<div class="footer-copy">
+			<a href="http://www.wyn88.com/about/gsjj_revision.html" target="_blank">关于维也纳</a>
+			&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			<a href="http://www.wyn88.com/index/app.html" target="_blank">APP下载</a>
+			&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			<!-- <a href="/join/joinwyn.html" target="_blank">招商加盟</a> -->
+			<a href="http://co.wyn88.com/" target="_blank">招商加盟</a>
+			&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			<a href="http://supplier.wyn88.com:8000/OA_HTML/index.html" target="_blank">供应商</a>
+			<!-- &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; -->
+		
+			<br>
+			深圳市维也纳国际酒店管理有限公司 版权所有&nbsp;&nbsp;&nbsp;Copyright ©1998-2018&nbsp;&nbsp;&nbsp;wyn88.com&nbsp;&nbsp;&nbsp;粤ICP备09078541号-1
+		</div>
+	</div>
+	
+</body></html>

@@ -19,5 +19,7 @@ public interface MemberService {
 	public void updateGrade(Member member);
 
 	public void updateRank(Member member);
+	
+	public Member findMemberByid(Integer member_id);
 
 }

@@ -6,13 +6,13 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.woniuxy.dao.MemberDao;
+import com.woniuxy.dao.MemberDAO;
 import com.woniuxy.pojo.Member;
 import com.woniuxy.service.MemberService;
 @Service
 public class MemberServiceImpl implements MemberService{
 	@Resource
-	private MemberDao memberDao;
+	private MemberDAO memberDao;
 
 	@Override
 	public void insert(Member member) {
@@ -57,6 +57,11 @@ public class MemberServiceImpl implements MemberService{
 	public Member findOneByName(String name) {
 		Member member = memberDao.findOneByName(name);
 		return member;
+	}
+	
+	@Override
+	public Member findMemberByid(Integer member_id) {
+		return memberDao.findMemberByid(member_id);
 	}
 
 }

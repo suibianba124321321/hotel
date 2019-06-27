@@ -1,8 +1,11 @@
 package com.woniuxy.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -11,8 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.woniuxy.pojo.Login;
 import com.woniuxy.pojo.Member;
 import com.woniuxy.service.MemberService;
+import com.woniuxy.utils.MemberUtil;
 
 /**
  * 会员类    对会员的增删查改
@@ -99,6 +104,19 @@ public class MemberController {
 		return "success";
 	}
 	
-	
+	@RequestMapping("/currentMember")
+	@ResponseBody
+	public Map currentMember(HttpSession session){
+		//从session中拿到member_id,通过member_id查询到当前会员	
+		Object object = session.getAttribute("login");
+		Login login=(Login) object;
+		Map<String, Object> map = new HashMap<String, Object>();	
+		Integer member_id=login.getMember_id();
+		Member member = memberService.findMemberByid(member_id);
+		String discount = MemberUtil.map.get(member.getRank());	
+		map.put("member", member);
+		map.put("discount", discount);
+		return map;
+	} 
 
 }

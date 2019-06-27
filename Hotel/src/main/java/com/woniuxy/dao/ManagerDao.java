@@ -15,7 +15,7 @@ public interface ManagerDao {
 	 * @param account
 	 * @return
 	 */
-	@Select("select * from manager where account=#{account} and falg=0")
+	@Select("select * from manager where account=#{account} and flag=0")
 	Manager findOneByAccount(String account);
 	
 	/**
@@ -23,38 +23,38 @@ public interface ManagerDao {
 	 * @param account
 	 * @return
 	 */
-	@Select("select * from manager where manager_id=#{manager_id} and falg=0")
+	@Select("select * from manager where manager_id=#{manager_id} and flag=0")
 	Manager findOneByID(Manager manager);
 	
 	/**
 	 * 查询所有的操作员
 	 * @return
 	 */
-	@Select("select * from manager where falg=0")
+	@Select("select * from manager where flag=0")
 	public List<Manager> findAll();
 	
 	/**
-	 * 新增   默认falg=0
+	 * 新增   默认flag=0
 	 * @param manager
 	 */
-	@Insert("insert into manager(account,role_id,pwd,falg,idcard,tel) values(#{account},#{role_id},#{pwd},0,#{idcard},#{tel})")
+	@Insert("insert into manager(account,role_id,pwd,flag,idcard,tel) values(#{account},#{role_id},#{pwd},0,#{idcard},#{tel})")
 	public void insert(Manager manager);
 	
 	/**
 	 * 根据账号改密码
 	 * @param room
 	 */
-	@Update("update manager set pwd=#{pwd} where account=#{account} and falg=0")
+	@Update("update manager set pwd=#{pwd} where account=#{account} and flag=0")
 	public void updatePwd(Manager manager);
 	
 	/**
 	 * 删除   软删除
 	 * @param room
 	 */
-	@Update("update manager set falg=1 where account=#{account}")
+	@Update("update manager set flag=1 where account=#{account}")
 	public void deleteByName(Manager manager);
 	
-	@Update("update manager set falg=1 where manager_id=#{manager_id}")
+	@Update("update manager set flag=1 where manager_id=#{manager_id}")
 	public void deleteByID(Manager manager);
 
 }

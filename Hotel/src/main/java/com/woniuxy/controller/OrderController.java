@@ -35,9 +35,9 @@ public class OrderController {
 	public Map<String, Object> createOrder(Order order,@RequestParam(value="persons[]")Integer[] persons){
 		
 		order.setLogin_id(1001);
-		System.out.println(persons);
 		order.setPersonID(persons);
-		System.out.println(order);
+		
+		
 	
 		 Map<String, Object> map=orderService.createOrder(order);
 		
@@ -61,16 +61,13 @@ public class OrderController {
 	public String delete( Integer id){
 		Order order=new Order();
 		order.setOrder_id(id);
-		System.out.println(order);
 		String msg=orderService.deleteOrder(order);
-		
 		return msg;
 	}
 	
 	@RequestMapping("/oneorder")
 	@ResponseBody
 	public Order currentOrder(Integer orderid){
-		System.out.println(orderid);
 		Order order = orderService.findOrderById(orderid);
 		return order ;
 	}

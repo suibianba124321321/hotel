@@ -1,19 +1,70 @@
-
+/*地图*/
+  .info {
+            border: solid 1px silver;
+        }
+        div.info-top {
+            position: relative;
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-bottom: 1px solid #CCC;
+            border-radius: 5px 5px 0 0;
+        }
+        div.info-top div {
+            display: inline-block;
+            color: #333333;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 31px;
+            padding: 0 10px;
+        }
+        div.info-top img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transition-duration: 0.25s;
+        }
+        div.info-top img:hover {
+            box-shadow: 0px 0px 5px #000;
+        }
+        div.info-middle {
+            font-size: 12px;
+            padding: 6px;
+            line-height: 20px;
+        }
+        div.info-bottom {
+            height: 0px;
+            width: 100%;
+            clear: both;
+            text-align: center;
+        }
+        div.info-bottom img {
+            position: relative;
+            z-index: 104;
+        }
+        span {
+            margin-left: 5px;
+            font-size: 20px;
+        }
+        .info-middle img {
+            float: left;
+            margin-right: 6px;
+        }
+/*地图样式*/
 		.head{
 		width: 100%;
-		height:45PX;	
+		height:70PX;	
 		position: fixed;
 		top: 0;
 		left: 0;
-		background-color:#39e826;
+		background-color:#97e8e3;
 		opacity:0.8;
+		z-index:9999
 		}
 		
 		.headtitle{
 		margin: 5px 6px;
 		text-align:left;
-		line-height:45x;
-		font-size:25px;
+		line-height:70x;
+		font-size:40px;
 		font-family:楷体;
 		font-weight:700;
 		color:#4d22dd;
@@ -21,28 +72,27 @@
 		float: left;
 		}
 		.login{
-		margin-top:12px;
-		width: 50px;		
-	   
-		font-size:16px;
+		line-height:70px;		
+		width: 60px;		
+		font-size:22px;
 		float: right;
-		text-align: left;
+		
 		}
 		.loginimg {
 		width: 25px;
-		 line-height:45x;
-	
+		 line-height:70x;
 		text-align: right;
 		float: right;	
 		}
 		.loginimg img{
-		margin-top:12px;
-		width: 20px;
+		margin-top:20px;
+		line-height:70x;
+		width: 25px;
 	
 		}	
 		
 		#myCarousel{
-		width:53%;
+		width:65%;
 		margin:auto;
 		margin-top:80px;
 		}
@@ -59,7 +109,7 @@
 #lists td,th{
 	text-align:center;
 	border-bottom: 1px solid #ccc;
-	height:70px;
+	height:100px;
 }
 #lists tr:hover{
 	background-color: #ddd;
@@ -70,7 +120,7 @@
 	
 }
 .td-g-img img{
-	height: 70px;
+	height: 90px;
 	border-radius: 60%;
 }
 td img:hover{
@@ -97,8 +147,16 @@ width:25%;
 border-radius:6px;
 border:2px solid;
 margin:auto;
-margin-top:60px;	
+margin-top:60px;
+font-size: 20px;	
 }
+
+.typedetail img{
+	width:100%;
+}
+
+
+
 .item img{
 	width:100%;
 	
@@ -138,32 +196,69 @@ font-weight: 700;
 .offlinepaybutton{
 background-color:#c0c0c0;
 border-radius:6px;
-width:85px;
-height:30px;
+width:120px;
+height:46px;
 border:2px solid;
 }
 .onlinepaybutton{
+	
 background-color:#fe9901;
 border-radius:6px;
-width:85px;
-height:30px;
+width:120px;
+height:46px;
 border:2px solid;
+
 }
 .cancelbutton{
 background-color:#80ff00;
 border-radius:6px;
 width:85px;
-height:30px;
+height:46px;
 border:2px solid;
 }
 .orderRoomInfo{
 width:24%;	
 border:12px solid #c0c0c0;
-margin-left:700px;
+margin:0 auto;
 border-radius:8px;	
 font-size: 23px;	
 }
 .orderRoomInfo img{
 width:100%;
 	
+}
+ .map{
+margin-left:30px;
+width:500px;	
+} 
+
+/* 版权信息 */
+#footer{
+	height: 50px;
+	background-color:#97e8e3;
+	width: 100%;
+	text-align: center;
+	line-height: 50px;
+	font-size: 18px;
+	color:#000040;
+	/* box-shadow:  0 0 5px #333; */
+	bottom: 0px;
+	position:fixed;
+	
+}
+/* 时间段搜索房间 */
+.timeSearch{
+margin:0 auto;
+font-size: 20px;	
+	
+}
+.back_to_top{
+    position: fixed;
+    bottom:50px;
+    right: 30px;
+    width:100px;
+    height:25px;
+    border:2px solid #888;
+    color: navy;
+    border-radius:3px
 }

@@ -66,6 +66,23 @@ public class ItemServiceImpl implements ItemService{
 		
 		return items;
 	}
+	
+	@Override
+	public List<Item> findItemsByOrdeIdAndflagEquelsZero(Integer order_id) {
+		List<Item> items = itemDAO.findItemsByOrdeIdAndflagEquelsZero(order_id);
+		for(int i=0;i<items.size();i++){
+			Item item=items.get(i);
+			int personId=item.getPerson_id();
+			Person person=personDAO.findPersonById(item.getPerson_id());
+			items.get(i).setPerson(person);
+			Type type=typeDAO.findTypeByid(item.getType_id());
+			items.get(i).setType(type);
+		}
+		return items;
+	}
+	
+	
+	
 
 	//通过person_id从item表中查询到item对象（order_id，price，number，deposit）
 	@Override

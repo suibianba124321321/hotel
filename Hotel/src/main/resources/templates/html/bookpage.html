@@ -2,15 +2,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
  
+ <!--地图大小设置-->
+ <style>
+	#wrapper{
+		width: 500px;
+		height: 500px;
+	}
+</style>
+
  <meta charset="UTF-8"> 
 <title>Insert title here</title>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/map.js"></script>
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="../css/bookpage.css" rel="stylesheet" type="text/css"/>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<script type="text/javascript">
+<!--高德地图连接-->
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.8&key=73ffdbe93adbe571eb3697538cc70707"></script> 
 
+
+<script type="text/javascript" th:inline="javascript">
 $(document).ready(function(){	
 	  //使入住时间 直接显示当天的日期
 	        var time = new Date();
@@ -52,7 +64,7 @@ $(document).ready(function(){
  				var price =$("<td></td>").text(data[i].price);
  				
  			  if(data[i].number!=0){
- 				  var state = $("<td><button class='button' onclick='bookdetail("+po+")'>预订</button><button class='button' onclick='teambook("+po+")'>团体预订</button></td>"); 
+ 				  var state = $("<td><button class='button' onclick='bookdetail("+po+")'>预订</button><button class='button' onclick='teambook("+po+")' style='width:120px'>团体预订</button></td>"); 
  				   
  			  }else{
  				  var state = $("<td><button class='buttonfull'>已满</button></td>");
@@ -70,49 +82,61 @@ $(document).ready(function(){
 }        
  //点击预定购跳转页面
  function bookdetail(type){
-	  
+	 if([[${session.login}]]==null)
+	 {alert("请先登录，老铁")}
+	 else{
 	  /* var roomtype=encodeURI(encodeURI(type.type)); */
-	  location.href="../html/bookdetailpage.html?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
+	  location.href="../one/book?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
 			            +"&img="+type.img+"&price="+type.price+"&description="+type.description+"&type="+type.type+"&livedays="+$("#livedays").val(); 
-	
+	 }
  }
      
  //点击预定团体预定页面
  function teambook(type){
-	  
+	 if([[${session.login}]]==null)
+	 {alert("请先登录，老铁")}
+	 else{
 	  /* var roomtype=encodeURI(encodeURI(type.type)); */
-	  location.href="../html/teambookpage.html?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
+	  location.href="../team/book?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
 			            +"&img="+type.img+"&price="+type.price+"&description="+type.description+"&type="+type.type+"&livedays="+$("#livedays").val(); 
-	
+	 }
  }
+
+
 </script>
 
 
 </head>
-<body>
+<body style="text-align:center">
 <input type="hidden" id="livedays"> 
 	<div class="head">
 	<div class="headtitle">罗马假日酒店</div>
 	<!-- 从session中取值 为空的话显示登录注册-->
 	
 	
-	<div  th:if="${session.uid} ==null" >
-	<div class="login"> 登录 </div>
+	<div  th:if="${session.login} ==null" >
+	<div class="login"> <a href="../login.html">登录 </a></div>
 	<div class="loginimg"><img src="../img/login1.png" /> </div>
-	<div class="login"> 注册 </div>
+	<div class="login"><a href="../register.html">注册 </a></div>
 	<div class="loginimg"><img src="../img/register.png" /> </div>
 	</div>
 	<!-- 从session中取值 不为空显示用户信息-->	
 	
 	
-	<div  th:if="${session.uid} != null" >
-	<div class="login" th:text="${session.uid}"></div>
-	<div class="login">用户：</div>
+	<div  th:if="${session.login} != null" >
+	<div class="login"><a href="login/logout">注销</a></div>
+	<div class="loginimg"><img src="../img/logout.png" /> </div>
+	
+	<div class="login"><a href="orders/all">订单</a></div>
+	<div class="loginimg"><img src="../img/order.png" /> </div>
+	
+	<div class="login" th:text="${session.login.account}"></div>
+	<div class="login">用户:</div>
 	<div class="loginimg"><img src="../img/register.png" /> </div>
 	</div>
 	</div>
 	
-	<div id="myCarousel" class="carousel slide">
+	<div id="myCarousel" class="carousel slide" >
 	<!-- 轮播（Carousel）指标 -->
 	<ol class="carousel-indicators">
 		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -120,9 +144,9 @@ $(document).ready(function(){
 		<li data-target="#myCarousel" data-slide-to="2"></li>
 	</ol>   
 	<!-- 轮播（Carousel）项目 -->
-	<div class="carousel-inner">
+	<div class="carousel-inner" style="height:300px">
 		<div class="item active">
-			<img src="../img/slide1.jpg" alt="First slide">
+			<img src="../img/slide1.jpg" alt="First slide" >
 			<div class="carousel-caption">温馨</div>
 		</div>
 		<div class="item">
@@ -146,17 +170,68 @@ $(document).ready(function(){
 </div>
 <br>
 <br>
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;入住时间：<input type="date" id="date_info" ><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;退房时间：<input type="date" id="date_info1"><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td><button class="button" onclick="search()">查询</button></td>
+<br>
+<!--时间段查询-->
+<div class="timeSearch">
+入住时间：<input type="date" id="date_info" >&nbsp;&nbsp;&nbsp;
+退房时间：<input type="date" id="date_info1">&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="button" onclick="search()">查询</button>
+</div>
+<br>
+<br>
+<br>
 <!-- 房间 -->
-<table id="lists">
+<table id="lists" style="font-size: 20px">
 			
 	</table>
 	<br>
+	<br>
+	<!--联系电话及地址  -->
+	<div class="map">
+	<span style="font-size: 20px">联系电话：010-64733333</span><br>
+	<span style="font-size: 20px">详细地址：天府大道8888号</span>
+    <div id="wrapper"></div>
+	<br>
+	<br>
+	<br>
+	<br>
 	<br>	
-	<br>	
-
+     </div>
+     <button class="back_to_top">返回顶部</button>
+     <!--版权-->
+     <div id="footer">
+			罗马假日酒店-hotel&copy; 版权所有|<a>后台管理登录</a>
+		</div>
 </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+var backButton=$('.back_to_top');
+function backToTop() {
+    $('html,body').animate({
+        scrollTop: 0
+    }, 800);
+}
+backButton.on('click', backToTop);
+
+$(window).on('scroll', function () {/*当滚动条的垂直位置大于浏览器所能看到的页面的那部分的高度时，回到顶部按钮就显示 */
+    if ($(window).scrollTop() > $(window).height())
+        backButton.fadeIn();
+    else
+        backButton.fadeOut();
+});
+$(window).trigger('scroll');/*触发滚动事件，避免刷新的时候显示回到顶部按钮*/
+
+</script>
 </html>

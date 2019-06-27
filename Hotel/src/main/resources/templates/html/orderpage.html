@@ -33,16 +33,16 @@ $.ajax({
 		var outtime=$("<td></td>").html(data.out_time);
 		if(data.order_state==0){
 			var payway=$("<td></td>").html("线上支付");
-		}else{
+		}else if(data.order_state==2){
 			var payway=$("<td></td>").html("线下支付");
 		}
 		var sumprice=$("<td></td>").html(data.sumprice);
 		var outtime=$("<td></td>").html(data.out_time);
 		
 		if(data.order_state==0){
-			var paybutton=$("<button class='onlinepaybutton' onclick=''>点击支付</button><button class='cancelbutton' onclick=''>取消</button>");
-		}else{
-			var paybutton=$("<button class='offlinepaybutton'>到店支付</button><button class='cancelbutton'>取消</button>");
+			var paybutton=$("<button class='onlinepaybutton' onclick='pay("+$("#orderid").val()+")'>点击支付</button><button class='cancelbutton' onclick='cancel("+$("#orderid").val()+")'>取消</button>");
+		}else if(data.order_state==2){
+			var paybutton=$("<button class='offlinepaybutton'>到店支付</button><button class='cancelbutton' onclick='cancel("+$("#orderid").val()+")'>取消</button>");
 		}
 		
 		tr.append(ordernum);
@@ -60,7 +60,7 @@ $.ajax({
 
 /* 查找出所有的订单项 */
 $.ajax({
-	url:"../item/items",
+	url:"../item/itemszero",
 	data:{
 		id:$("#orderid").val()
 	},
@@ -70,19 +70,18 @@ $.ajax({
 		var item=items[i];
  		var person=item.person;
 		var type=item.type;
-		var tr=$("<tr></tr>");
+		var tr=$("<tr style='text-align: center;'></tr>");
 		var personName=$("<td></td>").html(person.name);
 		var roomtype=$("<td></td>").html(type.type);
 		var deposit=$("<td></td>").html(item.deposit);
 		var livedays=$("<td></td>").html(item.day_number);
-		var sumprice=$("<td></td>").html(item.price);
+		var sumprice=$("<td></td>").html("￥"+item.price);
 		tr.append(personName);
 		tr.append(roomtype);
 		tr.append(deposit);
 		tr.append(livedays);
 		tr.append(sumprice);
-		$("#itemdatail").append(tr); 
-		
+		$("#itemdatail").append(tr); 		
 	}		
 	}
 	
@@ -113,13 +112,34 @@ $.ajax({
 /* ======查找出房间信息======= */
 
 
-
-
-	
-	
             })
             
-          
+//取消订单
+function cancel(orderId){
+	var flag=confirm("确认取消？");
+	if(flag==true){
+	$.ajax({
+		url:"/order/delete",
+		data:{
+			id:orderId
+		},
+		success:function(data){
+			alert(data);
+			location.reload(true);
+		}
+	
+	})
+	
+	}
+}
+//支付订单
+function pay(orderId){
+	var flag=confirm("确认支付？");
+	if(flag==true){
+		location.href="/pay/pay?id="+orderId;;
+
+	}
+}          
 </script>
 
 
@@ -133,20 +153,17 @@ $.ajax({
 
 
 	<div class="head">
-	<div class="headtitle">罗马假日酒店</div>
-	<!-- 从session中取值 为空的话显示登录注册-->
+	<div class="headtitle"><a href="/">罗马假日酒店</a></div>
+
+	<div  th:if="${session.login} != null" >
+	<div class="login"><a href="login/logout">注销</a></div>
+	<div class="loginimg"><img src="../img/logout.png" /> </div>
 	
+	<div class="login"><a href="../orders/all">订单</a></div>
+	<div class="loginimg"><img src="../img/order.png" /> </div>
 	
-	<div  th:if="${session.uid} ==null" >
-	<div class="login"> 登录 </div>
-	<div class="loginimg"><img src="../img/login1.png" /> </div>
-	<div class="login"> 注册 </div>
-	<div class="loginimg"><img src="../img/register.png" /> </div>
-	</div>
-	<!-- 从session中取值 不为空显示用户信息-->	
-	<div  th:if="${session.uid} != null" >
-	<div class="login" th:text="${session.uid}"></div>
-	<div class="login">用户：</div>
+	<div class="login" th:text="${session.login.account}"></div>
+	<div class="login">用户:</div>
 	<div class="loginimg"><img src="../img/register.png" /> </div>
 	</div>
 	</div>
@@ -177,7 +194,7 @@ $.ajax({
 
 
 <!-- 订单 -->
-<div class="panel panel-default" style="width:80%; margin:auto">
+<div class="panel panel-default" style="width:80%; margin:auto;font-size: 20px">
 	<div class="panel-heading">
 		<h3 class="panel-title">当前订单</h3>
 	</div>
@@ -205,22 +222,28 @@ $.ajax({
 
 
 <!--订单项-->
-<div class="panel panel-default" style="width:60%; margin:auto">
+<div class="panel panel-default" style="width:60%; margin:auto;font-size: 20px">
 	<div class="panel-heading">
 		<h3 class="panel-title">订单项详情</h3>
 	</div>
 	<table class="table" id="itemdatail">
-	     <tr>
-		<th>房客姓名</th>
-		<th>房型 </th>
-		<th>押金 </th>
-		<th>入住天数 </th>
-		<th>价格 </th>	
+	     <tr style="text-align: center;">
+		<th style="text-align: center;">房客姓名</th>
+		<th style="text-align: center;">房型 </th>
+		<th style="text-align: center;">押金 </th>
+		<th style="text-align: center;">入住天数 </th>
+		<th style="text-align: center;">价格 </th>	
 		</tr>
 			
 	</table>
 </div>
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 </body>
