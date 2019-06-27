@@ -67,7 +67,7 @@ public class ShiroConfig {
 		map.put("/img/**", "anon");
 		map.put("/type/show", "anon");
 		map.put("/backstage/**", "anon");
-		
+		map.put("/user/accountLogin", "anon");
 		
 		
 
