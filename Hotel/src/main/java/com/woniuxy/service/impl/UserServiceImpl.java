@@ -127,6 +127,16 @@ public class UserServiceImpl implements UserService{
 		}
 		return result;
 	}
+	@Override
+	public Login findLoginByAccount(String account) {
+		
+		return userDao.findLoginByAccount(account);
+	}
+	@Override
+	public Login findLoginByTel(String tel) {
+		
+		return userDao.findLoginByTel(tel);
+	}
 	
 
 }

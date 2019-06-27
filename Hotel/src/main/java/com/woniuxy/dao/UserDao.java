@@ -19,4 +19,10 @@ public interface UserDao {
 	 @Select("select * from login where tel=#{tel}")
 	 public String ifPhoneExit(Login login);
 	 
+	 @Select("select * from login where account=#{account}")
+	 public Login findLoginByAccount(String account);
+	 @Select("select * from login where tel=#{tel}")
+	 public Login findLoginByTel(String tel);
+	 
+	 
 }

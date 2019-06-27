@@ -76,7 +76,13 @@ public class UserController {
 			}
  			try {
  				currentUser.login(token);
- 				session.setAttribute("login", login);
+ 				
+ 				//通过loginaccount查出当前login的所有信息封装并保存在session
+ 				Login login0 = userService.findLoginByAccount(login.getAccount());
+ 				session.setAttribute("login", login0);
+ 				
+ 				
+ 				
  				 result="登录成功";
  			} catch (Exception e) {
  				result="登录失败";
@@ -106,7 +112,8 @@ public class UserController {
     	 }
     	 else{
     	 if(code.equals(loginCode.toString())){
-    		 session.setAttribute("login", login);
+    		 Login login0 = userService.findLoginByTel(login.getTel());
+				session.setAttribute("login", login0);
     		 result="登录成功";
     	 }
     	}

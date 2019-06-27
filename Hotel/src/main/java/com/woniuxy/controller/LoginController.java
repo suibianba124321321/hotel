@@ -36,7 +36,7 @@ public void setLoginService(LoginService loginService) {
 public List<Person>	allPerson(HttpSession session){
 	Object object = session.getAttribute("login");
 	Login ologin=(Login) object;
-System.out.println(ologin);
+    System.out.println(ologin);
 	Login login = loginService.findLoginByid(ologin.getLogin_id());
 	List<Person> persons = login.getPersons();
 	return persons;
@@ -45,7 +45,7 @@ System.out.println(ologin);
 @RequestMapping("/logout")
 public String logout(HttpSession session){
 	session.removeAttribute("login");
-	return "html/bookpage.html";
+	return "/logout";
 }
 
 

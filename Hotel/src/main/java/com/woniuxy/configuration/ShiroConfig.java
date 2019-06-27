@@ -133,7 +133,6 @@ public class ShiroConfig {
 		map.put("/js/**", "anon");
 		map.put("/lib/**", "anon");
 		map.put("/manager/login", "anon");
-
 		map.put("/backstage/css/**", "anon");
 		map.put("/backstage/error.html", "anon");
 		map.put("/backstage/images/**", "anon");
@@ -157,8 +156,8 @@ public class ShiroConfig {
 		map.put("/aaa.html", "user");
 	
 		map.put("/logout", "logout");
-
-		map.put("/**", "authc");
+		map.put("/login/logout", "logout");
+		//map.put("/**", "authc");
 		
 		
 		bean.setFilterChainDefinitionMap(map);

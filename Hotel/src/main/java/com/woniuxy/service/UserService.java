@@ -19,6 +19,9 @@ public interface UserService {
 	
 	public String ifPhoneExit(Login login,HttpSession session);
 	
+	public Login findLoginByAccount(String account);
+	
+	 public Login findLoginByTel(String tel);
 	
 
 }
