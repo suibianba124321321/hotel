@@ -2,13 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
  
+ <!--地图大小设置-->
+ <style>
+	#wrapper{
+		width: 500px;
+		height: 500px;
+	}
+</style>
+
  <meta charset="UTF-8"> 
 <title>Insert title here</title>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/map.js"></script>
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="../css/bookpage.css" rel="stylesheet" type="text/css"/>
 <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<!--高德地图连接-->
+<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.8&key=73ffdbe93adbe571eb3697538cc70707"></script> 
+
+
 <script type="text/javascript">
 
 $(document).ready(function(){	
@@ -52,7 +65,7 @@ $(document).ready(function(){
  				var price =$("<td></td>").text(data[i].price);
  				
  			  if(data[i].number!=0){
- 				  var state = $("<td><button class='button' onclick='bookdetail("+po+")'>预订</button><button class='button' onclick='teambook("+po+")'>团体预订</button></td>"); 
+ 				  var state = $("<td><button class='button' onclick='bookdetail("+po+")'>预订</button><button class='button' onclick='teambook("+po+")' style='width:120px'>团体预订</button></td>"); 
  				   
  			  }else{
  				  var state = $("<td><button class='buttonfull'>已满</button></td>");
@@ -101,6 +114,8 @@ $(document).ready(function(){
 	<div class="loginimg"><img src="../img/login1.png" /> </div>
 	<div class="login"> 注册 </div>
 	<div class="loginimg"><img src="../img/register.png" /> </div>
+	<div class="login"><a href="html/orders.html">订单</a></div>
+	<div class="loginimg"><img src="../img/order.png" /> </div>
 	</div>
 	<!-- 从session中取值 不为空显示用户信息-->	
 	
@@ -120,7 +135,7 @@ $(document).ready(function(){
 		<li data-target="#myCarousel" data-slide-to="2"></li>
 	</ol>   
 	<!-- 轮播（Carousel）项目 -->
-	<div class="carousel-inner">
+	<div class="carousel-inner" style="height:390px">
 		<div class="item active">
 			<img src="../img/slide1.jpg" alt="First slide">
 			<div class="carousel-caption">温馨</div>
@@ -147,16 +162,21 @@ $(document).ready(function(){
 <br>
 <br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;入住时间：<input type="date" id="date_info" ><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;退房时间：<input type="date" id="date_info1"><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;入住时间：<input type="date" id="date_info" >&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;退房时间：<input type="date" id="date_info1">&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<td><button class="button" onclick="search()">查询</button></td>
 <!-- 房间 -->
-<table id="lists">
+<table id="lists" style="font-size: 20px">
 			
 	</table>
 	<br>
+	<br>
+	<!--联系电话及地址  -->
+	<div class="map">
+	<span style="font-size: 20px">联系电话：010-64733333</span><br>
+	<span style="font-size: 20px">详细地址：天府大道8888号</span>
+    <div id="wrapper"></div>
 	<br>	
-	<br>	
-
+     </div>
 </body>
 </html>

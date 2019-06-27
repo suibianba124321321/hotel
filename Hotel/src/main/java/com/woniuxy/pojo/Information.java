@@ -24,6 +24,17 @@ public class Information implements Serializable{
 	private String out_time;
 	
 	private Integer flag;
+	
+	private Person person;
+	
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 
 	public Integer getInformation_id() {
 		return information_id;
@@ -72,6 +83,19 @@ public class Information implements Serializable{
 
 	public void setFlag(Integer flag) {
 		this.flag = flag;
+	}
+
+	public Information(Integer person_id, Integer room_id, String in_time, String out_time) {
+		super();
+		this.person_id = person_id;
+		this.room_id = room_id;
+		this.in_time = in_time;
+		this.out_time = out_time;
+	}
+
+	public Information() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 	
 	

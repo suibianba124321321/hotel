@@ -64,7 +64,7 @@ $(document).ready(function(){
       url:"../comment/all",	
       data:{typeid:$("#typeid").val()},
 	  success:function(data){
-		  alert(data)
+		 
 		  for (var i = 0; i < data.length; i++) {
 			  var div1=$("<div class='media'></div>"); 
 			  var div=$("<div class='media-body'></div>");	    
@@ -113,7 +113,8 @@ $(document).ready(function(){
 
   /*提交订单 */ 
   function submitOrder(){
-	  var list = [$('input[name="passenger"]:checked').val()];
+	  if(confirm("确认提交订单吗？")){
+
 	 $.ajax({
 		 url:"/order/create",
 		 data:{
@@ -128,12 +129,13 @@ $(document).ready(function(){
 		 
 		success:function(data){
 			var msg=data.msg;
-			alert(data)
+			alert(msg)
 			if(msg.search("成功")!=-1){			
-			 location.href="/order/page?orderid="+data.orderid;	 		
+			 location.href="/order/page?orderid="+data.orderid+"&typeid="+$("#typeid").val();	 		
 			}
 		} 	 
 	 })    
+  }
   }
   /*提交订单 */ 
   
@@ -145,7 +147,7 @@ $(document).ready(function(){
 <input type="hidden" id="typeid">
 
 	<div class="head">
-	<div class="headtitle">罗马假日酒店</div>
+	<div class="headtitle"><a href="../">罗马假日酒店</a></div>
 	
 	
 	<div class="loginimg"><img src="../img/register.png" /> </div>
@@ -156,19 +158,18 @@ $(document).ready(function(){
 	<div class="typedetail">
 	预定信息<br>
 	
-	<img  id="pic" style="width:120px"/><br>
+	<img  id="pic" style="width:100%"/><br>
 	房间类型:<span id="type" ></span><br>
 	基本信息:<span id="roominfo" ></span><br>
 	入住时间:<span id="inTime" ></span><br>
 	离开时间:<span id="outTime" ></span><br>
 	单间费用:<span id="price" style="color:red"></span>
-	
 	</div>
 	
 	
 	<!-- 入住房客信息  -->
 	
-	<table class="table table-striped" style="width:600px;margin:auto">
+	<table class="table table-striped" style="width:600px;margin:auto;font-size: 20px">
 	<thead>
 		<tr>
 		    <th style='text-align:center'>选择房客</th>
@@ -185,7 +186,7 @@ $(document).ready(function(){
 </table>
 <br>
 <br>
-<div class="row">
+<div class="row" style="font-size: 20px">
   <div align="center" >
     <form class="form-inline" role="form" onsubmit="return false;">
 	<div class="form-group">
@@ -210,20 +211,20 @@ $(document).ready(function(){
 </div>
 <br><br>
 <!-- 是否接机 -->
-<div class="row">
+<div class="row" style="font-size: 20px">
   <div align="center" >
-  		是否接机：是：<input type="radio" name="airService" value=0 >
-  		                   否：<input type="radio" name="airService" value=1 checked="checked">
+  		是否接机：是：<input type="radio" name="airService" value=1 >
+  		                   否：<input type="radio" name="airService" value=0 checked="checked">
   </div>
 </div>
 <!-- 是否线下支付 -->
-<div class="row">
+<div class="row" style="font-size: 20px">
   <div align="center" >
                    线上支付：<input type="radio" name="offlinepay" value=0 checked="checked">
   		线下支付：<input type="radio" name="offlinepay" value=2>
   </div>
 </div>
-<div class="row">
+<div class="row" style="font-size: 20px">
   <div align="center" >
   		留言：<input type="text" id="msg">
   </div>
@@ -232,7 +233,7 @@ $(document).ready(function(){
 <button class="bookbutton" onclick="submitOrder()">提交订单</button>
 
 <!--用户评价 -->
-<div class="container" id="commentbox">
+<div class="container" id="commentbox" >
   <h3>用户评价</h3> 
   </div>
 <!--用户评价 -->  

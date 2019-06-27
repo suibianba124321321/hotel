@@ -16,4 +16,6 @@ public interface RoomDAO {
 	public List<Room> allRoom();
 	@Update("update room set state=#{state} where room_id=#{room_id}")
 	public void updateState(Room room);
+	@Select ("select * from room where room_id=#{roomid}")
+	public Room findRoomById(Integer roomid);
 }

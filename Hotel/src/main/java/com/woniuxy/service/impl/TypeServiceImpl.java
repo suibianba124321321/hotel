@@ -124,5 +124,11 @@ public class TypeServiceImpl implements TypeService{
 		return typeDAO.findTypeByid(id);
 	}
 
+	@Override
+	public List<Type> findAllType() {
+		
+		return typeDAO.findAllType();
+	}
+
 
 }

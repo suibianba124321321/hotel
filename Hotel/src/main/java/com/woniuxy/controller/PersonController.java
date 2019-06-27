@@ -1,5 +1,8 @@
 package com.woniuxy.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -34,6 +37,27 @@ public Person addPerson(Person person,HttpSession session){
 	personService.addPerson(person, uid);
 	
 	
-	return person;}	
+	return person;
+	}	
 	
+@RequestMapping("/searchPerson")
+@ResponseBody
+public Map<String, Object> searchPerson(String idcard){
+	Map<String, Object> map =new HashMap<String, Object>();
+		map.put("msg", "成功");
+		Person person=personService.findPersonByIdcard(idcard);
+		if(person==null){
+			map.put("msg", "查无此人");
+		}
+		map.put("person", person);
+		return map;
+	
+}
+@RequestMapping("/change")
+@ResponseBody
+public String changeItemPerson(Integer itemid,Person person){
+	System.out.println(person);
+	String msg=personService.changeItemPerson(itemid,person);
+	return msg;
+}
 }

@@ -9,6 +9,12 @@
         <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
         <link rel="stylesheet" href="/backstage/css/font.css">
         <link rel="stylesheet" href="/backstage/css/xadmin.css">
+        
+       <link rel="stylesheet" href="/css/bootstrap.css">
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.js"></script>
+		
+		<script src="/js/bootstrap.min.js"></script>
         <script src="/backstage/lib/layui/layui.js" charset="utf-8"></script>
         <script type="text/javascript" src="/backstage/js/xadmin.js"></script>
     </head>
@@ -25,47 +31,38 @@
                 <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
             </a>
         </div>
-        <div class="layui-fluid">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md12">
-                    <div class="layui-card">
-                        <div class="layui-card-body ">
-                            <form class="layui-form layui-col-space5">
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <input class="layui-input" placeholder="开始日" name="start" id="start"></div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <input class="layui-input" placeholder="截止日" name="end" id="end"></div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <select name="contrller">
-                                        <option>支付方式</option>
-                                        <option>线下</option>
-                                       <option>支付宝</option>
-                                       </select>
-                                </div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <select name="contrller">
-                                        <option value="">订单状态</option>
-                                        <option value="0">未付款</option>
-                                        <option value="1">已付款</option>
-                                        <option value="2">线下支付</option>
-                                        <option value="3">已退房</option>
-                                        <option value="4">已取消</option>
-                                        <option value="5">已入住</option>
-                                        </select>
-                                </div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <input type="text" name="username" placeholder="请输入订单号" autocomplete="off" class="layui-input"></div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <button class="layui-btn" lay-submit="" lay-filter="sreach">
-                                        <i class="layui-icon">&#xe615;</i></button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="layui-card-header">
-                            <button class="layui-btn layui-btn-danger" onclick="delAll()">
-                                <i class="layui-icon"></i>批量删除</button>
-                            <button class="layui-btn" onclick="xadmin.open('添加用户','./order-add.html',800,600)">
-                                <i class="layui-icon"></i>添加</button></div>
+        <div class="row" style="font-size: 20px">
+  <div align="center" >
+    <form class="form-inline" role="form" onsubmit="return false;">
+	<div class="form-group">
+		<label class="sr-only" for="account">购买账号：</label>
+		<input type="text" class="form-control" id="account" 
+			   placeholder="请输入购买账号" value="">
+	</div>
+
+	<div class="form-group">
+		<label class="sr-only" for="state">订单状态：</label>
+		<select class="form-control" id="state" >
+		<option value="">订单状态</option>
+		<option value="0">未支付</option>
+		<option value="1">已支付</option>
+		<option value="2">线下支付</option>
+		<option value="3">已退房</option>
+		<option value="4">已取消</option>
+		<option value="5">已入住</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="inTime">入住时间：</label>
+		<input type="date" class="form-control" id="inTime" 
+			   placeholder="请选择入住时间" value="">
+	</div>
+	
+	<button type="submit" class="btn btn-default" onclick="searchOrders()">搜索</button>
+</form>
+  </div>
+</div>
+                       
                         <div class="layui-card-body ">
                             <table class="layui-table layui-form">
                                 <thead>
@@ -73,12 +70,11 @@
                                         
                                         <th>订单编号</th>
                                         <th>购买用户</th>
-                                        <th>购买会员</th>  <th>支付金额</th>
-                                      
+                                        <th>购买会员</th>  
+                                      	<th>支付金额</th>
                                         <th>下单时间</th>
                                         <th>订单状态</th>	
                                         <th>入住时间</th>
-                                       
                                         <th>用户留言</th>
                                         <th>是否需要接机</th>
                                         <th>预抵时间</th>
@@ -87,14 +83,14 @@
                                         </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="order,orderstate : ${orders}">
+                                    <tr th:each="order : ${orders}">
                                         
                                         <td th:text="${order.order_number}">2017009171822298053</td>
-                                        <td th:if="${logins!=null && logins.size()>0 && logins[orderstate.index] !=null}" th:text="${logins[orderstate.index].account == null}? ${logins[orderstate.index].tel }:${logins[orderstate.index].account}"></td>
-                                        <td th:if="${logins == null ||logins.size()==0 || logins[orderstate.index] ==null}">前台开单</td>
+                                        <td th:if="${order.login!=null} " th:text="${order.login.account == null}? ${order.login.tel }:${order.login.account}"></td>
+                                        <td th:if="${order.login == null }">前台开单</td>
                                         
-                                        <td th:if="${members!=null && members.size()>0 && members[orderstate.index] != null}" th:text="${members[orderstate.index].name}"></td>
-                                        <td th:if="${members == null || members.size()==0 || members[orderstate.index] == null}" >非会员</td>
+                                        <td th:if="${order.member!=null }" th:text="${order.member.name}"></td>
+                                        <td th:if="${order.member == null}" >非会员</td>
                                         <td th:text="${order.sumprice}"></td>
                                         <td th:text="${order.creat_time}"></td>
                                         
@@ -113,13 +109,14 @@
                                         <td th:if="${order.auto_cancel ==1}">是</td>
                                         <td th:if="${order.auto_cancel == 0}">否</td>
                                         <td class="td-manage">
-                                            <a title="查看" th:onclick="xadmin.open('编辑','/back/order-view.html?id=[[${order.order_id}]]')" href="javascript:;">
+                                            <a title="查看" th:onclick="xadmin.open('查看','/back/order-view.html?id=[[${order.order_id}]]')" href="javascript:;">
                                                 <i class="layui-icon">&#xe63c;</i></a>
-                                            <a  th:if="${order.order_state ==0 }"title="删除" th:onclick="cancel([[${order.order_id}]])" href="javascript:;">
+                                            <a  th:if="${order.order_state ==0 || order.order_state ==2 }"title="删除" th:onclick="cancel([[${order.order_id}]])" href="javascript:;">
                                                 <i class="layui-icon">&#xe640;</i></a>
                                                  <a th:if="${order.order_state ==1}" th:onclick="refund([[${order.order_id}]])" href="javascript:;">退款</a>    
                                             <a th:if="${order.order_state ==2}" th:onclick="pay([[${order.order_id}]])" href="javascript:;">线下支付</a> 
-                                            <a th:if="${order.order_state ==2}" th:onclick="onlinepay([[${order.order_id}]])" href="javascript:;">线下支付</a>    
+                                            <a th:if="${order.order_state ==2}" th:onclick="onlinepay([[${order.order_id}]])" href="javascript:;">线上支付</a> 
+                                             <a th:if="${order.order_state ==2 || order.order_state ==1}" th:onclick="update([[${order.order_id}]])" href="javascript:;">修改</a>       
                                         </td>
                                     </tr>
                                     
@@ -127,10 +124,7 @@
                             </table>
                         </div>
                       
-                        </div>
-                    </div>
-                </div>
-            </div>
+          
       
     </body>
     <script>
@@ -152,6 +146,7 @@
     	
     	}
     }
+  /* 线下支付 */
     function pay(orderId){
     	var flag=confirm("确认支付？");
     	if(flag==true){
@@ -170,6 +165,7 @@
     	
     	}
     }
+    /* 在线支付 */
     function onlinepay(orderId){
     	var flag=confirm("确认支付？");
     	if(flag==true){
@@ -188,6 +184,7 @@
     	
     	}
     }
+    /* 退款 */
     function refund(orderId){
     	var flag=confirm("确认退款？");
     	if(flag==true){
@@ -204,8 +201,115 @@
     	})
     	}
     }
-    
-    
+ /*查找订单  */   
+ function searchOrders(){
+	 $.ajax({
+		 url:"/order/searchOrders",
+		 data:{
+			 account:$("#account").val(),
+			 state:$("#state").val(),
+			 inTime:$("#inTime").val()
+		 },
+		 success:function(orders){
+			 $("tbody").html("");
+			 for(var i=0;i<orders.length;i++){
+				 var order=orders[i];
+				 var tr=$("<tr></tr>");
+				
+				var orderNumber=$("<td></td>").html(order.order_number);	 
+              
+				var buyaccont=$("<td></td>");     
+				 if(order.login==null){
+					 buyaccont.html("前台开单");
+				 }else{
+					if(order.login.account == null){
+						buyaccont.html(order.login.tel);
+					} else{
+						buyaccont.html(order.login.account);
+					}
+					 
+				 }
+				var buyMember=$("<td></td>") ;  
+				if(order.member==null){
+					buyMember.html("非会员");
+				}else{
+					buyMember.html(order.member.name);
+				}
+                var price=$("<td></td>").html(order.sumprice) ; 	
+                var creatTime=$("<td></td>").html(order.creat_time);   
+                 var state=$("<td></td>")    
+                 if(order.order_state == 0){
+                	 state.html("未支付");
+                 }
+                 if(order.order_state == 1){
+                	 state.html("未支付");
+                 }
+                 if(order.order_state == 2){
+                	 state.html("线下支付");
+                 }
+                 if(order.order_state == 3){
+                	 state.html("已退房");
+                 }
+                 if(order.order_state == 4){
+                	 state.html("已取消");
+                 }
+                 if(order.order_state == 5){
+                	 state.html("已入住");
+                 }
+                
+                 var inTime=$("<td></td>").html(order.in_time);   
+                 var msg=$("<td></td>").html(order.msg);   
+                  var inAir=$("<td></td>");
+                  if(order.in_air == 0){
+                	  inAir.html("是");
+                  }else{
+                	  inAir.html("否");
+                  }
+                 var arriveTime=$("<td></td>").html(order.arrive_time)    
+                 var autoCancel=$("<td></td>");
+                 if(order.auto_cancel == 0){
+                	 autoCancel.html("否");
+                 }else{
+                	 autoCancel.html("是");
+                 }
+                 
+                 var operation=$("<td></td>").html('<a title="查看" onclick="go('+order.order_id+')" href="javascript:;"<i class="layui-icon">&#xe63c;</i></a>');;
+                 if(order.order_state ==0 || order.order_state ==2 ){
+                	 operation.append(' <a  title="删除" onclick="cancel('+order.order_id+')" href="javascript:;"><i class="layui-icon">&#xe640;</i></a>');
+                	 operation.append('<a onclick="update('+order.order_id+')" href="javascript:;">修改</a>');
+                 }
+                 if(order.order_state == 1){
+                	 operation.append('<a onclick="refund('+order.order_id+')" href="javascript:;">退款</a>');
+                 }
+                 if(order.order_state == 2){
+                	 operation.append('<a onclick="pay('+order.order_id+')" href="javascript:;">线下支付</a> ');
+                	 operation.append('<a onclick="onlinepay('+order.order_id+')" href="javascript:;">线上支付</a> ');
+                	 operation.append('<a onclick="update('+order.order_id+')" href="javascript:;">修改</a>');
+                 }
+                 tr.append(orderNumber);
+                 tr.append(buyaccont);
+                 tr.append(buyMember);
+                 tr.append(price);
+                 tr.append(creatTime);
+                 tr.append(state);
+                 tr.append(inTime);
+                 tr.append(msg);
+                 tr.append(inAir);
+                 tr.append(arriveTime);
+                 tr.append(autoCancel);
+                 tr.append(operation);
+                 $("tbody").append(tr);
+			 }
+		 }
+	 })
+ } 
+ 
+ function go(id){
+	 xadmin.open("查看","/back/order-view.html?id="+id) ;
+ }
+ function update(id){
+	 xadmin.open("修改","/back/updateorder.html?id="+id) ;
+ }
   </script>
 
 </html>

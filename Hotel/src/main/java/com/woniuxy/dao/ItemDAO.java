@@ -2,9 +2,11 @@ package com.woniuxy.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.annotations.UpdateProvider;
 
@@ -21,12 +23,21 @@ public interface ItemDAO {
 	public void deleteItem(Order order);
 	@Select("select * from item where order_id=#{orderid}")
 	public List<Item> findItemsByOrdeId(Integer order_id);
+
 	@Select("select * from item ")
 	public List<Item> findAllItem();
 	@UpdateProvider(type=ItemProvider.class,method="updateByid")
 	public void updateFlag(Item item);
 	@Select("select * from item where item_id=#{item_id}")
 	public Item findItemById(Integer item_id);
+
+	@Select("select * from item where order_id=#{orderid} and flag=0")
+	public List<Item> findItemsByOrdeIdAndflagEquelsZero(Integer order_id);
+	
+	@SelectProvider(type=ItemProvider.class ,method="selectBymap")
+	public List<Item> findItemsBysome(Map<String, Object> map);
+	@Update("update item set person_id=#{person_id} where item_id=#{item_id}")
+	public void updatePerson(Item item);
 
 
 }

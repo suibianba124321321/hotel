@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.woniuxy.pojo.Item;
 import com.woniuxy.pojo.Order;
 import com.woniuxy.pojo.Room;
 import com.woniuxy.pojo.RoomDate;
@@ -24,6 +25,8 @@ public interface RoomDateDAO {
 	
 	@Select("select room_id from room_date where flag=0 and date=#{today}")
 	public List<Integer> findNowRoom(String today);
-	@Update("update room_date set flag=1 where room_id=#{room_id}")
-	public void deleteByRoomId(Integer room_id);
+	@Update("update room_date set flag=1 where room_id=#{room_id} and order_id=#{order_id}")
+	public void deleteByRoomId(Item item);
+	@Select("select room_id from room_date where date=#{date} and flag=0")
+	public List<Room> findRoomByDate(String date);
 }

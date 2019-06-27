@@ -11,4 +11,7 @@ public interface TypeService {
 	
 	public Type findTypeByid(int id);
 
+
+	public List<Type> findAllType();
+
 }

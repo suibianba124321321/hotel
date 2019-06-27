@@ -112,6 +112,7 @@ $(document).ready(function(){
 
   /*提交订单 */ 
   function submitOrder(){
+	  if(confirm("确认提交订单吗？")){
 	  var obj=document.getElementsByName("passenger");
 	  var personId=[];
 	  for(var i in obj){
@@ -133,13 +134,14 @@ $(document).ready(function(){
 		 },
 		 
 		success:function(data){
-			alert(data)
-			if(data.search("成功")!=-1){			
-			 location.href="/order/page"	 		
+			var msg=data.msg;
+			alert(msg);
+			if(msg.search("成功")!=-1){			
+			 location.href="/order/page?orderid="+data.orderid+"&typeid="+$("#typeid").val();		
 			}
 		} 	 
 	 })     
-  }
+  }}
   /*提交订单 */ 
   
 </script>
@@ -150,7 +152,7 @@ $(document).ready(function(){
 <input type="hidden" id="typeid">
 
 	<div class="head">
-	<div class="headtitle">罗马假日酒店</div>
+	<div class="headtitle"><a href="../">罗马假日酒店</a></div>
 	
 	
 	<div class="loginimg"><img src="../img/register.png" /> </div>

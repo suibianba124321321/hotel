@@ -2,6 +2,8 @@ package com.woniuxy.dao;
 
 
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Result;
@@ -26,5 +28,8 @@ public Login findLoginByid(int login_id);
 //将用户id与personid对应起来
 @Insert("insert into login_person values(#{param1},#{param2})")
 public void bindloginIdAndPersonId(int login_id,int person_id);
+
+@Select("select * from login where account=#{account} or tel=#{account} and flag=0")
+public List<Login> findLoginByString(String account);
 
 }

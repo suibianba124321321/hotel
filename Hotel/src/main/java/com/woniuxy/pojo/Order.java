@@ -50,9 +50,27 @@ public class Order implements Serializable{
 	
 	private List<Item> items;
 	
+	private Login login;
+	
+	private Member member;
+	
+	
+	public Login getLogin() {
+		return login;
+	}
 
-	
-	
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
 	public BigDecimal getSumprice() {
 		return sumprice;
 	}

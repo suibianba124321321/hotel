@@ -9,6 +9,11 @@
         <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
         <link rel="stylesheet" href="/backstage/css/font.css">
         <link rel="stylesheet" href="/backstage/css/xadmin.css">
+        
+         <link rel="stylesheet" href="/css/bootstrap.css">
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.js"></script>
+		
         <script src="/backstage/lib/layui/layui.js" charset="utf-8"></script>
         <script type="text/javascript" src="/backstage/js/xadmin.js"></script>
     </head>
@@ -25,51 +30,36 @@
                 <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i>
             </a>
         </div>
-        <div class="layui-fluid">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md12">
-                    <div class="layui-card">
-                        <div class="layui-card-body ">
-                            <form class="layui-form layui-col-space5">
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <input class="layui-input" placeholder="开始日" name="start" id="start"></div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <input class="layui-input" placeholder="截止日" name="end" id="end"></div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <select name="contrller">
-                                        <option>支付方式</option>
-                                        <option>线下</option>
-                                       <option>支付宝</option>
-                                         </select>
-                                </div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <select name="contrller">
-                                        <option value="">订单状态</option>
-                                        <option value="0">未付款</option>
-                                        <option value="1">已付款</option>
-                                        <option value="2">线下支付</option>
-                                        <option value="3">已退房</option>
-                                        <option value="4">已取消</option>
-                                        </select>
-                                </div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <input type="text" name="username" placeholder="请输入订单号" autocomplete="off" class="layui-input"></div>
-                                <div class="layui-input-inline layui-show-xs-block">
-                                    <button class="layui-btn" lay-submit="" lay-filter="sreach">
-                                        <i class="layui-icon">&#xe615;</i></button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="layui-card-header">
-                            <!-- <button class="layui-btn layui-btn-danger" onclick="delAll()">
-                                <i class="layui-icon"></i>批量删除</button> -->
-                            <button class="layui-btn" onclick="xadmin.open('添加用户','./order-add.html',800,600)">
-                                <i class="layui-icon"></i>添加</button></div>
+        <div class="row" style="font-size: 20px">
+  <div align="center" >
+    <form class="form-inline" role="form" onsubmit="return false;">
+	<div class="form-group">
+		<label class="sr-only" for="name">入住人员姓名：</label>
+		<input type="text" class="form-control" id="name" 
+			   placeholder="请输入人员姓名" value="">
+	</div>
+
+	<div class="form-group">
+		<label class="sr-only" for="state">订单状态：</label>
+		<select class="form-control" id="state" >
+		<option value="">状态</option>
+		<option value="0">未入住</option>
+		<option value="1">已退房</option>
+		<option value="2">已入住</option>
+		</select>
+	</div>
+	
+	<button type="submit" class="btn btn-default" onclick="searchItems()">搜索</button>
+</form>
+  </div>
+</div>
+  
                         <div class="layui-card-body ">
                             <table class="layui-table layui-form">
                                <thead>
 					<tr>
 						<th>姓名</th>
+						<th>电话</th>
 						<th>身份证</th>
 						<th>房间类型</th>
 						<th>押金</th>
@@ -83,6 +73,7 @@
 				<tbody>
 					<tr th:each="item : ${items}">
 					<td th:text="${item.person.name}"></td>
+					<td th:text="${item.person.tel}"></td>
 					<td th:text="${item.person.idcard}"></td>
 					<td th:text="${item.type.type}"></td>
 					<td th:text="${item.deposit == null}? 0: ${item.deposit}">0</td>
@@ -90,17 +81,20 @@
 					<td th:text="${item.day_number}"></td>
 					<td th:text="${item.deposit ==null } ? ${item.day_number * item.price }:${item.day_number * item.price+item.deposit } "></td>
 					<td th:if="${item.flag ==0 }">
-						<button type="button" class="btn btn-success" th:onclick="inRoom(${[[${item.item_id]]})">入住</button>
+						<button type="button" class="btn btn-success" th:onclick="inRoom([[${item.item_id}]])">入住</button>
+						<button type="button" class="btn btn-success" th:onclick="cancelRoom([[${item.item_id}]])">取消</button>
+						<button  type="button" class="btn btn-info" th:onclick="xadmin.open('修改','/back/itemInformation.html?id=[[${item.order_id}]]')">修改</button>
 					</td>
 					<td th:if="${item.flag ==2 }">
-						<button type="button" class="btn btn-danger" th:onclick="outRoom([[${item.item_id]]})">退房</button>
+						<button type="button" class="btn btn-danger" th:onclick="outRoom([[${item.item_id}]])">退房</button>
 					</td>
 					<td th:if="${item.flag ==1 }">
 						<button type="button" class="btn btn-default" >已退房</button>
 					</td>
 					<td class="td-manage">
-                         <a title="查看" th:onclick="xadmin.open('编辑','/back/singleorder.html?id=[[${item.order_id}]]')" href="javascript:;">
+                         <a title="查看" th:onclick="xadmin.open('查看','/back/singleorder.html?id=[[${item.order_id}]]')" href="javascript:;">
                           <i class="layui-icon">&#xe63c;</i></a>
+                      
                       </td>
 					</tr>
 
@@ -109,18 +103,21 @@
                             </table>
                         </div>
                       
-                        </div>
-                    </div>
-                </div>
-            </div>
+
        
     </body>
     <script>
+    function go(id){
+    	xadmin.open('编辑','/back/singleorder.html?id='+id);
+    }
+    function update(id){
+    	xadmin.open('修改','/back/itemInformation.html?id='+id);
+    }
     function inRoom(id){
     	$.ajax({
     		url:"/item/inroom",
     		data:{
-    			"item.item_id":id
+    			"item_id":id
     		
     		},
     		success:function(data){
@@ -135,16 +132,93 @@
     
     function outRoom(id){
     	$.ajax({
-    		url:"item/outroom",
+    		url:"/item/outroom",
     		data:{
-    			"item.item_id":id
+    			"item_id":id
     		},
-    		seccess:function(data){
+    		success:function(data){
     			alert(data);
     			location.reload(true);
     		}
     	})
     }
+    function cancel(id){
+    	$.ajax({
+    		url:"/item/cancel",
+    		type:"post",
+    		data:{
+    			"item_id":id
+    		},
+    		success:function(msg){
+    			alert(msg);
+    			location.reload(true);
+    		
+    		}
+    	})
+    }
+    function searchItems(){
+    	$.ajax({
+    		url:"/item/searchItems",
+    		data:{
+    			name:$("#name").val(),
+    			state:$("#state").val()
+    		},
+    		success:function(items){
+    			$("tbody").html("");
+    			for(var i=0;i<items.length;i++){
+    				var item=items[i];
+    				var tr=$("<tr></tr>");
+    				var name=$("<td></td>").html(item.person.name);
+    				var tel=$("<td></td>").html(item.person.tel);
+					var idcard=$("<td></td>").html(item.person.idcard);
+					
+					var type=$("<td></td>").html(item.type.type);
+					var deposit=$("<td>0</td>");
+					if(item.deposit!=null){
+						deposit.html(item.deposit);
+					}
+					var price=$("<td></td>").html(item.price);
+					var dayNumber=$("<td></td>").html(item.day_number);
+					var total=$("<td></td>");
+					if(item.deposit==null){
+						total.html(item.price*item.day_number);
+					}else{
+						total.html(item.price*item.day_number+item.deposit);
+					}
+					
+					var operation=$("<td></td>");
+					if(item.flag==0){
+						operation.html('<button type="button" class="btn btn-success" onclick="inRoom('+item.item_id+')">入住</button>');
+						operation.html('<button type="button" class="btn btn-success" onclick="cancelRoom('+item.item_id+')">取消</button>');
+						operation.append('<button  type="button" class="btn btn-info" onclick="update('+item.item_id+')">修改</button>');
+					}
+					if(item.flag==1){
+						operation.html('<button type="button" class="btn btn-default" >已退房</button>');
+					}
+					if(item.flag==2){
+						operation.html('<button type="button" class="btn btn-danger" onclick="outRoom('+item.item_id+')">退房</button>');
+						
+					}
+					var look=$("<td></td>").html('<a title="查看" onclick="go('+item.order_id+')" href="javascript:;"><i class="layui-icon">&#xe63c;</i></a>');
+					
+					tr.append(name);
+					tr.append(tel);
+					tr.append(idcard);
+					tr.append(type);
+					tr.append(deposit);
+					tr.append(price);
+					tr.append(dayNumber);
+					tr.append(total);
+					
+					tr.append(operation);
+					tr.append(look);
+					$("tbody").append(tr);
+    			}
+    		}
+    	})
+    }
+  
+    
     </script>
 
 </html>

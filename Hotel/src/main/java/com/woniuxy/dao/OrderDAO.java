@@ -1,12 +1,14 @@
 package com.woniuxy.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Select;
 
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.UpdateProvider;
 import org.springframework.stereotype.Repository;
 
 import com.woniuxy.pojo.Order;
@@ -35,5 +37,11 @@ public interface OrderDAO {
 	public List<Order> findAllOrder();
 	@Update("update `order` set order_state=#{order_state} where  order_id=#{order_id}") 
 	public void updateState(Order order);
+	@SelectProvider(type=OrderProvider.class,method="selectBymap")
+	public List<Order> findOrdersByMap(Map<String, Object> map);
+	@UpdateProvider(type=OrderProvider.class,method="update")
+	public void updateOrder(Order order);
+	@Update("update `order` set sumprice=#{sumprice} where order_id=#{order_id}")
+	public void updateSumpriceByid(Order order);
 
 }

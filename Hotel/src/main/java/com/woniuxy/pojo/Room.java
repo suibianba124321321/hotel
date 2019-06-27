@@ -54,6 +54,29 @@ public class Room implements Serializable {
 		return "Room [room_id=" + room_id + ", type_id=" + type_id + ", state=" + state + ", flag=" + flag + ", type="
 				+ type + "]";
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((room_id == null) ? 0 : room_id.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Room other = (Room) obj;
+		if (room_id == null) {
+			if (other.room_id != null)
+				return false;
+		} else if (!room_id.equals(other.room_id))
+			return false;
+		return true;
+	}
 	
 	
 }

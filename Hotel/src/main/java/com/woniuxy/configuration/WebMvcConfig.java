@@ -13,5 +13,6 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		/*registry.addRedirectViewController("pay/savemsg", "/pay/savemsg");*/
 		registry.addViewController("/order/page").setViewName("/html/orderpage");
 		registry.addViewController("/").setViewName("/html/bookpage");
+		
 	}
 }
