@@ -38,6 +38,9 @@ public Map currentMember(HttpSession session){
 	Login login=(Login) object;
 	Map<String, Object> map = new HashMap<String, Object>();	
 	Integer member_id=login.getMember_id();
+	if(member_id==null){	
+		return  (Map) map.put("member", 0);
+	}
 	Member member = memberService.findMemberByid(member_id);
 	String discount = MemberUtil.map.get(member.getRank());	
 	map.put("member", member);
