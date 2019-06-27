@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Bootstrap 实例 - 上下文类</title>
+<link rel="stylesheet" href="/css/bootstrap.css">
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.js"></script>
+
+<script src="/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+function updateInfo(){
+	
+	 $.ajax({
+		url:"/person/change",
+		type:"POST",
+		data:{
+			itemid:$("#itemid").val(),
+			name:$("#name").val(),
+			tel:$("#tel").val(),
+			idcard:$("#idcard").val()
+		},
+		success:function(msg){
+			alert(msg);
+		} 
+		
+	}) 
+}
+
+</script>
+</head>
+<body>
+<input type="hidden" id="itemid" th:value="${itemid}">
+	<div class="container">
+		<div class="panel-group" id="accordion">
+			<table class=" table">
+				<caption>入住人员信息</caption>
+				
+					<tr><th>姓名</th><td><input type="text" id="name" th:value="${person.name}"></td></tr>
+						
+					<tr><th>身份证</th><td><input type="text" id="idcard" th:value="${person.idcard}"></td></tr>
+					<tr><th>电话</th><td><input type="text" id="tel" th:value="${person.tel}"></td></tr>
+					<tr><th>操作</th><td><button  type="button" class="btn btn-default" onclick="updateInfo()">修改</button></td></tr>	
+					
+				
+			</table>
+		</div>
+	</div>
+<script type="text/javascript">
+
+
+</script>
+
+</body>
+</html>
