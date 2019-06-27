@@ -94,10 +94,7 @@ public class OrderServiceImpl implements OrderService{
 		      public void run() {
 	     
 	        Order order=orderService.findOrderById(orderId);
-	       if(order==null){
-	    	   timer.cancel();
-	    	   return;
-	       }
+	       
 	        int orderState=order.getOrder_state();
 	         int auto=order.getAuto_cancel();
 	        
@@ -120,6 +117,7 @@ public class OrderServiceImpl implements OrderService{
 		map.put("msg", "创建成功");
 		//入住人员
 		Integer[] personIds=order.getPersonID();
+		
 		SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd");
 		//获取订单的时间
 		List<String> orderDates=new ArrayList<>();
@@ -280,6 +278,13 @@ public class OrderServiceImpl implements OrderService{
 		roomDateDAO.delete(order);
 		return "退房成功";
 
+	}
+
+	//通过order_id从order表中查询到order对象（order_state,in_time,out_time）
+	@Override
+	public Order findOrderByOrder_id(Item item) {
+		
+		return orderDAO.findOrderByOrder_id(item);
 	}
 	
 	

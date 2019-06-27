@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.woniuxy.dao.RoomDAO;
+import com.woniuxy.pojo.Information;
 import com.woniuxy.pojo.Room;
 import com.woniuxy.service.RoomService;
 @Service
@@ -55,6 +56,32 @@ public class RoomServiceImpl implements RoomService{
 		
 	}
 
+	@Override
+	public Room findRoomByRoom_id(Information information) {
+		return roomDAO.findRoomByRoom_id(information);
+	}
+
+	@Override
+	public String updateStateByRoom_id(Information information) {
+		String result="退房失败";
+		boolean re=roomDAO.updateStateByRoom_id(information);
+		if(re){
+			result="退房成功";
+		}
+		return result;
+	}
+
+	@Override
+	public String updateOldAndNewRoomStateByRoom_id(Information information, Information oldInformation) {
+		String result="修改失败";
+		boolean re=false;
+		re=roomDAO.updateOldRoomStateByOldRoom_id(oldInformation);
+		re=roomDAO.updateNewRoomStateByNewRoom_id(information);
+		if(re){
+			result="修改成功";
+		}
+		return result;
+	}
 	
 
 }

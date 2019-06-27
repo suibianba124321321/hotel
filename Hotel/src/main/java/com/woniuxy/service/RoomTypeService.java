@@ -2,7 +2,8 @@ package com.woniuxy.service;
 
 import java.util.List;
 
-
+import com.woniuxy.pojo.Room;
+import com.woniuxy.pojo.RoomDate;
 import com.woniuxy.pojo.Type;
 
 public interface RoomTypeService {
@@ -44,6 +45,10 @@ public interface RoomTypeService {
 	 */
 	public void updateNumberByType_id(Type type);
 
+	
+	public Type findTypeByType_id(RoomDate roomDate);
+	
+	public Type findTypeByRoom(Room room);
 	public void updateDescriptionByType_id(Type type);
 
 }

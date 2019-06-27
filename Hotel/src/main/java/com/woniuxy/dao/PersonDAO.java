@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import com.woniuxy.pojo.Information;
 import com.woniuxy.pojo.Person;
 
 @Repository
@@ -24,5 +25,17 @@ public void addPerson(Person person);
 //通过idcard查询出该房客的id 
 @Select("select * from person where idcard=#{idcard} ")
 public Person findPersonIdByIdcard(Person person);
+//查找所有person
+@Select("select * from person where flag=0")
+public List<Person> findAllPerson();
+//通过idcard从person表中查询到person对象（入住姓名、手机号、person_id）
+@Select("select * from person where idcard = #{idcard}")
+public Person findPersonByIdCard(String idcard);
+//通过person_id从person表中查询到person对象（入住姓名、手机号、person_id）
+@Select("select * from person where person_id=#{person_id} and flag=0")
+public Person findPersonByPerson_id(Information information);
+//通过姓名模糊查询person对象
+@Select("select * from person where name like CONCAT('%',#{name},'%') and flag =0")
+public Person findPersonByName(Person person);
 
 }

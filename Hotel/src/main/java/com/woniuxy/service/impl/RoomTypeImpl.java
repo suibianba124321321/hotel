@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.woniuxy.dao.RoomTypeDao;
+import com.woniuxy.pojo.Room;
+import com.woniuxy.pojo.RoomDate;
 import com.woniuxy.pojo.Type;
 import com.woniuxy.service.RoomTypeService;
 @Service
@@ -53,5 +55,18 @@ public class RoomTypeImpl implements RoomTypeService{
 		roomTypeDao.updateDescriptionById(type);
 		
 	}
+	
+	//通过type_id从room_type表中查询到room_type对象（type）
+		@Override
+		public Type findTypeByType_id(RoomDate roomDate) {
+			
+			return roomTypeDao.findTypeByType_id(roomDate);
+		}
+
+		@Override
+		public Type findTypeByRoom(Room room) {
+			return roomTypeDao.findTypeByRoom(room);
+		}
+
 
 }

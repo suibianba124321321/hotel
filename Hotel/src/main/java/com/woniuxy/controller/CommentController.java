@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.woniuxy.pojo.Comment;
 import com.woniuxy.service.CommentService;
 
+/**
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
@@ -28,9 +32,7 @@ public void setCommentService(CommentService commentService) {
 @RequestMapping("/all")	
 @ResponseBody
  public List<Comment> all(int typeid){
-	
 	List<Comment> allComments = commentService.allComments(typeid);
-	System.out.println(allComments);
 	return allComments;
 	
 	
