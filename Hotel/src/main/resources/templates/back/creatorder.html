@@ -105,7 +105,7 @@ $.ajax({
 		"name":$("#name").val(),
 		"tel":$("#tel").val(),
 		"idcard":$("#idcard").val(),
-		memberid:$("#memberid").val()
+		"member_id":$("#memberid").val()
 	},
 	success:function(data){
 		alert(data.msg);
@@ -179,7 +179,7 @@ $.ajax({
 				<tr>
 				<th>预抵时间：</th>
 				<td>
-					<input type="date" id="arriveTime" th:value="${inTime}">
+					<input type="time" id="arriveTime" value="12:00">
   		         </td>
 				</tr>
 				<tr>

@@ -200,7 +200,7 @@ public class ItemServiceImpl implements ItemService{
 				start=new Date(start.getTime()+24*60*60*1000);
 			}
 			//算出退款金额
-			 refund=refund.multiply(new BigDecimal(""+number));
+			 refund=refund.multiply(new BigDecimal(""+(oldItem.getDay_number()-number)));
 			 refund=refund.add(oldItem.getDeposit());
 			 msg=msg+",请退款：￥"+refund.doubleValue();
 			

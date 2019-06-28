@@ -585,9 +585,7 @@ public class OrderServiceImpl implements OrderService {
 			String date = orderDates.get(i);
 			roomDateDAO.insert(new RoomDate(room.getRoom_id(), room.getType_id(), date, orderId));
 		}
-		//开单修改房间的状态
-		room.setState(1);
-		roomDAO.updateState(room);
+		
 		map.put("msg","开单成功");
 		map.put("orderid",orderId);
 		// 超过规定时间未付款自动取消订单

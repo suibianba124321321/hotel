@@ -41,7 +41,8 @@
 					<td th:text="${item.deposit == null? 0: item.deposit}">0</td>
 					<td th:text="${item.price}"></td>
 					<td th:text="${item.day_number}"></td>
-					<td th:text="${item.deposit ==null ?item.day_number * item.price :item.day_number * item.price+item.deposit  }"></td>
+					<td th:if="${item.day_number!=0}" th:text="${item.deposit ==null ?item.day_number * item.price :item.day_number * item.price+item.deposit  }"></td>
+					<td  th:if="${item.day_number == 0}">0</td>
 					<td th:if="${orderstate == 0 || orderstate == 2}" >待付款</td>
 					<td th:if="${orderstate != 0 && orderstate != 2 && item.flag ==0 }">
 						<button type="button" class="btn btn-success" th:onclick="inRoom([[${item.item_id}]])">入住</button>
