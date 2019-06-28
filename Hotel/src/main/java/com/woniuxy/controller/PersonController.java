@@ -31,9 +31,9 @@ public void setPersonService(PersonService personService) {
 @RequestMapping("/addperson")
 @ResponseBody
 public String addPerson(Person person,HttpSession session){
-	/*Object ouid = session.getAttribute("uid");
-	int uid=(int) ouid;*/
-	int uid=1001;
+	Object ouid = session.getAttribute("uid");
+	int uid=(int) ouid;
+	
 	String result="添加失败";
 	result = personService.addPerson(person, uid);
 	
@@ -58,7 +58,7 @@ public Map<String, Object> searchPerson(String idcard){
 @RequestMapping("/change")
 @ResponseBody
 public String changeItemPerson(Integer itemid,Person person){
-	System.out.println(person);
+	
 	String msg=personService.changeItemPerson(itemid,person);
 	return msg;
 }
