@@ -38,7 +38,7 @@
 				<tr>
 					<th>购买会员</th>
 					<td th:if="${member!=null }" th:text="${member.name}"></td>
-					<td th:if="${members == null }">非会员</td>
+					<td th:if="${member == null }">非会员</td>
 				</tr>
 				<tr>
 					<th>支付金额</th>

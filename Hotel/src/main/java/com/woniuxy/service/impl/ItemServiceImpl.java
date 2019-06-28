@@ -13,9 +13,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.woniuxy.dao.InformationDAO;
 import com.woniuxy.dao.ItemDAO;
+import com.woniuxy.dao.MemberDAO;
 import com.woniuxy.dao.OrderDAO;
 import com.woniuxy.dao.PersonDAO;
 import com.woniuxy.dao.RoomDAO;
@@ -23,12 +25,13 @@ import com.woniuxy.dao.RoomDateDAO;
 import com.woniuxy.dao.TypeDAO;
 import com.woniuxy.pojo.Information;
 import com.woniuxy.pojo.Item;
+import com.woniuxy.pojo.Member;
 import com.woniuxy.pojo.Order;
 import com.woniuxy.pojo.Person;
 import com.woniuxy.pojo.Room;
 import com.woniuxy.pojo.Type;
 import com.woniuxy.service.ItemService;
-
+@Transactional
 @Service("itemService")
 public class ItemServiceImpl implements ItemService{
 	@Resource
@@ -46,9 +49,19 @@ public class ItemServiceImpl implements ItemService{
 	private RoomDAO roomDAO;
 	@Resource
 	private InformationDAO informationDAO;
+	@Resource
+	private MemberDAO memberDAO;
 	
 	
 	
+	public MemberDAO getMemberDAO() {
+		return memberDAO;
+	}
+
+	public void setMemberDAO(MemberDAO memberDAO) {
+		this.memberDAO = memberDAO;
+	}
+
 	public InformationDAO getInformationDAO() {
 		return informationDAO;
 	}
@@ -166,13 +179,14 @@ public class ItemServiceImpl implements ItemService{
 		orderDAO.updateState(order);;
 		return msg;
 	}
-
+	
 	@Override
 	public String outRoom(Item item) {
 		String msg="退房成功";
 		Date now=new Date();
 		SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd");
-		String today=sd.format(now);
+//		String today=sd.format(now);
+		String today="2019-06-29";
 		Item oldItem=itemDAO.findItemById(item.getItem_id());
 		if(oldItem==null){
 			return "订单项不存在";
@@ -200,7 +214,7 @@ public class ItemServiceImpl implements ItemService{
 				start=new Date(start.getTime()+24*60*60*1000);
 			}
 			//算出退款金额
-			 refund=refund.multiply(new BigDecimal(""+number));
+			 refund=refund.multiply(new BigDecimal(""+(oldItem.getDay_number()-number)));
 			 refund=refund.add(oldItem.getDeposit());
 			 msg=msg+",请退款：￥"+refund.doubleValue();
 			
@@ -209,6 +223,7 @@ public class ItemServiceImpl implements ItemService{
 			//修改订单总价
 			order.setSumprice(order.getSumprice().subtract(refund));
 			orderDAO.updateSumpriceByid(order);
+			
 			
 		}
 		
@@ -231,6 +246,23 @@ public class ItemServiceImpl implements ItemService{
 		//插入入住信息
 		Information information=new Information(oldItem.getPerson_id(), oldItem.getRoom_id(), order.getIn_time(), today);
 		informationDAO.insertInformation(information);
+		//如果是会员计算积分
+		if(order.getMember_id()!=null && order.getMember_id()!=0){
+			Member member=memberDAO.findMemberBId(order.getMember_id());
+			int grade=oldItem.getPrice().intValue()*number;
+			int newGrade=member.getGrade()+grade;
+			System.out.println(newGrade);
+			member.setGrade(newGrade);
+			memberDAO.updateGrade(member);
+			if(1000<=newGrade && newGrade<2000){
+				member.setRank(2);
+				memberDAO.updateRank(member);
+			}else if(newGrade>=2000){
+				member.setRank(3);
+				memberDAO.updateRank(member);
+			}
+		}
+		
 		
 		return msg;
 	}

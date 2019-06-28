@@ -4,13 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import com.woniuxy.pojo.Login;
 import com.woniuxy.pojo.Order;
 
 import com.woniuxy.pojo.Person;
@@ -34,13 +35,12 @@ public class OrderController {
 	
 	@RequestMapping("/create")
 	@ResponseBody
-	public Map<String, Object> createOrder(Order order,@RequestParam(value="persons[]")Integer[] persons){
-		
-		order.setLogin_id(1001);
+	public Map<String, Object> createOrder(HttpSession session,Order order,@RequestParam(value="persons[]")Integer[] persons){
+		Object object = session.getAttribute("login");
+		Login ologin=(Login) object;
+		order.setLogin_id(ologin.getLogin_id());
+		order.setMember_id(ologin.getMember_id());
 		order.setPersonID(persons);
-		
-		
-	
 		 Map<String, Object> map=orderService.createOrder(order);
 		
 		return map;
@@ -48,10 +48,11 @@ public class OrderController {
 	
 	@RequestMapping("/orders")
 	@ResponseBody
-	public List<Order> allOrderByid(){
+	public List<Order> allOrderByid(HttpSession session){
 		Order order=new Order();
-		
-		order.setLogin_id(1001);
+		Object object = session.getAttribute("login");
+		Login ologin=(Login) object;
+		order.setLogin_id(ologin.getLogin_id());
 		List<Order> orders=orderService.findAllOrder(order);
 	   
 		

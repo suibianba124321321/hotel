@@ -26,6 +26,7 @@ import com.woniuxy.dao.PersonDAO;
 import com.woniuxy.dao.RoomDAO;
 import com.woniuxy.dao.RoomDateDAO;
 import com.woniuxy.dao.TypeDAO;
+import com.woniuxy.datacenter.DataCenter;
 import com.woniuxy.pojo.Item;
 import com.woniuxy.pojo.Login;
 import com.woniuxy.pojo.Member;
@@ -35,6 +36,7 @@ import com.woniuxy.pojo.Room;
 import com.woniuxy.pojo.RoomDate;
 import com.woniuxy.pojo.Type;
 import com.woniuxy.service.OrderService;
+import com.woniuxy.util.MemberDiscount;
 
 @Service("orderService")
 @Transactional
@@ -219,9 +221,7 @@ public class OrderServiceImpl implements OrderService {
 					flag = false;
 
 				}
-
 			}
-
 			// 不包含订单中的时间，加入可住房间列表中
 			if (flag == true) {
 
@@ -252,6 +252,36 @@ public class OrderServiceImpl implements OrderService {
 		// 订单总价
 		BigDecimal sumPrice = type.getPrice()
 				.multiply(new BigDecimal("" + inRoom.size()).multiply(new BigDecimal("" + orderDates.size())));
+		//价格
+		BigDecimal price=type.getPrice();
+		//获取会员
+		Integer memberId=order.getMember_id();
+		if(memberId != null && memberId != 0){
+			Member member=memberDAO.findMemberBId(memberId);
+			if(member!=null){
+				//会员折扣价
+				MemberDiscount util=new MemberDiscount();
+				sumPrice=util.getOnlieDiscount(member, sumPrice);
+				price=util.getOnlieDiscount(member, price);
+			}else{
+				sumPrice=sumPrice.multiply(DataCenter.getDiscount());
+				price=price.multiply(DataCenter.getDiscount());
+			}
+			
+		}else{
+			sumPrice=sumPrice.multiply(DataCenter.getDiscount());
+			price=price.multiply(DataCenter.getDiscount());
+		}
+		
+		//押金
+		if (order.getMember_id() == null || order.getMember_id()<= 1) {
+			BigDecimal deposit= type.getDeposit().multiply(new BigDecimal(""+inRoom.size()));
+			sumPrice=sumPrice.add(deposit);
+		} 
+		//价格取整
+		sumPrice=sumPrice.setScale(0, BigDecimal.ROUND_HALF_UP);
+		price=price.setScale(0, BigDecimal.ROUND_HALF_UP);
+		
 		order.setSumprice(sumPrice);
 		// 插入
 		orderDAO.insertOrder(order);
@@ -260,12 +290,12 @@ public class OrderServiceImpl implements OrderService {
 
 		for (int i = 0; i < inRoom.size(); i++) {
 			Room room = inRoom.get(i);
-			if (order.getMember_id() != null && order.getMember_id() != 0) {
+			if (order.getMember_id() != null && order.getMember_id() > 1) {
 				itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), personIds[i],
-						orderDates.size(), new BigDecimal(0), room.getType().getPrice()));
+						orderDates.size(), new BigDecimal("0"), price));
 			} else {
 				itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), personIds[i],
-						orderDates.size(), room.getType().getDeposit(), room.getType().getPrice()));
+						orderDates.size(), room.getType().getDeposit(), price));
 
 			}
 
@@ -404,25 +434,35 @@ public class OrderServiceImpl implements OrderService {
 		order.setCancel_time(sd.format(cancelTime));
 		// 订单总价
 		BigDecimal sumPrice = null;
-		
-		if (order.getMember_id() != null && order.getMember_id() != 0) {
-			sumPrice=type.getPrice().multiply(new BigDecimal("" + orderDates.size()));
+		//今日价格
+		BigDecimal price=type.getPrice();
+		if (order.getMember_id() != null && order.getMember_id() > 1) {
+			
+			//会员折扣价
+			MemberDiscount util=new MemberDiscount();
+			Member member=memberDAO.findMemberBId(order.getMember_id() );
+			
+			price=util.getDownDiscount(member, price);
+			sumPrice=price.multiply(new BigDecimal(""+orderDates.size()));
 		}else{
-			sumPrice=type.getPrice().multiply(new BigDecimal("" + orderDates.size())).add(type.getDeposit());
+			
+			sumPrice=type.getPrice().multiply(new BigDecimal("" + orderDates.size())).multiply(DataCenter.getDiscount()).add(type.getDeposit());
 		}
+		sumPrice=sumPrice.setScale(0, BigDecimal.ROUND_HALF_UP);
+		price=price.setScale(0, BigDecimal.ROUND_HALF_UP);
 		order.setSumprice(sumPrice);
 		// 插入
 		orderDAO.insertOrder(order);
 
 		int orderId = orderDAO.findOrderByNumber(OrderNumber).getOrder_id();
 
-		if (order.getMember_id() != null && order.getMember_id() != 0) {
+		if (order.getMember_id() != null && order.getMember_id() > 1) {
 			itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
-					orderDates.size(), new BigDecimal(0+""), type.getPrice()));
+					orderDates.size(), new BigDecimal(0+""),price));
 		} else {
 			
 			itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
-					orderDates.size(), type.getDeposit(), type.getPrice()));
+					orderDates.size(), type.getDeposit(),price));
 
 		}
 
@@ -506,25 +546,35 @@ public class OrderServiceImpl implements OrderService {
 		order.setCancel_time(sd.format(cancelTime));
 		// 订单总价
 		BigDecimal sumPrice = null;
-		
-		if (order.getMember_id() != null && order.getMember_id() != 0) {
-			sumPrice=type.getPrice().multiply(new BigDecimal("" + orderDates.size()));
+		//今日价格
+		BigDecimal price=type.getPrice();
+		if (order.getMember_id() != null && order.getMember_id() > 1) {
+			
+			//会员折扣价
+			MemberDiscount util=new MemberDiscount();
+			Member member=memberDAO.findMemberBId(order.getMember_id() );
+			
+			price=util.getDownDiscount(member, price);
+			sumPrice=price.multiply(new BigDecimal(""+orderDates.size()));
 		}else{
-			sumPrice=type.getPrice().multiply(new BigDecimal("" + orderDates.size())).add(type.getDeposit());
+			
+			sumPrice=type.getPrice().multiply(new BigDecimal("" + orderDates.size())).multiply(DataCenter.getDiscount()).add(type.getDeposit());
 		}
+		sumPrice=sumPrice.setScale(0, BigDecimal.ROUND_HALF_UP);
+		price=price.setScale(0, BigDecimal.ROUND_HALF_UP);
 		order.setSumprice(sumPrice);
 		// 插入
 		orderDAO.insertOrder(order);
 
 		int orderId = orderDAO.findOrderByNumber(OrderNumber).getOrder_id();
 
-		if (order.getMember_id() != null && order.getMember_id() != 0) {
+		if (order.getMember_id() != null && order.getMember_id() > 1) {
 			itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
-					orderDates.size(), new BigDecimal(0+""), type.getPrice()));
+					orderDates.size(), new BigDecimal(0+""),price));
 		} else {
 			
 			itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
-					orderDates.size(), type.getDeposit(), type.getPrice()));
+					orderDates.size(), type.getDeposit(),price));
 
 		}
 
@@ -535,6 +585,7 @@ public class OrderServiceImpl implements OrderService {
 			String date = orderDates.get(i);
 			roomDateDAO.insert(new RoomDate(room.getRoom_id(), room.getType_id(), date, orderId));
 		}
+		
 		map.put("msg","开单成功");
 		map.put("orderid",orderId);
 		// 超过规定时间未付款自动取消订单

@@ -175,6 +175,7 @@ public class PayController {
 			Order order=new Order();
 			order.setPay_number(trade_no);
 			order.setOrder_number(out_trade_no);
+			
 			orderService.updatePayNumber(order);
 			//——请在这里编写您的程序（以上代码仅作参考）——
 	}
@@ -278,7 +279,7 @@ public class PayController {
 	 */
 	@RequestMapping("/ui")
 	
-	public String ui(HttpServletRequest request,ModelMap map) throws Exception {
+	public String ui(HttpServletRequest request,String out_trade_no,ModelMap map) throws Exception {
 		//获取支付宝GET过来反馈信息
 		Map<String,String> params = new HashMap<String,String>();
 		Map<String,String[]> requestParams = request.getParameterMap();
@@ -297,7 +298,7 @@ public class PayController {
 		
 		
 			//商户订单号
-			String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
+//			String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
 		
 			//支付宝交易号
 			String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
