@@ -5,7 +5,14 @@ private Integer comment_id;
 private Integer typeid;
 private Integer loginid;
 private String description;
+private Login login;
 private Integer flag;
+public Login getLogin() {
+	return login;
+}
+public void setLogin(Login login) {
+	this.login = login;
+}
 public Integer getComment_id() {
 	return comment_id;
 }
@@ -39,7 +46,8 @@ public void setFlag(Integer flag) {
 @Override
 public String toString() {
 	return "Comment [comment_id=" + comment_id + ", typeid=" + typeid + ", loginid=" + loginid + ", description="
-			+ description + ", flag=" + flag + "]";
+			+ description + ", login=" + login + ", flag=" + flag + "]";
 }
+
 
 }

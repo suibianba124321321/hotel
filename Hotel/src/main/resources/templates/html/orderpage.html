@@ -102,7 +102,6 @@ $.ajax({
     	$("#pic").prop("src",type.img);
     	$("#type").html(type.type);
     	$("#description").html(type.description);
-    	$("#price").html(type.price);
     	
     	
     	
@@ -153,7 +152,6 @@ function pay(orderId){
 
 
 	<div class="head">
-
 	<div class="headtitle"><a href="/">罗马假日酒店</a></div>
 
 	<div  th:if="${session.login} != null" >
@@ -165,7 +163,6 @@ function pay(orderId){
 	
 	<div class="login" th:text="${session.login.account}"></div>
 	<div class="login">用户:</div>
-
 	<div class="loginimg"><img src="../img/register.png" /> </div>
 	</div>
 	</div>
@@ -182,9 +179,8 @@ function pay(orderId){
 <!--房间信息  -->
 <div class="orderRoomInfo">
 <img alt="not found" src="" id="pic"><br>
-房间类型：<span id="type"></span><br>
-基本信息：<span id="description"></span><br>
-非会员每日费用：<span id="price"></span><br>
+房间类型：<span id="type" style="font-size: 20px"></span><br>
+基本信息：<span id="description" style="font-size: 20px"></span><br>
 </div>
 <br>
 <br>

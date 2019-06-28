@@ -21,19 +21,19 @@ public class DataCenter {
 	 * @return
 	 */
 	//普通会员 
-	public BigDecimal on1( ){
+	public static BigDecimal on1( ){
 		BigDecimal discount2 = getDiscount().multiply(new BigDecimal("0.9"));
 		return discount2;
 	}
 	
 	//铂金会员 
-	public BigDecimal on2( ){
+	public static BigDecimal on2( ){
 		BigDecimal discount2 = getDiscount().multiply(new BigDecimal("0.85"));
 		return discount2;
 	}
 	
 	//普通会员 
-	public BigDecimal on3( ){
+	public static BigDecimal on3( ){
 		BigDecimal discount2 = getDiscount().multiply(new BigDecimal("0.8"));
 		return discount2;
 	}

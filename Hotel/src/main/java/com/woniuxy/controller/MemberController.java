@@ -1,15 +1,19 @@
 package com.woniuxy.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.woniuxy.datacenter.DataCenter;
+import com.woniuxy.pojo.Login;
 import com.woniuxy.pojo.Member;
 import com.woniuxy.service.MemberService;
 
@@ -105,5 +109,33 @@ public class MemberController {
 		return map;
 	}
 
-
+	//通过当前登录用户查询该人的会员等级 及显示折扣
+		@RequestMapping("/currentMember")
+		@ResponseBody
+		public Map currentMember(HttpSession session){
+			//从session中拿到member_id,通过member_id查询到当前会员	
+			Object object = session.getAttribute("login");
+			Login login=(Login) object;
+			Map<String, Object> map = new HashMap<String, Object>();	
+			Integer member_id=login.getMember_id();
+			if(member_id==null){
+				map.put("notice","notAMember");
+				return map;
+			}else{
+				Member member = memberService.findMemberByid(member_id);
+				map.put("notice","isAMember");
+				map.put("member", member);
+				if(member.getRank()==1){
+					map.put("discount", DataCenter.on1());	
+				}
+				if(member.getRank()==2){
+					map.put("discount", DataCenter.on2());	
+				}
+				if(member.getRank()==3){
+					map.put("discount", DataCenter.on3());	
+				}
+		
+			}
+			
+			return map;} 
 }
