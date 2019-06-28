@@ -3,12 +3,14 @@ package com.woniuxy.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.crypto.hash.SimpleHashRequest;
 import org.apache.shiro.session.Session;
@@ -22,6 +24,8 @@ import com.woniuxy.pojo.Manager;
 import com.woniuxy.service.ManagerService;
 import com.woniuxy.util.CustomizedToken;
 import com.woniuxy.util.LoginType;
+
+import ch.qos.logback.classic.pattern.Util;
 /**
  * 后台人员controller操作   manager
  * @author Administrator
@@ -153,6 +157,7 @@ public class ManagerController {
      * @param manager
      * @return
      */
+    @RequiresRoles(value={"Superuser"})
     @ResponseBody
 	@RequestMapping("/delete")
     public String deleteByID(Manager manager){

@@ -3,6 +3,7 @@ package com.woniuxy.configuration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.shiro.authc.credential.CredentialsMatcher;
@@ -19,6 +20,8 @@ import org.springframework.context.annotation.Configuration;
 import com.woniuxy.realm.AdmineRealms;
 import com.woniuxy.realm.UserRealm;
 import com.woniuxy.util.CustomizedModularRealmAuthenticator;
+
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 
 
 
@@ -55,6 +58,10 @@ public class ShiroConfig {
 		return admineRealms;
 	}
 	
+	@Bean
+	public ShiroDialect shiroDialect(){
+		return new ShiroDialect();
+	}
 	
 	
 	//realm
@@ -125,9 +132,9 @@ public class ShiroConfig {
 		
 		bean.setLoginUrl("/login.html");
 		//无权限界面
-		bean.setUnauthorizedUrl("/index.html");
+		bean.setUnauthorizedUrl("/backstage/error.html");
 		
-		Map<String, String> map=new HashMap<>();
+		Map<String, String> map=new LinkedHashMap<>();
         //后台页面登录+资源
 		map.put("/backstage/login.html", "anon");
 		map.put("/js/**", "anon");
@@ -148,7 +155,7 @@ public class ShiroConfig {
 		map.put("/index.html", "anon");
 
 		map.put("/login.html", "anon");
-
+		map.put("/", "anon");
 		map.put("/html/login.html", "anon");
 		map.put("/html/bookpage.html", "anon");
 		map.put("/html/bookdetailpage.html", "anon");
@@ -175,7 +182,7 @@ public class ShiroConfig {
 		
 		
 		
-		/*map.put("/**", "authc");*/
+		map.put("/**", "authc");
 
 		
 		

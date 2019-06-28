@@ -1,16 +1,18 @@
 package com.woniuxy.controller;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.woniuxy.datacenter.DataCenter;
 
 @Controller
-@RequiresRoles("/discount")
+
 public class DisCountController {
 	
 	/**
@@ -18,48 +20,37 @@ public class DisCountController {
 	 * @param old_discount  老的折扣
 	 * @return
 	 */
-/*	@ResponseBody
-	@RequiresRoles("/getDiscount")
-	public Map<String, Double> changeDiscount(Double old_discount){
-       Map<String, Double> map = getDisCountMessage();
-		if(old_discount!=0){
-			DataCenter.setDiscount(old_discount);
-      	}else{
-      		System.out.println("数据错误");
-      	}	
-		map.put("discount", DataCenter.getDiscount());	
-
+	@ResponseBody
+	@RequestMapping("/getdiscount")
+	public Map<String, BigDecimal> getDiscount(){
+		Map<String, BigDecimal> map = new HashMap<>();
+        map.put("discount", DataCenter.getDiscount());
+        map.put("on1", DataCenter.on1());
+        map.put("on2", DataCenter.on2());
+        map.put("on3", DataCenter.on3());
+        map.put("down3", DataCenter.down3());
+        map.put("down2", DataCenter.down2());
+        map.put("down1", DataCenter.down1());
 		return map;
-	}*/
+	}
+	@ResponseBody
+	@RequestMapping("/setdiscount")
+	public String setDiscount(String discount){
+	  try {
+		  BigDecimal bigDecimal = new BigDecimal(discount);
+		  if(bigDecimal==null||bigDecimal.equals("0")){
+				return "设置有误";
+			}else{
+				DataCenter.setDiscount(bigDecimal);
+				return "修改成功";
+			}
+	} catch (Exception e) {
+		return "输入格式错误";
+	}
+		
+	  
+	}
 	
 	
-	/**
-	 * 所有会员的打折    on  代表线上    down  代表线下     1  2  3     普通会员   铂金会员   黑卡会员
-	 * @return
-	 */
-/*	public Map<String,Double> getDisCountMessage(){
-		Map<String,Double> map = new HashMap<>();
-		*//**
-		 * 线上
-		 *//*
-		//普通会员打折
-		map.put("on1", new DataCenter().on1());
-		//铂金会员打折
-		map.put("on2", new DataCenter().on2());
-		//黑卡会员打折
-		map.put("on3", new DataCenter().on3());
-		
-		*//**
-		 * 线下
-		 *//*
-		//普通会员打折
-		map.put("on1", new DataCenter().down1());
-		//铂金会员打折
-		map.put("on2", new DataCenter().down2());
-		//黑卡会员打折
-		map.put("on3", new DataCenter().down3());
-		
-		return map;
-	}*/
 
 }

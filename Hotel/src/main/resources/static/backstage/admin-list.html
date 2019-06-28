@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="x-admin-sm">
+<html class="x-admin-sm"  xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
     <head>
         <meta charset="UTF-8">
         <title>欢迎页面-X-admin2.2</title>
@@ -9,10 +9,10 @@
 
         <!-- <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
          -->
-        <link rel="stylesheet" href="./css/font.css">
-        <link rel="stylesheet" href="./css/xadmin.css">
-        <script src="./lib/layui/layui.js" charset="utf-8"></script>
-        <script type="text/javascript" src="./js/xadmin.js"></script>
+        <link rel="stylesheet" href="/backstage/css/font.css">
+        <link rel="stylesheet" href="/backstage/css/xadmin.css">
+        <script src="/backstage/lib/layui/layui.js" charset="utf-8"></script>
+        <script type="text/javascript" src="/backstage/js/xadmin.js"></script>
         <script type="text/javascript" src="/js/jquery.min.js"></script>
         <!--[if lt IE 9]>
           <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -52,14 +52,14 @@
                         </div>
                         <div class="layui-card-header">
                            <!--  <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button> -->
-                            <button class="layui-btn" onclick="xadmin.open('添加用户','./admin-add.html',600,400)"><i class="layui-icon"></i>添加</button>
+                            <button class="layui-btn" onclick="xadmin.open('添加用户','/backstage/admin-add.html',600,400)"><i class="layui-icon"></i>添加</button>
                         </div>
                         <div class="layui-card-body ">
                             <table class="layui-table layui-form">
                               <thead>
                                 <tr>
                                 
-                                  <th>员工编号</th>
+                                  <th shiro:hasRole="Superuser">员工编号</th>
                                   <th>登录名</th>
                                   <th>手机</th>
                                   <th>身份证</th>
@@ -107,7 +107,7 @@
     				var tel="<td>"+user.tel+"</td>";
     				var name="<td >"+user.account+"</td>";
     				var role_id="<td name=rank"+i+">"+user.role_id+"</td>";
-    				var buten="<td> <button onclick='deletes("+user.manager_id+")' class='layui-btn'>删除</button> <button   onclick=\"xadmin.open('修改用户信息','./admin-edit.html?manager="+mid+"',600,400)\"       class='layui-btn'>修改</button></td>";
+    				var buten="<td> <button onclick='deletes("+user.manager_id+")' class='layui-btn'>删除</button> <button   onclick=\"xadmin.open('修改用户信息','/backstage/admin-edit.html?manager="+mid+"',600,400)\"       class='layui-btn'>修改</button></td>";
     				
     				$("tbody").append(tr+id+name+tel+idcard+role_id+buten);
     				
@@ -221,7 +221,7 @@
     		 success:function(data){
     		
     			 
-    			 window.location.href="./admine-one.html?id="+data.manager_id;
+    			 window.location.href="/backstage/admine-one.html?id="+data.manager_id;
     			
     		 }
     	 })
