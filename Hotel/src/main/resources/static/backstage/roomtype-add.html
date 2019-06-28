@@ -20,7 +20,8 @@
     <body>
         <div class="layui-fluid">
             <div class="layui-row">
-                <form class="layui-form" action="/type/insert">
+                <form class="layui-form" action="/type/insert" method="post" enctype="multipart/form-data"
+                >
                  
                  
                     
@@ -39,7 +40,7 @@
                         <label for="L_email" class="layui-form-label">
                             <span class="x-red">*</span>房间图片</label>
                         <div class="layui-input-inline">
-                            <input type="file" id="L_email" name="img" required=""  autocomplete="off" class="layui-input"></div>
+                            <input type="file" id="L_email" name="headImg" required=""  autocomplete="off" class="layui-input"></div>
                         <div class="layui-form-mid layui-word-aux">
                             <span class="x-red"></span></div>
                     </div>

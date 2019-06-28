@@ -1,6 +1,7 @@
 package com.woniuxy.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,7 +18,14 @@ public class WebMvcConfig implements WebMvcConfigurer{
 		registry.addViewController("/orders/all").setViewName("/html/orders");
 		registry.addViewController("/one/book").setViewName("/html/bookdetailpage");
 		registry.addViewController("/team/book").setViewName("/html/teambookpage");
+		registry.addViewController("/backstage/index.html").setViewName("/html/index");
 
 		
 	}
+	
+	
+/*	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		 registry.addResourceHandler("../img/**").addResourceLocations("file:D:/hotil/hotel/Hotel/src/main/upload");
+	}*/
 }
