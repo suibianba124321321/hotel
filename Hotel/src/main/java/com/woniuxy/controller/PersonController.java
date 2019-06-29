@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.woniuxy.pojo.Login;
 import com.woniuxy.pojo.Person;
 import com.woniuxy.service.PersonService;
 
@@ -31,11 +32,11 @@ public void setPersonService(PersonService personService) {
 @RequestMapping("/addperson")
 @ResponseBody
 public String addPerson(Person person,HttpSession session){
-	Object ouid = session.getAttribute("uid");
-	int uid=(int) ouid;
+	Object object = session.getAttribute("login");
+	Login login=(Login) object;
 	
 	String result="添加失败";
-	result = personService.addPerson(person, uid);
+	result = personService.addPerson(person, login.getLogin_id());
 	
 	
 	return result;

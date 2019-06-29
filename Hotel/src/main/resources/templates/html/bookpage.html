@@ -38,7 +38,7 @@ $(document).ready(function(){
             
             
    
-            
+    //展示时间段房间信息        
     function search(){
 	var today = $("#date_info").val();
 	var nextday = $("#date_info1").val();
@@ -51,64 +51,100 @@ $(document).ready(function(){
      	    outTime:$("#date_info1").val()  		
      	},
      	success:function(data){
-     		$("#lists").html("");
-     		var head=$('<tr><th style="text-align: center;">客房</th><th style="text-align: center;">房型</th><th style="text-align: center;">基本信息</th><th style="text-align: center;">今日价格</th><th style="text-align: center;">状态</th></tr>');
-     		$("#lists").append(head);
      		
-     		for (var i = 0; i < data.length; i++) {
-     			var po=JSON.stringify(data[i]);
- 				var tr = $("<tr></tr>");
- 				var pic = $("<td class='td-g-img'><img src="+ data[i].img+ "></td>");
- 				var type=$("<td></td>").text(data[i].type);
- 				var description=$("<td></td>").text(data[i].description);
- 				var price =$("<td></td>").text(data[i].price);
- 				
- 			  if(data[i].number!=0){
- 				  var state = $("<td><button class='button' onclick='bookdetail("+po+")'>预订</button><button class='button' onclick='teambook("+po+")' style='width:120px'>团体预订</button></td>"); 
- 				   
- 			  }else{
- 				  var state = $("<td><button class='buttonfull'>已满</button></td>");
- 			  }
- 				tr.append(pic);
- 				tr.append(type);
- 				tr.append(description);
- 				tr.append(price);
- 				tr.append(state);
- 				$("#lists").append(tr);
- 			  }			
+     		var types=data.types;
+     		var discount=data.discount;
+     		if(discount==1){
+     			$("#lists").html("");
+         		var head=$('<tr><th style="text-align: center;">客房</th><th style="text-align: center;">房型</th><th style="text-align: center;">基本信息</th><th style="text-align: center;">今日价格</th><th style="text-align: center;">状态</th></tr>');
+         		$("#lists").append(head);
+         		
+         		for (var i = 0; i < types.length; i++) {
+         			var po=JSON.stringify(types[i]);
+     				var tr = $("<tr></tr>");
+     				var pic = $("<td class='td-g-img'><img src="+ types[i].img+ "></td>");
+     				var type=$("<td></td>").text(types[i].type);
+     				var description=$("<td></td>").text(types[i].description);
+     				var discountPrice=types[i].price;
+     				var price =$("<td></td>").text(types[i].price+"(今日不打折)");
+     				
+     			  if(types[i].number!=0){
+     				  var state = $("<td><button class='button' onclick='bookdetail("+po+","+discountPrice+")'>预订</button><button class='button' onclick='teambook("+po+","+discountPrice+")' style='width:120px'>团体预订</button></td>"); 
+     				   
+     			  }else{
+     				  var state = $("<td><button class='buttonfull'>已满</button></td>");
+     			  }
+     				tr.append(pic);
+     				tr.append(type);
+     				tr.append(description);
+     				tr.append(price);
+     				tr.append(state);
+     				$("#lists").append(tr);
+     			  }			
+     		}else{
+     			
+     			$("#lists").html("");
+         		var head=$('<tr><th style="text-align: center;">客房</th><th style="text-align: center;">房型</th><th style="text-align: center;">基本信息</th><th style="text-align: center;">今日价格</th><th style="text-align: center;">状态</th></tr>');
+         		$("#lists").append(head);
+         		
+         		for (var i = 0; i < types.length; i++) {
+         			var po=JSON.stringify(types[i]);
+     				var tr = $("<tr></tr>");
+     				var pic = $("<td class='td-g-img'><img src="+ types[i].img+ "></td>");
+     				var type=$("<td></td>").text(types[i].type);
+     				var description=$("<td></td>").text(types[i].description);
+     				
+                   var discountPricecontent=Math.round(parseInt(types[i].price)*parseFloat(discount))+"(今日"+discount+"折)"; 
+                   var discountPrice=Math.round(parseInt(types[i].price)*parseFloat(discount));
+     				var price =$("<td></td>").text(discountPricecontent);
+     				
+     			  if(types[i].number!=0){
+     				  var state = $("<td><button class='button' onclick='bookdetail("+po+","+discountPrice+")'>预订</button><button class='button' onclick='teambook("+po+","+discountPrice+")' style='width:120px'>团体预订</button></td>"); 
+     				   
+     			  }else{
+     				  var state = $("<td><button class='buttonfull'>已满</button></td>");
+     			  }
+     				tr.append(pic);
+     				tr.append(type);
+     				tr.append(description);
+     				tr.append(price);
+     				tr.append(state);
+     				$("#lists").append(tr);
+     			  }			
+     			
+     		}
+     		
  		}     
      	})         	
 	
 }        
  //点击预定购跳转页面
- function bookdetail(type){
+ function bookdetail(type,discountPrice){
 	 if([[${session.login}]]==null)
 	 {alert("请先登录，老铁")}
 	 else{
 	  /* var roomtype=encodeURI(encodeURI(type.type)); */
 	  location.href="../one/book?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
-			            +"&img="+type.img+"&price="+type.price+"&description="+type.description+"&type="+type.type+"&livedays="+$("#livedays").val(); 
+			            +"&img="+type.img+"&price="+discountPrice+"&description="+type.description+"&type="+type.type+"&livedays="+$("#livedays").val(); 
 	 }
  }
      
  //点击预定团体预定页面
- function teambook(type){
+ function teambook(type,discountPrice){
 	 if([[${session.login}]]==null)
 	 {alert("请先登录，老铁")}
 	 else{
 	  /* var roomtype=encodeURI(encodeURI(type.type)); */
 	  location.href="../team/book?typeid="+type.type_id+"&inTime="+$("#date_info").val()+"&outTime="+$("#date_info1").val()
-			            +"&img="+type.img+"&price="+type.price+"&description="+type.description+"&type="+type.type+"&livedays="+$("#livedays").val(); 
+			            +"&img="+type.img+"&price="+discountPrice+"&description="+type.description+"&type="+type.type+"&livedays="+$("#livedays").val(); 
 	 }
  }
-
-
 </script>
 
 
 </head>
 <body style="text-align:center">
-<input type="hidden" id="livedays"> 
+<input type="hidden" id="livedays">  
 	<div class="head">
 	<div class="headtitle">罗马假日酒店</div>
 	<!-- 从session中取值 为空的话显示登录注册-->

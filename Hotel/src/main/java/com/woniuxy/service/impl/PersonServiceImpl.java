@@ -68,7 +68,6 @@ public void setPersonDAO(PersonDAO personDAO) {
 		Integer person_id = nperson.getPerson_id();
 		// 插入login-person表 建立loginid与personid的联系
 		loginDAO.bindloginIdAndPersonId(uid, person_id);
-
 		return "添加成功";
 	}
 	@Override

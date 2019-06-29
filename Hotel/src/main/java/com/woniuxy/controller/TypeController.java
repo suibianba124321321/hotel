@@ -1,6 +1,9 @@
 package com.woniuxy.controller;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.woniuxy.datacenter.DataCenter;
 import com.woniuxy.pojo.Type;
 import com.woniuxy.service.TypeService;
 
@@ -32,11 +36,13 @@ public class TypeController {
 
 	@RequestMapping("/show")
 	@ResponseBody
-	public List<Type> show(String inTime ,String outTime){
-		
+	public Map show(String inTime ,String outTime){
+		Map<String, Object> map = new HashMap<>();
 		List<Type> types=typeService.show(inTime, outTime);
-		
-		return types;
+		BigDecimal discount = DataCenter.getDiscount();
+		map.put("discount", discount);
+		map.put("types", types);
+		return map;
 	}
 
 	

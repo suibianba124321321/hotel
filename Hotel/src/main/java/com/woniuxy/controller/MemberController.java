@@ -1,6 +1,7 @@
 package com.woniuxy.controller;
 
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -126,13 +127,13 @@ public class MemberController {
 				map.put("notice","isAMember");
 				map.put("member", member);
 				if(member.getRank()==1){
-					map.put("discount", DataCenter.on1());	
+					map.put("discount", DataCenter.on1().divide(DataCenter.getDiscount()));	
 				}
 				if(member.getRank()==2){
-					map.put("discount", DataCenter.on2());	
+					map.put("discount", DataCenter.on2().divide(DataCenter.getDiscount()));	
 				}
 				if(member.getRank()==3){
-					map.put("discount", DataCenter.on3());	
+					map.put("discount", DataCenter.on3().divide(DataCenter.getDiscount()));	
 				}
 		
 			}
