@@ -17,7 +17,7 @@ public interface RoomTypeDao {
 	 * 新增房间类型
 	 * @param type
 	 */
-	@Insert("insert into room_type(type,price,description,number,flag,img) values(#{type},#{price},#{description},#{number},0,#{img})")
+	@Insert("insert into room_type(type,price,description,number,flag,img,deposit) values(#{type},#{price},#{description},#{number},0,#{img},#{deposit})")
 	public void insert(Type type);
 	
 	/**
@@ -48,7 +48,7 @@ public interface RoomTypeDao {
 	 * @param type
 	 */
 	@Update("update room_type set price=#{price} where type_id=#{type_id} and flag=0")
-	public void updatePriceByType_id(Type type);
+	public void updatePriceByType_id(Type type); 
 	
 	/**
 	 * 修改房间数量
@@ -63,11 +63,15 @@ public interface RoomTypeDao {
 
 		@Select("select * from room_type where type_id=#{type_id} and flag=0")
 		public Type findTypeByRoom(Room room);
-	
+		
+
 	
 	@Update("update room_type set description=#{description} where type_id=#{type_id} and flag=0")
 	public void updateDescriptionById(Type type);
 	
+	
+	@Select("select * from room_type where type=#{type} and flag=0 limit 1")
+	public Type findTypeByType(Type type);
 
 	
 }

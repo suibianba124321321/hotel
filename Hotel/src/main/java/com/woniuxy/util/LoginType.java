@@ -2,7 +2,7 @@ package com.woniuxy.util;
 
 public enum LoginType {
 	// 普通用户登录    管理员登录
-	 USER("User"),  ADMIN("Admin");
+	 USER("User"),  ADMIN("Admin"),TEL("Tel");
 
     private String type;
 

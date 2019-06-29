@@ -50,5 +50,6 @@ public interface RoomTypeService {
 	
 	public Type findTypeByRoom(Room room);
 	public void updateDescriptionByType_id(Type type);
+	public Type findTypeByType(Type type);
 
 }

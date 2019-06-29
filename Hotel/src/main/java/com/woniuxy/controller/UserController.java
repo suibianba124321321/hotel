@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,7 @@ public class UserController {
      @Resource
 	private UserService userService;
      private static final String ADMIN_LOGIN_TYPE = LoginType.USER.toString();
+     private static final String ADMIN_LOGIN_TYPE1 = LoginType.TEL.toString();
      //手机号码注册
      @RequestMapping("/phoneCheck")
      @ResponseBody
@@ -103,21 +106,41 @@ public class UserController {
      @RequestMapping("/phoneLogin")
      @ResponseBody
      public String phoneRegister(Login login,HttpServletRequest request,HttpSession session){
-    	 String result="登录失败";
+    	//对的验证码
     	 Object loginCode = session.getAttribute("logincode");
+    	 
+    	 //前端输入的验证
     	 String code = request.getParameter("code");
-    	 if(loginCode==null){
-    		 return result;
-    	 }
-    	 else{
-    	 if(code.equals(loginCode.toString())){
-    		 Login login0 = userService.findLoginByTel(login.getTel());
-				session.setAttribute("login", login0);
-    		 result="登录成功";
-    	 }
-    	}
-    	 System.out.println(result);
-    	 return result;
+    	 //判断电话号码是否存在
+    		 Login login0 = userService.findLoginByTel(login.getTel()); 
+        if(login0==null){
+        	System.out.println(login0);
+        	return "手机号不存在，请先注册";
+        }else{
+    	
+    	 
+    	 Subject subject = SecurityUtils.getSubject();
+    	 
+    	 if(!subject.isAuthenticated()){
+	    		CustomizedToken token = new CustomizedToken(login.getTel()+"|"+loginCode,code,ADMIN_LOGIN_TYPE1 );
+	    		token.setRememberMe(false);
+	    		try {	
+	    			subject.login(token);
+	    			session.setAttribute("login", login0);
+	    			return "登录成功";
+			} catch (IncorrectCredentialsException ice) {
+				    return "验证码有误";
+			}catch (AuthenticationException ae) {
+             return "登陆失败";
+         }
+	    	
+	    }
+    	 
+    	 
+    
+        }
+    
+    	 return null;
      
      }
 }

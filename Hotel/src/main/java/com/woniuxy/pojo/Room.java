@@ -79,6 +79,15 @@ public class Room implements Serializable {
 		return true;
 
 	}
+	public Room add(Integer room_id, Integer type_id, Integer state) {
+		
+		Room room = new Room();
+		room.setRoom_id(room_id);
+		room.setState(state);
+		room.setType_id(type_id);
+		return room;
+
+	}
 	
 	
 }
