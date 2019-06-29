@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.woniuxy.realm.AdmineRealms;
+import com.woniuxy.realm.TelRealms;
 import com.woniuxy.realm.UserRealm;
 import com.woniuxy.util.CustomizedModularRealmAuthenticator;
 
@@ -57,6 +58,18 @@ public class ShiroConfig {
 		admineRealms.setCredentialsMatcher(matcher);
 		return admineRealms;
 	}
+	
+	
+	
+	@Bean
+	public TelRealms telRealms(CredentialsMatcher matcher){
+		System.out.println("创建telRealms");
+		TelRealms telRealms=new TelRealms();
+		telRealms.setCredentialsMatcher(matcher);
+		return telRealms;
+	}
+	
+	
 	
 	@Bean
 	public ShiroDialect shiroDialect(){
@@ -103,13 +116,14 @@ public class ShiroConfig {
 	 * @return
 	 */
 	@Bean
-	public SecurityManager securityManager(AdmineRealms admineRealms,UserRealm userRealm,CustomizedModularRealmAuthenticator cmra){
+	public SecurityManager securityManager(AdmineRealms admineRealms,TelRealms telRealms,UserRealm userRealm,CustomizedModularRealmAuthenticator cmra){
 		DefaultSecurityManager securityManager=new DefaultWebSecurityManager();
 		securityManager.setAuthenticator(cmra);
 		
 		Collection<Realm> realms=new ArrayList<>();
 		realms.add(userRealm);
 		realms.add(admineRealms);
+		realms.add(telRealms);
 		securityManager.setRealms(realms);
 	
 		return securityManager;

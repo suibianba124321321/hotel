@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService{
          }
          session.setAttribute("rcode", rcode);
          //我的模板id
-         int tpl_id=167814;
+         int tpl_id=169027;
          System.out.println("注册时验证码："+rcode);
          //调方法生成短信发送给tel
          boolean re = JuHeDemo.mobileQuery(tel, tpl_id, rcode);
@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService{
         }
         session.setAttribute("logincode", rcode);
         //我的模板id
-        int tpl_id=167814;
+        int tpl_id=169027;
         
         System.out.println("登录时验证码："+rcode);
 		if(ifPhoneExit!= null){

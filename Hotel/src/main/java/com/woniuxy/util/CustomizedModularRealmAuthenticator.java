@@ -24,14 +24,16 @@ public class CustomizedModularRealmAuthenticator extends ModularRealmAuthenticat
 	        
 	        System.out.println(loginType);
 	        
-	        
+	        System.out.println("验证当前的realms的类型");
 	        // 所有Realm
 	        Collection<Realm> realms = getRealms();
 	        // 登录类型对应的所有Realm
 	        Collection<Realm> typeRealms = new ArrayList<>();
 	        
 	        for (Realm realm : realms) {
+	        	System.out.println("所有的realms"+realm.getName()+"------"+loginType);
 	            if (realm.getName().contains(loginType)){
+	            	System.out.println("--------00000000000----------00000000-");
 	            	System.out.println(realm.getName()+"当前realm");
 	                typeRealms.add(realm);}
 	        }

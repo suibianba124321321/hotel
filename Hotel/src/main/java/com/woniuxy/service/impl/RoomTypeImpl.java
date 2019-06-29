@@ -68,5 +68,12 @@ public class RoomTypeImpl implements RoomTypeService{
 			return roomTypeDao.findTypeByRoom(room);
 		}
 
+		@Override
+		public Type findTypeByType(Type type) {
+			
+			return roomTypeDao.findTypeByType(type);
+		}
+		
+
 
 }

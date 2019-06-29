@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.woniuxy.pojo.Room;
 import com.woniuxy.pojo.Type;
+import com.woniuxy.service.RoomService;
 import com.woniuxy.service.RoomTypeService;
 
 @Controller
@@ -22,6 +24,8 @@ import com.woniuxy.service.RoomTypeService;
 public class RoomTypeController {
 	@Resource
 	private RoomTypeService roomTypeService;
+	@Resource
+	private RoomService roomService;
 	
 
 	
@@ -70,17 +74,24 @@ public class RoomTypeController {
 				newtype.setDeposit(deposit);
 				newtype.setDescription(description);
 				newtype.setNumber(number);
+			
 				newtype.setPrice(price);
 				newtype.setType(type);
 				newtype.setImg("file://"+newFilePath);
 		
-		System.out.println(newFilePath);
-		
+
+		roomTypeService.insert(newtype);
 		
 		System.out.println(newtype);
-		
-		
-		roomTypeService.insert(newtype);
+		//通过房间类型找到房间类型id
+		Type type2 = roomTypeService.findTypeByType(newtype);
+		System.out.println(type2);
+	
+		for(int i=0;i<number;i++){
+			String id=type2.getType_id()+"00"+(i+1);
+			Integer room_id=Integer.valueOf(id);
+			roomService.insert(new Room().add(room_id, type2.getType_id(), 0));
+		}
 		return "添加成功";
 	}
 	

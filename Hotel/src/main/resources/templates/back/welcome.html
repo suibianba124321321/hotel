@@ -73,7 +73,7 @@
                         <div  class="layui-card-header">系统信息 <button shiro:hasRole="Superuser" class="layui-btn" onclick="xadmin.open('修改今日优惠','/backstage/discount-change.html',600,400)"><i class="layui-icon"></i>修改今日优惠</button></div>
                         <div class="layui-card-body ">
                             <table class="layui-table">
-                                <tbody>
+                                <tbody id="discount">
                                     <tr>
                                         <th>xxx版本</th>
                                         <td >1.0.180420</td></tr>
@@ -157,7 +157,7 @@
         			var down2="<tr><th>铂金会员线下打折</th><td>"+(data.down2*10).toFixed(1)+"折</td></tr>";
         			var down3="<tr><th>黑卡会员线下打折</th><td>"+(data.down3*10).toFixed(1)+"折</td></tr>";
         	     
-        			$("tbody").append(discount+on1+down1+on2+down2+on3+down3);
+        			$("#discount").append(discount+on1+down1+on2+down2+on3+down3);
         			
         		}
         	})
