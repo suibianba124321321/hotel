@@ -262,3 +262,21 @@ font-size: 20px;
     color: navy;
     border-radius:3px
 }
+.commentTypeInfo{	
+margin:auto;	
+border: 5px solid #c0c0c0;	
+width:400px;	
+margin-top:100px;	
+}
+.commentbox{
+margin:0 auto;		
+width:700px;
+height:100px;	
+}
+.commentButton{
+	background-color:#fdbb31;
+border-radius:6px;
+width:85px;
+height:30px;
+border:2px solid;
+}

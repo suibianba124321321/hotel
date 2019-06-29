@@ -153,6 +153,7 @@ public class OrderServiceImpl implements OrderService {
 	// 创建订单
 	@Override
 	public Map<String, Object> createOrder(Order order) {
+		
 		Map<String, Object> map = new HashMap<>();
 
 		map.put("msg", "创建成功");
@@ -224,7 +225,6 @@ public class OrderServiceImpl implements OrderService {
 			}
 			// 不包含订单中的时间，加入可住房间列表中
 			if (flag == true) {
-
 				room.setType(type);
 				inRoom.add(room);
 			}
@@ -274,9 +274,13 @@ public class OrderServiceImpl implements OrderService {
 		}
 		
 		//押金
-		if (order.getMember_id() == null || order.getMember_id()<= 1) {
-			BigDecimal deposit= type.getDeposit().multiply(new BigDecimal(""+inRoom.size()));
-			sumPrice=sumPrice.add(deposit);
+		if (order.getMember_id() == null ) {
+			Member member=memberDAO.findMemberBId(order.getMember_id());
+			if(member==null || member.getRank()<=1){
+				BigDecimal deposit= type.getDeposit().multiply(new BigDecimal(""+inRoom.size()));
+				sumPrice=sumPrice.add(deposit);
+			}
+			
 		} 
 		//价格取整
 		sumPrice=sumPrice.setScale(0, BigDecimal.ROUND_HALF_UP);
@@ -290,9 +294,17 @@ public class OrderServiceImpl implements OrderService {
 
 		for (int i = 0; i < inRoom.size(); i++) {
 			Room room = inRoom.get(i);
-			if (order.getMember_id() != null && order.getMember_id() > 1) {
-				itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), personIds[i],
-						orderDates.size(), new BigDecimal("0"), price));
+			if (order.getMember_id() != null ) {
+				Member member=memberDAO.findMemberBId(order.getMember_id());
+				if(member==null || member.getRank()>1){
+					itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), personIds[i],
+							orderDates.size(), new BigDecimal("0"), price));
+				}else {
+					itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), personIds[i],
+							orderDates.size(), room.getType().getDeposit(), price));
+
+				}
+				
 			} else {
 				itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), personIds[i],
 						orderDates.size(), room.getType().getDeposit(), price));
@@ -436,14 +448,17 @@ public class OrderServiceImpl implements OrderService {
 		BigDecimal sumPrice = null;
 		//今日价格
 		BigDecimal price=type.getPrice();
-		if (order.getMember_id() != null && order.getMember_id() > 1) {
-			
+		if (order.getMember_id() != null ) {
 			//会员折扣价
 			MemberDiscount util=new MemberDiscount();
-			Member member=memberDAO.findMemberBId(order.getMember_id() );
-			
-			price=util.getDownDiscount(member, price);
-			sumPrice=price.multiply(new BigDecimal(""+orderDates.size()));
+			Member member=memberDAO.findMemberBId(order.getMember_id());
+			if(member==null || member.getRank()>1){
+				price=util.getDownDiscount(member, price);
+				sumPrice=price.multiply(new BigDecimal(""+orderDates.size()));
+			}else {
+				sumPrice=type.getPrice().multiply(new BigDecimal("" + orderDates.size())).multiply(DataCenter.getDiscount()).add(type.getDeposit());
+
+			}
 		}else{
 			
 			sumPrice=type.getPrice().multiply(new BigDecimal("" + orderDates.size())).multiply(DataCenter.getDiscount()).add(type.getDeposit());
@@ -456,9 +471,17 @@ public class OrderServiceImpl implements OrderService {
 
 		int orderId = orderDAO.findOrderByNumber(OrderNumber).getOrder_id();
 
-		if (order.getMember_id() != null && order.getMember_id() > 1) {
-			itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
-					orderDates.size(), new BigDecimal(0+""),price));
+		if (order.getMember_id() != null ) {
+			Member member=memberDAO.findMemberBId(order.getMember_id());
+			if(member==null || member.getRank()>1){
+				itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
+						orderDates.size(), new BigDecimal(0+""),price));
+				
+			}else {
+				itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
+						orderDates.size(), type.getDeposit(),price));
+			}
+			
 		} else {
 			
 			itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
@@ -548,14 +571,17 @@ public class OrderServiceImpl implements OrderService {
 		BigDecimal sumPrice = null;
 		//今日价格
 		BigDecimal price=type.getPrice();
-		if (order.getMember_id() != null && order.getMember_id() > 1) {
-			
+		if (order.getMember_id() != null ) {
 			//会员折扣价
 			MemberDiscount util=new MemberDiscount();
-			Member member=memberDAO.findMemberBId(order.getMember_id() );
-			
-			price=util.getDownDiscount(member, price);
-			sumPrice=price.multiply(new BigDecimal(""+orderDates.size()));
+			Member member=memberDAO.findMemberBId(order.getMember_id());
+			if(member==null || member.getRank()>1){
+				price=util.getDownDiscount(member, price);
+				sumPrice=price.multiply(new BigDecimal(""+orderDates.size()));
+			}else {
+				sumPrice=type.getPrice().multiply(new BigDecimal("" + orderDates.size())).multiply(DataCenter.getDiscount()).add(type.getDeposit());
+
+			}
 		}else{
 			
 			sumPrice=type.getPrice().multiply(new BigDecimal("" + orderDates.size())).multiply(DataCenter.getDiscount()).add(type.getDeposit());
@@ -568,9 +594,17 @@ public class OrderServiceImpl implements OrderService {
 
 		int orderId = orderDAO.findOrderByNumber(OrderNumber).getOrder_id();
 
-		if (order.getMember_id() != null && order.getMember_id() > 1) {
-			itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
-					orderDates.size(), new BigDecimal(0+""),price));
+		if (order.getMember_id() != null ) {
+			Member member=memberDAO.findMemberBId(order.getMember_id());
+			if(member==null || member.getRank()>1){
+				itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
+						orderDates.size(), new BigDecimal(0+""),price));
+				
+			}else {
+				itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
+						orderDates.size(), type.getDeposit(),price));
+			}
+			
 		} else {
 			
 			itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
