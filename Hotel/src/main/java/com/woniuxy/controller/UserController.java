@@ -79,7 +79,7 @@ public class UserController {
  				//通过loginaccount查出当前login的所有信息封装并保存在session
  				Login login0 = userService.findLoginByAccount(login.getAccount());
  				session.setAttribute("login", login0);
- 				
+ 				System.out.println(session.getAttribute("login"));
  				
  				
  				 result="登录成功";

@@ -157,6 +157,8 @@ public class ShiroConfig {
 		map.put("/js/**", "anon");
 		map.put("/img/**", "anon");
 		map.put("/type/show", "anon");
+		map.put("/html/websocket.html", "anon");
+		map.put("/websocket", "anon");
 		
 		
 		
