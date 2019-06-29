@@ -164,8 +164,10 @@ $(document).ready(function(){
 	<div class="loginimg"><img src="../img/logout.png" /> </div>
 	
 	<div class="login"><a href="orders/all">订单</a></div>
-	<div class="loginimg"><img src="../img/order.png" /> </div>
 	
+	<div class="loginimg"><img src="../img/order.png" /> </div>
+	<div class="login"><a href="/websocket.html">消息</a></div>
+	<div class="loginimg"><img src="../img/message.png" /> </div>
 	<div class="login" th:text="${session.login.account==null}?${session.login.tel}:${session.login.account}"></div>
 	<div class="login">用户:</div>
 	<div class="loginimg"><img src="../img/register.png" /> </div>
