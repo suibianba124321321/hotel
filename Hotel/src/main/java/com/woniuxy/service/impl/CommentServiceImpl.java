@@ -28,4 +28,10 @@ public void setCommentDAO(CommentDAO commentDAO) {
 		return commentDAO.allComments(typeid);
 	}
 
+	@Override
+	public void addComment(Comment comment) {
+		
+		commentDAO.addComment(comment);
+	}
+
 }

@@ -178,11 +178,8 @@ public class ShiroConfig {
 		map.put("/aaa.html", "user");
 	
 		map.put("/logout", "logout");
-		map.put("/login/logout", "logout");
-		
-		
-		
-		map.put("/**", "authc");
+		map.put("/login/logout", "logout");		
+		/*map.put("/**", "authc");*/
 
 		
 		

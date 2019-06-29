@@ -224,7 +224,6 @@ public class OrderServiceImpl implements OrderService {
 			}
 			// 不包含订单中的时间，加入可住房间列表中
 			if (flag == true) {
-
 				room.setType(type);
 				inRoom.add(room);
 			}

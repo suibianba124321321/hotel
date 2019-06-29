@@ -7,4 +7,6 @@ import com.woniuxy.pojo.Comment;
 public interface CommentService {
 	//通过房间类型查询所有的评价
 	public List<Comment> allComments(int typeid);
+	//添加评价
+	public void addComment(Comment comment);
 }
