@@ -34,7 +34,7 @@ public interface OrderDAO {
 	@Select("select * from `order` where order_number=#{orderNumber} ")
 	public Order findOrderByNumber(String orderNumber);
 
-	@Select("select * from `order` where order_id=#{id} and flag=0")
+	@Select("select * from `order` where order_id=#{id}")
 	public Order findOrderById(Integer id);
 
 	@Select("select * from `order` ")

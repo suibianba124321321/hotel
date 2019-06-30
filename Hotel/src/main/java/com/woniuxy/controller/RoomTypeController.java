@@ -77,7 +77,7 @@ public class RoomTypeController {
 			
 				newtype.setPrice(price);
 				newtype.setType(type);
-				newtype.setImg("file://"+newFilePath);
+				newtype.setImg("../../../../../upload/"+newFileName);
 		
 
 		roomTypeService.insert(newtype);

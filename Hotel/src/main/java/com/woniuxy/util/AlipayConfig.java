@@ -27,10 +27,10 @@ public class AlipayConfig {
     public static String alipay_public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5NL/Def4j60pt3ssS/9lu9bbr4jZdAedhpqpVJh44HKnpdJ4DkT6b8F1qGI+ncePwEQVosijxdkDjVnO4XtJ7nX/lawZ1JLpnXbmIgLLYc4+TsHwnkhXICAEalOsLPMXDVQw8h9ql+CsNHThm5xsKQR4J2/Viz8eD0mCrRZi3NgDyfTI/WUKJf6O/BYcWuzxle3G6gAFJhyPMGODAiHlXtzTa8xv88935Skp4dGUhndxRv6dYPvjbHatpPvYmuG91NT6ZFiAnTqRJzc/lttSfGmFtI2hmKS3dDHemwgemEB7m1qjj6h6d5Fp9c22f7dZ1lgdfvMLmMU3ncove6Q2DwIDAQAB";
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = "http://248gl08394.wicp.vip/pay/savemsg";
+	public static String notify_url = "http://24808f5i38.zicp.vip/pay/savemsg";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String return_url = "http://248gl08394.wicp.vip/pay/ui";
+	public static String return_url = "http://24808f5i38.zicp.vip/pay/ui";
 
 	// 签名方式
 	public static String sign_type = "RSA2";

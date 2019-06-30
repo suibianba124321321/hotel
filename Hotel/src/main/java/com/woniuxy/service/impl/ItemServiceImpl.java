@@ -185,8 +185,8 @@ public class ItemServiceImpl implements ItemService{
 		String msg="退房成功";
 		Date now=new Date();
 		SimpleDateFormat sd=new SimpleDateFormat("yyyy-MM-dd");
-//		String today=sd.format(now);
-		String today="2019-06-29";
+		String today=sd.format(now);
+//		String today="2019-06-29";
 		Item oldItem=itemDAO.findItemById(item.getItem_id());
 		if(oldItem==null){
 			return "订单项不存在";

@@ -84,7 +84,7 @@ public class ManagerController {
 			session.setAttribute("account", old_Manager.getAccount());
 			return "redirect:/backstage/index.html";
 		}
-		return "success";
+		return "redirect:/";
 	}
 	
 	/**

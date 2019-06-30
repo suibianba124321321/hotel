@@ -276,7 +276,7 @@ public class OrderServiceImpl implements OrderService {
 		//押金
 		if (order.getMember_id() == null ) {
 			Member member=memberDAO.findMemberBId(order.getMember_id());
-			if(member==null || member.getRank()<=1){
+			if(member !=null && member.getRank()>1){
 				BigDecimal deposit= type.getDeposit().multiply(new BigDecimal(""+inRoom.size()));
 				sumPrice=sumPrice.add(deposit);
 			}
@@ -296,7 +296,7 @@ public class OrderServiceImpl implements OrderService {
 			Room room = inRoom.get(i);
 			if (order.getMember_id() != null ) {
 				Member member=memberDAO.findMemberBId(order.getMember_id());
-				if(member==null || member.getRank()>1){
+				if(member !=null && member.getRank()>1){
 					itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), personIds[i],
 							orderDates.size(), new BigDecimal("0"), price));
 				}else {
@@ -452,7 +452,7 @@ public class OrderServiceImpl implements OrderService {
 			//会员折扣价
 			MemberDiscount util=new MemberDiscount();
 			Member member=memberDAO.findMemberBId(order.getMember_id());
-			if(member==null || member.getRank()>1){
+			if(member !=null && member.getRank()>1){
 				price=util.getDownDiscount(member, price);
 				sumPrice=price.multiply(new BigDecimal(""+orderDates.size()));
 			}else {
@@ -473,7 +473,7 @@ public class OrderServiceImpl implements OrderService {
 
 		if (order.getMember_id() != null ) {
 			Member member=memberDAO.findMemberBId(order.getMember_id());
-			if(member==null || member.getRank()>1){
+			if(member !=null && member.getRank()>1){
 				itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
 						orderDates.size(), new BigDecimal(0+""),price));
 				
@@ -575,7 +575,7 @@ public class OrderServiceImpl implements OrderService {
 			//会员折扣价
 			MemberDiscount util=new MemberDiscount();
 			Member member=memberDAO.findMemberBId(order.getMember_id());
-			if(member==null || member.getRank()>1){
+			if(member !=null && member.getRank()>1){
 				price=util.getDownDiscount(member, price);
 				sumPrice=price.multiply(new BigDecimal(""+orderDates.size()));
 			}else {
@@ -596,7 +596,7 @@ public class OrderServiceImpl implements OrderService {
 
 		if (order.getMember_id() != null ) {
 			Member member=memberDAO.findMemberBId(order.getMember_id());
-			if(member==null || member.getRank()>1){
+			if(member !=null && member.getRank()>1){
 				itemDAO.insertItem(new Item(orderId, room.getRoom_id(), type.getType_id(), person.getPerson_id(),
 						orderDates.size(), new BigDecimal(0+""),price));
 				
